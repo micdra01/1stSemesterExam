@@ -1,0 +1,3 @@
+<template>
+  <input-field default="micdra01.gui">IJ_BASE_PACKAGE</input-field>
+</template>
