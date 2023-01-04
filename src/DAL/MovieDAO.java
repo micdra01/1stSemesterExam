@@ -115,6 +115,33 @@ public class MovieDAO implements IMovieDAO {
     @Override
     public void updateMovie(Movie movie) throws Exception {
 
+        String sql = "UPDATE Movies SET  Title=?, PersonalRating=?, ImdbRating=?, MovieFileLink=?, PictureFileLink=?, TrailerFileLink=?, LastView=? WHERE Id=?;";
 
+        try (Connection connection = databaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            String title = movie.getTitle();
+            double pR = movie.getPersonalRating();
+            double iR = movie.getImdbRating();
+            String movieLink = movie.getMovieFileLink();
+            String pictureLink = movie.getPictureFileLink();
+            String trailerLink = movie.getTrailerFileLink();
+            Timestamp tS = movie.getLastViewed();
+
+
+            statement.setString(1, title);
+            statement.setDouble(2, pR);
+            statement.setDouble(3, iR);
+            statement.setString(4, movieLink);
+            statement.setString(5, pictureLink);
+            statement.setString(6, trailerLink);
+            statement.setTimestamp(7, tS);
+            statement.setInt(8,movie.getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("Failed to edit the movie", e);
+        }
     }
 }

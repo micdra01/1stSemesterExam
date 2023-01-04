@@ -34,7 +34,7 @@ public class MovieManager implements IMovieManager {
 
     @Override
     public void updateMovie(Movie movie) throws Exception {
-
+        databaseAccess.updateMovie(movie);
     }
 
     @Override

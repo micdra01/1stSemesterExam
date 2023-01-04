@@ -30,4 +30,8 @@ public class MovieModel {
     public Movie createMovie(Movie movie) throws Exception {
         return movieManager.createMovie(movie);
     }
+
+    public void updateMovie(Movie movie) throws Exception {
+        movieManager.updateMovie(movie);
+    }
 }

@@ -38,6 +38,8 @@ public class MainController implements Initializable {
             Timestamp t = new Timestamp(Calendar.getInstance().getTimeInMillis());
             Movie m = new Movie("fkeo", 5.22, 3.44, "fmek/dd", "fefe/be", "nfejnfe/d", t );
             System.out.println(movieModel.createMovie(m));
+            movieModel.getMoviesInList().get(0).setTitle("nyhehehhehe");
+            movieModel.updateMovie(movieModel.getMoviesInList().get(0));
             
             for (int i = 0; movieModel.getMoviesInList().size() > i; i++){
                 System.out.println("title:  " + movieModel.getMoviesInList().get(i).getTitle() +
