@@ -4,8 +4,10 @@ import BE.Movie;
 import GUI.Models.MovieModel;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -15,9 +17,8 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
-    public GridPane grid;
 
-    public AnchorPane contentBoxId;
+    public ScrollBar contentBoxId;
 
     private MovieModel movieModel;
 
@@ -32,6 +33,14 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        testcrud();
+    }
+
+
+
+
+
+    private void testcrud() {
         //test if the movie is sent through the layers
         try {
 
@@ -40,7 +49,7 @@ public class MainController implements Initializable {
             System.out.println(movieModel.createMovie(m));
             movieModel.getMoviesInList().get(0).setTitle("nyhehehhehe");
             movieModel.updateMovie(movieModel.getMoviesInList().get(0));
-            
+
             for (int i = 0; movieModel.getMoviesInList().size() > i; i++){
                 System.out.println("title:  " + movieModel.getMoviesInList().get(i).getTitle() +
                         "   personalRate:  " + movieModel.getMoviesInList().get(i).getPersonalRating() +
@@ -52,9 +61,5 @@ public class MainController implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
-
-
     }
 }
