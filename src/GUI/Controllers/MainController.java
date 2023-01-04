@@ -8,11 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,6 +23,8 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
+    @FXML
+    private Label textSceneTitle;
     @FXML
     private BorderPane borderPane;
 
@@ -51,11 +55,26 @@ public class MainController implements Initializable {
     public void handleHome(ActionEvent actionEvent) throws IOException {
         VBox home = FXMLLoader.load(getClass().getResource("/GUI/Views/HomeView.fxml"));
         borderPane.setCenter(home);
+        textSceneTitle.setText("Home");
     }
 
     public void handleTrending(ActionEvent actionEvent) throws IOException {
-        VBox trending = FXMLLoader.load(getClass().getResource("/GUI/Views/TrendingView.fxml"));
+        ScrollPane trending = FXMLLoader.load(getClass().getResource("/GUI/Views/TrendingView.fxml"));
         borderPane.setCenter(trending);
+        textSceneTitle.setText("Trending");
+        GridPane grid = new GridPane();
+        trending.setContent(grid);
+        Image img = new Image("/Images/play.PNG");
+        ImageView imgV1 = new ImageView(img);
+        imgV1.setSmooth(true);
+        imgV1.setPreserveRatio(true);
+        imgV1.setFitWidth(200);
+        ImageView imgV2 = new ImageView(img);
+        grid.add(imgV1, 0, 0);
+        grid.add(new Label(new String("Uhh?")), 0, 1);
+        grid.add(new Separator(), 1,0);
+        grid.add(imgV2, 2, 0);
+        grid.add(new Label(new String("Ahhhh!")), 2, 1);
     }
 
     public void handlePopular(ActionEvent actionEvent) {
