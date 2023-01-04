@@ -17,7 +17,7 @@ public class Movie {
 
 
     public Movie(int id, String title, double personalRating, double imdbRating, String movieFileLink,
-                 String pictureFileLink, String trailerFileLink, String category, Timestamp lastViewed) {
+                 String pictureFileLink, String trailerFileLink, Timestamp lastViewed) {
         this.id = id;
         this.title = title;
         this.personalRating = personalRating;

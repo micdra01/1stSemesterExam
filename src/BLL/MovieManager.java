@@ -2,10 +2,18 @@ package BLL;
 
 import BE.Movie;
 import BLL.Interfaces.IMovieManager;
+import DAL.Interfaces.IMovieDAO;
+import DAL.MovieDAO;
 
 import java.util.List;
 
 public class MovieManager implements IMovieManager {
+
+    private IMovieDAO databaseAccess;
+
+    public MovieManager() {
+        databaseAccess = new MovieDAO();
+    }
 
     @Override
     public Movie createMovie(Movie movie) throws Exception {
@@ -19,7 +27,9 @@ public class MovieManager implements IMovieManager {
 
     @Override
     public List<Movie> getAllMovies() throws Exception {
-        return null;
+
+        return databaseAccess.getAllMovies();
+
     }
 
     @Override
