@@ -22,4 +22,12 @@ public class MovieModel {
     public ObservableList<Movie> getMoviesInList() {
         return moviesInList;
     }
+
+    public void deleteMovie(Movie movie) throws Exception {
+        movieManager.deleteMovie(movie);
+    }
+
+    public Movie createMovie(Movie movie) throws Exception {
+        return movieManager.createMovie(movie);
+    }
 }

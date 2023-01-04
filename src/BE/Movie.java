@@ -1,5 +1,6 @@
 package BE;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -25,7 +26,16 @@ public class Movie {
         this.movieFileLink = movieFileLink;
         this.pictureFileLink = pictureFileLink;
         this.trailerFileLink = trailerFileLink;
-        this.category = category;
+        this.lastViewed = lastViewed;
+    }
+    public Movie(String title, double personalRating, double imdbRating, String movieFileLink,
+                 String pictureFileLink, String trailerFileLink, Timestamp lastViewed) {
+        this.title = title;
+        this.personalRating = personalRating;
+        this.imdbRating = imdbRating;
+        this.movieFileLink = movieFileLink;
+        this.pictureFileLink = pictureFileLink;
+        this.trailerFileLink = trailerFileLink;
         this.lastViewed = lastViewed;
     }
 
@@ -93,7 +103,7 @@ public class Movie {
         this.category = category;
     }
 
-    public Date getLastViewed() {
+    public Timestamp getLastViewed() {
         return lastViewed;
     }
 

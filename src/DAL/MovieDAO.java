@@ -11,16 +11,66 @@ public class MovieDAO implements IMovieDAO {
 
 
     private DatabaseConnector databaseConnector;
+
     public MovieDAO() {
         databaseConnector = new DatabaseConnector();
     }
+
     @Override
     public Movie createMovie(Movie movie) throws Exception {
-        return null;
+
+        String sql = "INSERT INTO Movies (Title, PersonalRating, ImdbRating, MovieFileLink, PictureFileLink, TrailerFileLink, LastView) VALUES (?,?,?,?,?,?,?) ;";
+        try (Connection connection = databaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            String title = movie.getTitle();
+            double pR = movie.getPersonalRating();
+            double iR = movie.getImdbRating();
+            String movieLink = movie.getMovieFileLink();
+            String pictureLink = movie.getPictureFileLink();
+            String trailerLink = movie.getTrailerFileLink();
+            Timestamp tS = movie.getLastViewed();
+
+            statement.setString(1, title);
+            statement.setDouble(2, pR);
+            statement.setDouble(3, iR);
+            statement.setString(4, movieLink);
+            statement.setString(5, pictureLink);
+            statement.setString(6, trailerLink);
+            statement.setTimestamp(7, tS);
+
+            statement.executeUpdate();
+            int id = 0;
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
+            }
+
+            Movie generatedMovie =new Movie(id, title, pR, iR, movieLink, pictureLink, trailerLink, tS);
+            return generatedMovie;
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("Failed to create movie", e);
+        }
     }
 
     @Override
     public void deleteMovie(Movie movie) throws Exception {
+        String sql = "DELETE FROM Movies WHERE Id = ?;";
+
+        try (Connection connection = databaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            // Bind parameters
+            statement.setInt(1, movie.getId());
+
+            // Run the specified SQL Statement
+            statement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("Failed to delete movie", e);
+        }
 
     }
 
@@ -62,9 +112,9 @@ public class MovieDAO implements IMovieDAO {
         //returns a list of all movies
         return allMovies;
 }
-
     @Override
     public void updateMovie(Movie movie) throws Exception {
+
 
     }
 }

@@ -17,12 +17,12 @@ public class MovieManager implements IMovieManager {
 
     @Override
     public Movie createMovie(Movie movie) throws Exception {
-        return null;
+        return databaseAccess.createMovie(movie) ;
     }
 
     @Override
     public void deleteMovie(Movie movie) throws Exception {
-
+        databaseAccess.deleteMovie(movie);
     }
 
     @Override
