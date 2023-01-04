@@ -1,5 +1,6 @@
 package BE;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Movie {
@@ -12,11 +13,11 @@ public class Movie {
     private String pictureFileLink;
     private String trailerFileLink;
     private String category;
-    private Date lastViewed;
+    private Timestamp lastViewed;
 
 
     public Movie(int id, String title, double personalRating, double imdbRating, String movieFileLink,
-                 String pictureFileLink, String trailerFileLink, String category, Date lastViewed) {
+                 String pictureFileLink, String trailerFileLink, String category, Timestamp lastViewed) {
         this.id = id;
         this.title = title;
         this.personalRating = personalRating;
@@ -96,15 +97,9 @@ public class Movie {
         return lastViewed;
     }
 
-    public void setLastViewed(Date lastViewed) {
+    public void setLastViewed(Timestamp lastViewed) {
         this.lastViewed = lastViewed;
     }
-
-
-
-
-
-
 
 
 }
