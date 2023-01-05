@@ -117,7 +117,7 @@
    <center>
       <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <content>
-          <AnchorPane fx:id="contentBoxId" minHeight="0.0" minWidth="0.0" prefHeight="454.0" prefWidth="489.0" />
+          <ScrollBar fx:id="contentBoxId" minHeight="0.0" minWidth="0.0" prefHeight="454.0" prefWidth="489.0" />
         </content>
       </ScrollPane>
    </center>
