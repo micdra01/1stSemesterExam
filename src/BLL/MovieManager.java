@@ -11,8 +11,7 @@ public class MovieManager implements IMovieManager {
 
     private IMovieDAO databaseAccess;
 
-    public MovieManager() {
-        databaseAccess = new MovieDAO();
+    public MovieManager() {databaseAccess = new MovieDAO();
     }
 
     /**

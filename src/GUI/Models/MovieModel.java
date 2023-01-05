@@ -1,6 +1,8 @@
 package GUI.Models;
 
+import BE.Category;
 import BE.Movie;
+import BLL.Interfaces.ICategoryManager;
 import BLL.Interfaces.IMovieManager;
 import BLL.MovieManager;
 import javafx.collections.FXCollections;
@@ -9,15 +11,21 @@ import javafx.collections.ObservableList;
 public class MovieModel {
 
     private IMovieManager movieManager;
+    private ICategoryManager categoryManager;
     private ObservableList<Movie> moviesInList;
+    private ObservableList<Category> categoriesInList;
 
     public MovieModel() throws Exception {
         movieManager = new MovieManager();
 
+
         //gets all movies in a list
         moviesInList = FXCollections.observableArrayList();
         moviesInList.addAll(movieManager.getAllMovies());
+
+
     }
+
 
     public ObservableList<Movie> getMoviesInList() {
         return moviesInList;
@@ -36,5 +44,9 @@ public class MovieModel {
     }
     public Movie getMovieById(int movieId) throws Exception{
         return movieManager.getMovieFromId(movieId);
+    }
+
+    public Category createCategory(Category category) throws Exception {
+        return categoryManager.createCategory(category);
     }
 }

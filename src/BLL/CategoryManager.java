@@ -2,11 +2,19 @@ package BLL;
 
 import BE.Category;
 import BE.Movie;
+import DAL.CategoryDAO;
 import DAL.Interfaces.ICategoryDAO;
+import DAL.MovieDAO;
 
 import java.util.List;
 
 public class CategoryManager implements ICategoryDAO {
+
+    private ICategoryDAO databaseAccess;
+
+    public CategoryManager() {
+        databaseAccess = new CategoryDAO();
+    }
 
     /**
      * Return a list of Category objects.
@@ -15,7 +23,7 @@ public class CategoryManager implements ICategoryDAO {
      */
     @Override
     public List<Category> getAllCategories() throws Exception {
-        return null;
+        return databaseAccess.getAllCategories();
     }
 
     /**
@@ -42,12 +50,12 @@ public class CategoryManager implements ICategoryDAO {
 
     @Override
     public Category createCategory(Category category) throws Exception {
-        return null;
+        return databaseAccess.createCategory(category);
     }
 
     @Override
     public void deleteCategory(Category category) throws Exception {
-
+        databaseAccess.deleteCategory(category);
     }
 
     @Override
