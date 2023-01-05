@@ -38,7 +38,7 @@
                </VBox.margin>
             </Button>
             <Separator maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="180.0" prefWidth="100.0" visible="false" VBox.vgrow="ALWAYS" />
-            <Button mnemonicParsing="false" onAction="#handleAddMovie" prefHeight="40.0" prefWidth="80.0" text="Button" VBox.vgrow="NEVER">
+            <Button mnemonicParsing="false" onAction="#handleAddMovie" prefHeight="40.0" prefWidth="80.0" text="➕ Add" VBox.vgrow="NEVER">
                <font>
                   <Font size="16.0" />
                </font>

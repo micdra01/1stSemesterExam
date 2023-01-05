@@ -92,7 +92,11 @@ public class MainController implements Initializable {
     public void handlePopular(ActionEvent actionEvent) {
     }
 
-    public void handleFavorites(ActionEvent actionEvent) {
+    public void handleFavorites(ActionEvent actionEvent) throws IOException {
+        //TODO this is just testing, to be removed!!
+        ScrollPane movieView = FXMLLoader.load(getClass().getResource("/GUI/Views/MovieView.fxml"));
+        borderPane.setCenter(movieView);
+        textSceneTitle.setText("Information");
     }
 
     public void handleAddMovie(ActionEvent actionEvent) {
