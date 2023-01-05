@@ -47,4 +47,13 @@ public interface IMovieManager {
      * @throws Exception If it fails to search.
      */
     List<Movie> search(String query) throws Exception;
+
+
+    /**
+     * gets a movie from the database by its id
+     * @param movieId the movie id for the movie
+     * @return returns a movie object
+     * @throws Exception
+     */
+    Movie getMovieFromId(int movieId) throws Exception;
 }

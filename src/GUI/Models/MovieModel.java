@@ -34,4 +34,7 @@ public class MovieModel {
     public void updateMovie(Movie movie) throws Exception {
         movieManager.updateMovie(movie);
     }
+    public Movie getMovieById(int movieId) throws Exception{
+        return movieManager.getMovieFromId(movieId);
+    }
 }

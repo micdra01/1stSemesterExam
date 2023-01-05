@@ -35,4 +35,13 @@ public interface IMovieDAO {
      */
     void updateMovie(Movie movie) throws Exception;
 
+
+    /**
+     * gets a movie from the id
+     * @param movieId the movie id
+     * @return the found movie object from id.
+     * @throws Exception
+     */
+    Movie getMovieFromId(int movieId) throws Exception;
+
 }
