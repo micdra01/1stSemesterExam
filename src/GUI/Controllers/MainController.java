@@ -56,9 +56,20 @@ public class MainController {
     }
 
     public void handleTrending(ActionEvent actionEvent) throws IOException {
-        ScrollPane trending = FXMLLoader.load(getClass().getResource("/GUI/Views/TrendingView.fxml"));
-        borderPane.setCenter(trending);
-        textSceneTitle.setText("Trending");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/TrendingView.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            new Exception("Failed to open 'trending movies'", e);
+        }
+
+        TrendingController controller = loader.getController();
+        controller.setMovieModel(movieModel);
+        borderPane.setCenter(root);
+
+
     }
 
 

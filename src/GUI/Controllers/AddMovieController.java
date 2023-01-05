@@ -74,7 +74,6 @@ public class AddMovieController implements Initializable {
 
         movieModel.createMovie(movie);
 
-
     }
 
     public void setMovieModel(MovieModel movieModel) {
