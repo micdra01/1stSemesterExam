@@ -87,19 +87,6 @@ public class MainController implements Initializable {
         ScrollPane trending = FXMLLoader.load(getClass().getResource("/GUI/Views/TrendingView.fxml"));
         borderPane.setCenter(trending);
         textSceneTitle.setText("Trending");
-        GridPane grid = new GridPane();
-        trending.setContent(grid);
-        Image img = new Image("/Images/play.PNG");
-        ImageView imgV1 = new ImageView(img);
-        imgV1.setSmooth(true);
-        imgV1.setPreserveRatio(true);
-        imgV1.setFitWidth(200);
-        ImageView imgV2 = new ImageView(img);
-        grid.add(imgV1, 0, 0);
-        grid.add(new Label(new String("Uhh?")), 0, 1);
-        grid.add(new Separator(), 1,0);
-        grid.add(imgV2, 2, 0);
-        grid.add(new Label(new String("Ahhhh!")), 2, 1);
     }
 
     public void handlePopular(ActionEvent actionEvent) {
