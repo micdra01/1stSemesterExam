@@ -27,9 +27,7 @@ public class MovieManager implements IMovieManager {
 
     @Override
     public List<Movie> getAllMovies() throws Exception {
-
         return databaseAccess.getAllMovies();
-
     }
 
     @Override
