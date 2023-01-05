@@ -16,6 +16,13 @@ public class MovieDAO implements IMovieDAO {
         databaseConnector = new DatabaseConnector();
     }
 
+
+    /**
+     * Creates a Movie.
+     * @param movie The movie to create.
+     * @return Returns the newly created movie.
+     * @throws Exception If it fails to create the movie.
+     */
     @Override
     public Movie createMovie(Movie movie) throws Exception {
 
@@ -55,6 +62,11 @@ public class MovieDAO implements IMovieDAO {
         }
     }
 
+    /**
+     * Deletes a movie.
+     * @param movie The movie to delete.
+     * @throws Exception If it fails to delete the movie.
+     */
     @Override
     public void deleteMovie(Movie movie) throws Exception {
         String sql = "DELETE FROM Movies WHERE Id = ?;";
@@ -111,7 +123,13 @@ public class MovieDAO implements IMovieDAO {
         }
         //returns a list of all movies
         return allMovies;
-}
+    }
+
+    /**
+     * Update/Edit a Movie
+     * @param movie, the selected movie to update
+     * @throws Exception If it fails to update the movie.
+     */
     @Override
     public void updateMovie(Movie movie) throws Exception {
 
@@ -120,22 +138,14 @@ public class MovieDAO implements IMovieDAO {
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            String title = movie.getTitle();
-            double pR = movie.getPersonalRating();
-            double iR = movie.getImdbRating();
-            String movieLink = movie.getMovieFileLink();
-            String pictureLink = movie.getPictureFileLink();
-            String trailerLink = movie.getTrailerFileLink();
-            Timestamp tS = movie.getLastViewed();
 
-
-            statement.setString(1, title);
-            statement.setDouble(2, pR);
-            statement.setDouble(3, iR);
-            statement.setString(4, movieLink);
-            statement.setString(5, pictureLink);
-            statement.setString(6, trailerLink);
-            statement.setTimestamp(7, tS);
+            statement.setString(1, movie.getTitle());
+            statement.setDouble(2, movie.getPersonalRating());
+            statement.setDouble(3, movie.getImdbRating());
+            statement.setString(4, movie.getMovieFileLink());
+            statement.setString(5, movie.getPictureFileLink());
+            statement.setString(6, movie.getTrailerFileLink());
+            statement.setTimestamp(7, movie.getLastViewed());
             statement.setInt(8,movie.getId());
 
             statement.executeUpdate();
