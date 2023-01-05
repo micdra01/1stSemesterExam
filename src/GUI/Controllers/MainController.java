@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
@@ -111,10 +112,19 @@ public class MainController implements Initializable {
     }
 
     public void handleAddMovie(ActionEvent actionEvent) throws IOException {
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/AddMovieView.fxml"));
-        GridPane addmovie = FXMLLoader.load(getClass().getResource("/GUI/Views/AddMovieView.fxml"));
-        borderPane.setCenter(addmovie);
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            new Exception("Failed to open 'Add movie'", e);
+        }
+
+        AddMovieController controller = loader.getController();
+        controller.setMovieModel(movieModel);
+        borderPane.setCenter(root);
+
         textSceneTitle.setText("Add Movie");
     }
 }

@@ -77,6 +77,9 @@ public class AddMovieController implements Initializable {
 
     }
 
+    public void setMovieModel(MovieModel movieModel) {
+        this.movieModel = movieModel;
+    }
 
     //public TextField textImageFile, textTrailerFile, textIMDBRating, textCategory, textTitle, textMovieFile;
 
