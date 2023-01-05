@@ -54,12 +54,19 @@ public class MainController implements Initializable {
 
             //creates a movie
             Timestamp t = new Timestamp(Calendar.getInstance().getTimeInMillis());
+            System.out.println(t);
             Movie m = new Movie("fkeo", 5.22, 3.44, "fmek/dd", "fefe/be", "nfejnfe/d", t );
             System.out.println(movieModel.createMovie(m));
+
+            movieModel.createMovie(m);
 
             //updates movie title
             movieModel.getMoviesInList().get(0).setTitle("nyhehehhehe");
             movieModel.updateMovie(movieModel.getMoviesInList().get(0));
+
+            //get movie from id test
+            Movie mff = movieModel.getMoviesInList().get(0);
+            System.out.println("your chosen movie from id:  " + mff.getTitle());
 
             //gets all movies from db
             for (int i = 0; movieModel.getMoviesInList().size() > i; i++){
@@ -88,6 +95,7 @@ public class MainController implements Initializable {
         borderPane.setCenter(trending);
         textSceneTitle.setText("Trending");
     }
+
 
     public void handlePopular(ActionEvent actionEvent) {
     }

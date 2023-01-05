@@ -30,6 +30,7 @@ public class MovieDAO implements IMovieDAO {
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
+            //gets all variables from movie and saves
             String title = movie.getTitle();
             double pR = movie.getPersonalRating();
             double iR = movie.getImdbRating();
@@ -47,6 +48,7 @@ public class MovieDAO implements IMovieDAO {
             statement.setTimestamp(7, tS);
 
             statement.executeUpdate();
+
             int id = 0;
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -154,4 +156,40 @@ public class MovieDAO implements IMovieDAO {
             throw new Exception("Failed to edit the movie", e);
         }
     }
+
+    /**
+     * gets a movie from the id
+     * @param movieId the movie id
+     * @return the found movie object from id.
+     * @throws Exception
+     */
+    @Override
+    public Movie getMovieFromId(int movieId) throws Exception {
+        //SELECT * FROM Movies WHERE [condition]
+
+        String sql = " SELECT * FROM Movies WHERE Id=?;";
+        Movie movie;
+
+        try (Connection connection = databaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1,movieId);
+            ResultSet rs = statement.executeQuery(sql);
+
+            int id = rs.getInt("Id");
+            String title =rs.getString("Title");
+            double personalRating = rs.getDouble("PersonalRating");
+            double imdbRating = rs.getDouble("ImdbRating");
+            String movieFileLink = rs.getString("MovieFileLink");
+            String pictureFileLink = rs.getString("PictureFileLink");
+            String trailerFileLink = rs.getString("TrailerFileLink");
+            Timestamp lastView = rs.getTimestamp("LastView");
+
+            //creates the movie and add it to the list allMovies
+            movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink,trailerFileLink, lastView);
+
+        }
+        return  movie;
+    }
+
 }
