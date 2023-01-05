@@ -2,13 +2,14 @@ package BLL;
 
 import BE.Category;
 import BE.Movie;
+import BLL.Interfaces.ICategoryManager;
 import DAL.CategoryDAO;
 import DAL.Interfaces.ICategoryDAO;
 import DAL.MovieDAO;
 
 import java.util.List;
 
-public class CategoryManager implements ICategoryDAO {
+public class CategoryManager implements ICategoryManager {
 
     private ICategoryDAO databaseAccess;
 

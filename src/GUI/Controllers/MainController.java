@@ -1,6 +1,7 @@
 package GUI.Controllers;
 
 import BE.Movie;
+import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,11 +32,13 @@ public class MainController {
     }
 
     private MovieModel movieModel;
+    private CategoryModel categoryModel;
 
 
     public MainController(){
         try {
             movieModel = new MovieModel();//sets the movieModel
+            categoryModel = new CategoryModel();//sets categoryModel
 
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
 
 public class TrendingController implements Initializable {
 
+
+
     @FXML
     private ScrollPane trending;
 
