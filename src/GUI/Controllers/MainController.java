@@ -19,7 +19,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
-public class MainController implements Initializable {
+public class MainController {
 
     @FXML
     private Label textSceneTitle;
@@ -43,50 +43,11 @@ public class MainController implements Initializable {
     }
 
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        testcrud();
-    }
 
 
 
 
 
-    private void testcrud() {
-        //test if the movie is sent through the layers
-        try {
-
-            //creates a movie
-            Timestamp t = new Timestamp(Calendar.getInstance().getTimeInMillis());
-            System.out.println(t);
-            Movie m = new Movie("fkeo", 5.22, 3.44, "fmek/dd", "fefe/be", "nfejnfe/d", t );
-            System.out.println(movieModel.createMovie(m));
-
-            movieModel.createMovie(m);
-
-            //updates movie title
-            movieModel.getMoviesInList().get(0).setTitle("nyhehehhehe");
-            movieModel.updateMovie(movieModel.getMoviesInList().get(0));
-
-            //get movie from id test
-            Movie mff = movieModel.getMoviesInList().get(0);
-            System.out.println("your chosen movie from id:  " + mff.getTitle());
-
-            //gets all movies from db
-            for (int i = 0; movieModel.getMoviesInList().size() > i; i++){
-                System.out.println("title:  " + movieModel.getMoviesInList().get(i).getTitle() +
-                        "   personalRate:  " + movieModel.getMoviesInList().get(i).getPersonalRating() +
-                        "  id:  " + movieModel.getMoviesInList().get(i).getId());
-
-                movieModel.deleteMovie(movieModel.getMoviesInList().get(2));
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
 
     public void handleHome(ActionEvent actionEvent) throws IOException {
         VBox home = FXMLLoader.load(getClass().getResource("/GUI/Views/HomeView.fxml"));

@@ -29,7 +29,7 @@ public class AddMovieController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            movieModel = new MovieModel();
+           // movieModel = new MovieModel();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
