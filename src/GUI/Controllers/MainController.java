@@ -8,9 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -28,11 +25,17 @@ public class MainController implements Initializable {
     @FXML
     private BorderPane borderPane;
 
+    public MovieModel getMovieModel() {
+        return movieModel;
+    }
+
     private MovieModel movieModel;
+
 
     public MainController(){
         try {
             movieModel = new MovieModel();//sets the movieModel
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -107,6 +110,11 @@ public class MainController implements Initializable {
         textSceneTitle.setText("Information");
     }
 
-    public void handleAddMovie(ActionEvent actionEvent) {
+    public void handleAddMovie(ActionEvent actionEvent) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/AddMovieView.fxml"));
+        GridPane addmovie = FXMLLoader.load(getClass().getResource("/GUI/Views/AddMovieView.fxml"));
+        borderPane.setCenter(addmovie);
+        textSceneTitle.setText("Add Movie");
     }
 }
