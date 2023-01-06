@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * todo write comments for all methods
+ */
 public class MainController {
     @FXML
     private Label textSceneTitle;
@@ -25,20 +28,15 @@ public class MainController {
     public MainController(){
         try {
             movieModel = new MovieModel();//sets the movieModel
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-
     public void handleHome(ActionEvent actionEvent) throws IOException {
         VBox home = FXMLLoader.load(getClass().getResource("/GUI/Views/HomeView.fxml"));
         borderPane.setCenter(home);
         textSceneTitle.setText("Home");
-    }
-
-    public void handleTrending(ActionEvent actionEvent) throws IOException {
     }
 
 
@@ -47,8 +45,6 @@ public class MainController {
 
     public void handleFavorites(ActionEvent actionEvent) throws IOException {
     }
-
-
 
     public void handleAllMovies(ActionEvent actionEvent) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
@@ -87,7 +83,6 @@ public class MainController {
     }
 
     public void openMovieInfo(Movie movie){
-        System.out.println(movie.getTitle());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieView.fxml"));
         Parent root = null;
 

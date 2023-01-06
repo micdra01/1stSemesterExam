@@ -23,6 +23,12 @@ public class AddMovieController{
     private MovieModel movieModel;
 
 
+    /**
+     * todo write comments for all methods in class
+     * todo save name of files from each file chooser as local variable in handle save method, so we can make file links later
+     * todo save the movie files and picture files from file chooser in resources folder.
+     * @param event
+     */
     public void handleMovieFile(ActionEvent event) {
         Stage stage = (Stage) btnMovieFile.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
@@ -52,6 +58,7 @@ public class AddMovieController{
         String title = textTitle.getText();
         double personalRating = -1;
         double imdbRating = Double.parseDouble(textIMDBRating.getText());
+        //todo next 3 variables should take the name of the file and send down so it can make the file link in dal
         String movieLink = textMovieFile.getText();
         String pictureLink = textImageFile.getText();
         String trailerLink = textTrailerFile.getText();

@@ -38,49 +38,38 @@ public class MovieListController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        //Create a grid in the ScrollPane to hold all movies
-        GridPane grid = new GridPane();
-        movieListView.setContent(grid);
+        //sets the models
         try {
             movieModel = new MovieModel();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
+       createMovieContentGrid();
+    }
+
+    /**
+     * todo write comment
+     */
+    private void createMovieContentGrid() {
+        //Create a grid in the ScrollPane to hold all movies
+        GridPane grid = new GridPane();
+        movieListView.setContent(grid);
+
         //used for placing
         int col = 0;
         int row = 0;
-        int count = 0;
+        //loop for creating each movieCard and setting movie info
         for (int i = 0; movieModel.getMoviesInList().size() > i; i++) {
-            GridPane movieCard = null;
 
-            try {
-                movieCard = FXMLLoader.load(getClass().getResource("/GUI/Views/MovieCard.fxml"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            GridPane movieCard = createMovieCard(i);//creates the movie card
+            grid.add(movieCard, col, row);//adds it to the content gridPane
 
-            Image img = new Image("/Images/play.PNG");
-            ImageView imgView = new ImageView(img);
-            imgView.setPreserveRatio(true);
-            imgView.fitWidthProperty().bind(movieCard.widthProperty());
-
-            Label lblTitle = new Label(movieModel.getMoviesInList().get(i).getTitle());
-
-            String rating = String.valueOf(movieModel.getMoviesInList().get(i).getImdbRating());
-            Label lblRating = new Label(rating);
-
-
-            movieCard.add(imgView, 0, 0);
-            movieCard.add(lblTitle, 0, 1);
-            movieCard.add(lblRating, 2, 1);
-
-            grid.add(movieCard, col, row);
-
+            //makes a space between all movies
             col++;
             grid.add(new Separator(Orientation.HORIZONTAL), col, row);
 
+            //loop for positioning movieCards in grid
             if(col < 6 ){
                 col++;
             }else {
@@ -90,17 +79,57 @@ public class MovieListController implements Initializable {
                 row++;
             }
 
-            int finalCount = count;
-            movieCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    Movie m = movieModel.getMoviesInList().get(finalCount);
-                    mainController.openMovieInfo(m);
-                }
-            });
-            count++;
-
+            movieCardOnClickListener(i, movieCard);//creates the listener for each card
         }
+    }
+
+
+
+    /**
+     * todo write comment
+     * @param numberInLinst
+     * @return
+     */
+    private GridPane createMovieCard(int numberInLinst) {
+        GridPane movieCard = null;
+
+        try {
+            movieCard = FXMLLoader.load(getClass().getResource("/GUI/Views/MovieCard.fxml"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Image img = new Image("/Images/play.PNG");
+        ImageView imgView = new ImageView(img);
+        imgView.setPreserveRatio(true);
+        imgView.fitWidthProperty().bind(movieCard.widthProperty());
+
+        Label lblTitle = new Label(movieModel.getMoviesInList().get(numberInLinst).getTitle());
+
+        String rating = String.valueOf(movieModel.getMoviesInList().get(numberInLinst).getImdbRating());
+        Label lblRating = new Label(rating);
+
+        movieCard.add(imgView, 0, 0);
+        movieCard.add(lblTitle, 0, 1);
+        movieCard.add(lblRating, 2, 1);
+        return movieCard;
+    }
+
+    /**
+     * todo write comment
+     * @param movieInList
+     * @param movieCard
+     */
+    private void movieCardOnClickListener(int movieInList, GridPane movieCard) {
+
+        int finalCount = movieInList;
+        movieCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Movie m = movieModel.getMoviesInList().get(finalCount);
+                mainController.openMovieInfo(m);
+            }
+        });
     }
 
     public void setMovieModel(MovieModel movieModel) {

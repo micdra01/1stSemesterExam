@@ -9,13 +9,11 @@ import java.util.List;
 
 public class MovieDAO implements IMovieDAO {
 
-
     private DatabaseConnector databaseConnector;
 
     public MovieDAO() {
         databaseConnector = new DatabaseConnector();
     }
-
 
     /**
      * Creates a Movie.
@@ -192,9 +190,10 @@ public class MovieDAO implements IMovieDAO {
 
             //creates the movie and add it to the list allMovies
             movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink,trailerFileLink, lastView);
-
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("Failed to find movie", e);
         }
-
         return  movie; //returns the found movie
     }
 }
