@@ -15,26 +15,13 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
-public class AddMovieController implements Initializable {
+public class AddMovieController{
     public TextField textImageFile, textTrailerFile, textIMDBRating, textCategory, textTitle, textMovieFile;
     public Button btnMovieFile, btnTrailerFile, btnImageFile, btnSave;
     public Label lblImageFile, lblTrailerFile, lblIMDBRating, lblCategory, lblMovieFile, lblTitle;
 
-
-
     private MovieModel movieModel;
 
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        try {
-           // movieModel = new MovieModel();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 
     public void handleMovieFile(ActionEvent event) {
         Stage stage = (Stage) btnMovieFile.getScene().getWindow();
@@ -65,13 +52,12 @@ public class AddMovieController implements Initializable {
         String title = textTitle.getText();
         double personalRating = -1;
         double imdbRating = Double.parseDouble(textIMDBRating.getText());
-        String movielink = textMovieFile.getText();
+        String movieLink = textMovieFile.getText();
         String pictureLink = textImageFile.getText();
         String trailerLink = textTrailerFile.getText();
         Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
-        Movie movie = new Movie(title, personalRating, imdbRating, movielink, pictureLink, trailerLink, lastViewed);
-
+        Movie movie = new Movie(title, personalRating, imdbRating, movieLink, pictureLink, trailerLink, lastViewed);
         movieModel.createMovie(movie);
 
     }
@@ -79,7 +65,5 @@ public class AddMovieController implements Initializable {
     public void setMovieModel(MovieModel movieModel) {
         this.movieModel = movieModel;
     }
-
-    //public TextField textImageFile, textTrailerFile, textIMDBRating, textCategory, textTitle, textMovieFile;
 
 }

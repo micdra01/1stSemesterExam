@@ -15,18 +15,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainController {
-
     @FXML
     private Label textSceneTitle;
     @FXML
     private BorderPane borderPane;
 
-    public MovieModel getMovieModel() {
-        return movieModel;
-    }
-
     private MovieModel movieModel;
-
 
     public MainController(){
         try {
@@ -37,25 +31,6 @@ public class MainController {
         }
     }
 
-    public void openMovieInfo(Movie movie){
-        System.out.println(movie.getTitle());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieView.fxml"));
-        Parent root = null;
-
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            new Exception("Failed to show movie info'", e);
-        }
-
-        MovieController controller = loader.getController();
-        controller.setMovieModel(movieModel);
-
-        borderPane.setCenter(root);
-
-    }
-
-
 
     public void handleHome(ActionEvent actionEvent) throws IOException {
         VBox home = FXMLLoader.load(getClass().getResource("/GUI/Views/HomeView.fxml"));
@@ -64,20 +39,6 @@ public class MainController {
     }
 
     public void handleTrending(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
-        Parent root = null;
-
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            new Exception("Failed to open 'trending movies'", e);
-        }
-
-        MovieListController controller = loader.getController();
-        controller.setMovieModel(movieModel);
-        borderPane.setCenter(root);
-
-
     }
 
 
@@ -85,6 +46,26 @@ public class MainController {
     }
 
     public void handleFavorites(ActionEvent actionEvent) throws IOException {
+    }
+
+
+
+    public void handleAllMovies(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            new Exception("Failed to open 'open all movies'", e);
+        }
+
+        MovieListController controller = loader.getController();
+        controller.setMovieModel(movieModel);
+        controller.setMainController(this);
+        borderPane.setCenter(root);
+
+        textSceneTitle.setText("all movies");
     }
 
     public void handleAddMovie(ActionEvent actionEvent) throws IOException {
@@ -105,21 +86,21 @@ public class MainController {
         textSceneTitle.setText("Add Movie");
     }
 
-    public void handleAllMovies(ActionEvent actionEvent) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
+    public void openMovieInfo(Movie movie){
+        System.out.println(movie.getTitle());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieView.fxml"));
         Parent root = null;
 
         try {
             root = loader.load();
         } catch (IOException e) {
-            new Exception("Failed to open 'open all movies'", e);
+            new Exception("Failed to show movie info'", e);
         }
 
-        MovieListController controller = loader.getController();
+        MovieController controller = loader.getController();
         controller.setMovieModel(movieModel);
-        controller.setMainController(this);
+
         borderPane.setCenter(root);
 
-        textSceneTitle.setText("all movies");
     }
 }

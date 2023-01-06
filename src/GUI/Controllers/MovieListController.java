@@ -33,10 +33,6 @@ public class MovieListController implements Initializable {
     @FXML
     private MovieModel movieModel;
 
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
-
     MainController mainController;
 
 
@@ -58,7 +54,6 @@ public class MovieListController implements Initializable {
         int count = 0;
         for (int i = 0; movieModel.getMoviesInList().size() > i; i++) {
             GridPane movieCard = null;
-
 
             try {
                 movieCard = FXMLLoader.load(getClass().getResource("/GUI/Views/MovieCard.fxml"));
@@ -95,25 +90,27 @@ public class MovieListController implements Initializable {
                 row++;
             }
 
-
             int finalCount = count;
             movieCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     Movie m = movieModel.getMoviesInList().get(finalCount);
                     mainController.openMovieInfo(m);
-
                 }
             });
             count++;
 
         }
-
-
     }
+
     public void setMovieModel(MovieModel movieModel) {
         this.movieModel = movieModel;
     }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
 
 
 }
