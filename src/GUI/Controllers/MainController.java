@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -100,6 +101,7 @@ public class MainController {
         controller.setMovieModel(movieModel);
         borderPane.setCenter(root);
 
+
         textSceneTitle.setText("Add Movie");
     }
 
@@ -115,6 +117,7 @@ public class MainController {
 
         MovieListController controller = loader.getController();
         controller.setMovieModel(movieModel);
+        controller.setMe(this);
         borderPane.setCenter(root);
 
         textSceneTitle.setText("all movies");

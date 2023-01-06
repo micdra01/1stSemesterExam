@@ -30,6 +30,12 @@ public class MovieListController implements Initializable {
     @FXML
     private MovieModel movieModel;
 
+    public void setMe(MainController me) {
+        this.mainController = me;
+    }
+
+    MainController mainController;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -87,8 +93,7 @@ public class MovieListController implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     Movie m = movieModel.getMoviesInList().get(finalCount);
-                    MainController me = new MainController();
-                    me.openMovieInfo(m);
+                    mainController.openMovieInfo(m);
 
                 }
             });
