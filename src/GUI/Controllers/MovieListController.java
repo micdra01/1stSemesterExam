@@ -33,8 +33,8 @@ public class MovieListController implements Initializable {
     @FXML
     private MovieModel movieModel;
 
-    public void setMe(MainController me) {
-        this.mainController = me;
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
     MainController mainController;

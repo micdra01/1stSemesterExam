@@ -117,7 +117,7 @@ public class MainController {
 
         MovieListController controller = loader.getController();
         controller.setMovieModel(movieModel);
-        controller.setMe(this);
+        controller.setMainController(this);
         borderPane.setCenter(root);
 
         textSceneTitle.setText("all movies");
