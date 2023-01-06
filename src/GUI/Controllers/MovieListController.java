@@ -26,6 +26,10 @@ import java.net.URL;
 
 import java.util.ResourceBundle;
 
+/**
+ * todo make a instance variable for movieModel.moviesInList so we can chose the specific list we want shown in our content window (categories, favourite mm)
+ */
+
 
 public class MovieListController implements Initializable {
 
@@ -45,13 +49,14 @@ public class MovieListController implements Initializable {
             throw new RuntimeException(e);
         }
 
-       createMovieContentGrid();
+       createContentGrid();
     }
 
     /**
-     * todo write comment
+     * creates the gridPane for movieContent
+     * fills it with movies from list
      */
-    private void createMovieContentGrid() {
+    private void createContentGrid() {
         //Create a grid in the ScrollPane to hold all movies
         GridPane grid = new GridPane();
         movieListView.setContent(grid);
@@ -86,46 +91,53 @@ public class MovieListController implements Initializable {
 
 
     /**
-     * todo write comment
-     * @param numberInLinst
+     * create the movieCard gridPane and fills it with info from chosen movie
+     * picture, title and rating
+     * @param numberInList
      * @return
      */
-    private GridPane createMovieCard(int numberInLinst) {
+    private GridPane createMovieCard(int numberInList) {
         GridPane movieCard = null;
-
+        //loads the movieCard fxml
         try {
             movieCard = FXMLLoader.load(getClass().getResource("/GUI/Views/MovieCard.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        Image img = new Image("/Images/play.PNG");
-        ImageView imgView = new ImageView(img);
+        Image img = new Image("/Images/play.PNG");//todo get the real image file link when it is saved correct in db
+        ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it
         imgView.setPreserveRatio(true);
-        imgView.fitWidthProperty().bind(movieCard.widthProperty());
+        imgView.fitWidthProperty().bind(movieCard.widthProperty());//sets it to the cards full size
 
-        Label lblTitle = new Label(movieModel.getMoviesInList().get(numberInLinst).getTitle());
+        //creates a label with the title of the movieCard
+        Label lblTitle = new Label(movieModel.getMoviesInList().get(numberInList).getTitle());
 
-        String rating = String.valueOf(movieModel.getMoviesInList().get(numberInLinst).getImdbRating());
+        // creates a label with the rating info on
+        String rating = String.valueOf(movieModel.getMoviesInList().get(numberInList).getImdbRating());
         Label lblRating = new Label(rating);
 
+        //sets the movieCard information labels on the movieCard gridPane
         movieCard.add(imgView, 0, 0);
         movieCard.add(lblTitle, 0, 1);
         movieCard.add(lblRating, 2, 1);
-        return movieCard;
+
+        return movieCard; // the finished movieCard with information
     }
 
     /**
-     * todo write comment
-     * @param movieInList
+     * sets a listener on the movieCard
+     * when a user has clicked the card, the movie information fxml gets called with the specified movie
+     * @param movieInList number of movie li the shown list
      * @param movieCard
      */
     private void movieCardOnClickListener(int movieInList, GridPane movieCard) {
-
+        //used for counting number in list
         int finalCount = movieInList;
         movieCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                //gets the chosen movie and sends it to mainController that opens the information window
                 Movie m = movieModel.getMoviesInList().get(finalCount);
                 mainController.openMovieInfo(m);
             }
