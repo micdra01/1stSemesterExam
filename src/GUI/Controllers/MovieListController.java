@@ -7,10 +7,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
+import javafx.geometry.VerticalDirection;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 
+import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -80,10 +83,15 @@ public class MovieListController implements Initializable {
 
             grid.add(movieCard, col, row);
 
-            if(col < 3 ){
+            col++;
+            grid.add(new Separator(Orientation.HORIZONTAL), col, row);
+
+            if(col < 6 ){
                 col++;
             }else {
                 col = 0;
+                row++;
+                grid.add(new Separator(Orientation.VERTICAL), col, row);
                 row++;
             }
 
