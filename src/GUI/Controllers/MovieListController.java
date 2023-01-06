@@ -3,21 +3,20 @@ package GUI.Controllers;
 import BE.Movie;
 import GUI.Models.MovieModel;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,18 +24,19 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class TrendingController implements Initializable {
+public class MovieListController implements Initializable {
 
+    public ScrollPane movieListView;
     @FXML
-    private ScrollPane trending;
     private MovieModel movieModel;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         //Create a grid in the ScrollPane to hold all movies
         GridPane grid = new GridPane();
-        trending.setContent(grid);
+        movieListView.setContent(grid);
         try {
             movieModel = new MovieModel();
         } catch (Exception e) {
@@ -46,6 +46,7 @@ public class TrendingController implements Initializable {
         //used for placing
         int col = 0;
         int row = 0;
+        int count = 0;
         for (int i = 0; movieModel.getMoviesInList().size() > i; i++) {
             GridPane movieCard = null;
 
@@ -80,8 +81,20 @@ public class TrendingController implements Initializable {
                 row++;
             }
 
-        }
 
+            int finalCount = count;
+            movieCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Movie m = movieModel.getMoviesInList().get(finalCount);
+                    MainController me = new MainController();
+                    me.openMovieInfo(m);
+
+                }
+            });
+            count++;
+
+        }
 
 
     }

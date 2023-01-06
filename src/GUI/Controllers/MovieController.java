@@ -1,5 +1,6 @@
 package GUI.Controllers;
 
+import GUI.Models.MovieModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
@@ -16,9 +17,16 @@ public class MovieController implements Initializable {
     @FXML
     private MediaView mediaView;
 
+    private MovieModel movieModel;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //mediaView.setMediaPlayer(new MediaPlayer(new Media("/Movies/mp4 sample.mp4")));
 
+    }
+
+
+    public void setMovieModel(MovieModel movieModel) {
+        this.movieModel = movieModel;
     }
 }
