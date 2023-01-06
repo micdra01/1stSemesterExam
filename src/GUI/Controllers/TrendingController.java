@@ -73,7 +73,7 @@ public class TrendingController implements Initializable {
 
             grid.add(movieCard, col, row);
 
-            if(col <= 1 ){
+            if(col < 3 ){
                 col++;
             }else {
                 col = 0;
