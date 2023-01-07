@@ -3,11 +3,14 @@ package GUI.Controllers;
 import BE.Movie;
 import GUI.Models.MovieModel;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 
@@ -17,6 +20,10 @@ import javafx.scene.image.ImageView;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import jdk.jshell.spi.ExecutionControl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -81,7 +88,6 @@ public class MovieListController implements Initializable {
                 row++;
             }
 
-            movieCardOnClickListener(i, movieCard);//creates the listener for each card
         }
     }
 
@@ -121,27 +127,54 @@ public class MovieListController implements Initializable {
         movieCard.add(lblTitle, 0, 1);
         movieCard.add(lblRating, 2, 1);
 
+
+
+
+        Label label1 = new Label("");
+        movieCard.add(label1, 0,0);
+
+        Button button = new Button();
+        Button button1 = new Button();
+        VBox vBox = new VBox(button, button1);
+        button.setText("play");
+        button1.setText("se info");
+        vBox.setAlignment(Pos.CENTER);
+        movieCard.add(vBox, 2,0);
+        button.setOpacity(0);
+        button1.setOpacity(0);
+        button1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                mainController.openMovieInfo(movie);
+            }
+        });
+        movieCard.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                imgView.setOpacity(0.3);
+                button.setOpacity(1);
+                button1.setOpacity(1);
+                label1.setMinSize(130,170);
+                label1.setWrapText(true);
+                label1.setText("forklaring og info om filmen bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla");
+
+
+            }
+        });
+        movieCard.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                imgView.setOpacity(1);
+                button.setOpacity(0);
+                button1.setOpacity(0);
+                label1.setText("");
+            }
+        });
         return movieCard; // the finished movieCard with information
     }
 
-    /**
-     * sets a listener on the movieCard
-     * when a user has clicked the card, the movie information fxml gets called with the specified movie
-     * @param movieInList number of movie li the shown list
-     * @param movieCard
-     */
-    private void movieCardOnClickListener(int movieInList, GridPane movieCard) {
-        //used for counting number in list
-        int finalCount = movieInList;
-        movieCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                //gets the chosen movie and sends it to mainController that opens the information window
-                Movie m = movieModel.getMoviesInList().get(finalCount);
-                mainController.openMovieInfo(m);
-            }
-        });
-    }
+
 
     public void setMovieModel(MovieModel movieModel) {
         this.movieModel = movieModel;

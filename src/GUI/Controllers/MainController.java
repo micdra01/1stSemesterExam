@@ -96,6 +96,7 @@ public class MainController {
         controller.setMovieModel(movieModel);
 
         borderPane.setCenter(root);
+        System.out.println(movie.getTitle());
 
     }
 }
