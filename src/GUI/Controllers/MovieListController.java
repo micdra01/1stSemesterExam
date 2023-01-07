@@ -8,8 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
-import javafx.geometry.VerticalDirection;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 
@@ -18,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
@@ -105,7 +102,7 @@ public class MovieListController implements Initializable {
             throw new RuntimeException(e);
         }
 
-        Image img = new Image("/Images/play.PNG");//todo get the real image file link when it is saved correct in db
+        Image img = new Image("/images/play.PNG");//todo get the real image file link when it is saved correct in db
         ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it
         imgView.setPreserveRatio(true);
         imgView.fitWidthProperty().bind(movieCard.widthProperty());//sets it to the cards full size
