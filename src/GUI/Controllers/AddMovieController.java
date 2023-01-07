@@ -60,8 +60,6 @@ public class AddMovieController{
 
         if (movieCover != null) {
             textImageFile.setText(movieCover.getAbsolutePath());
-
-            Path coverPath = Paths.get(movieCover.getAbsolutePath());
         }
     }
 
@@ -72,12 +70,10 @@ public class AddMovieController{
         double imdbRating = Double.parseDouble(textIMDBRating.getText());
         //todo next 3 variables should take the name of the file and send down so it can make the file link in dal
         String movieLink = textMovieFile.getText();
-        String pictureLink = textImageFile.getText();
         String coverPath = movieCover != null ? movieCover.getAbsolutePath() : "";//gets the absolute path for the file
         String trailerLink = textTrailerFile.getText();
         Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
-        System.out.println(movieCover);
-        Movie movie = new Movie(title, personalRating, imdbRating, movieLink, pictureLink, trailerLink, lastViewed);
+        Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, trailerLink, lastViewed);
 
         movieModel.createMovie(movie);
 

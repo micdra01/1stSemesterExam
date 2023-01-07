@@ -103,16 +103,17 @@ public class MovieListController implements Initializable {
         }
 
         Movie movie = movieModel.getMoviesInList().get(numberInList);
+
         Image img = new Image(movie.getPictureFileLink());
         ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it
         imgView.setPreserveRatio(true);
         imgView.fitWidthProperty().bind(movieCard.widthProperty());//sets it to the cards full size
 
         //creates a label with the title of the movieCard
-        Label lblTitle = new Label(movieModel.getMoviesInList().get(numberInList).getTitle());
+        Label lblTitle = new Label(movie.getTitle());
 
         // creates a label with the rating info on
-        String rating = String.valueOf(movieModel.getMoviesInList().get(numberInList).getImdbRating());
+        String rating = String.valueOf(movie.getImdbRating());
         Label lblRating = new Label(rating);
 
         //sets the movieCard information labels on the movieCard gridPane
