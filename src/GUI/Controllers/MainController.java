@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -24,6 +25,8 @@ import java.util.ResourceBundle;
  */
 public class MainController implements Initializable {
     @FXML
+    private HBox boxAdvancedSearch;
+    @FXML
     private TextField textSearch;
     @FXML
     private Button btnSearch;
@@ -34,6 +37,7 @@ public class MainController implements Initializable {
 
     private MovieModel movieModel;
     private MovieListController movieListController;
+    private boolean isSimpleSearch;
 
     public MainController(){
         try {
@@ -158,6 +162,19 @@ public class MainController implements Initializable {
     public void handleEnter(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             handleSearch();
+        }
+    }
+
+    /**
+     * Switch between simple and advanced search
+     */
+    public void handleSearchSettings() {
+        if (isSimpleSearch) {
+            boxAdvancedSearch.setOpacity(0);
+            isSimpleSearch = false;
+        } else {
+            boxAdvancedSearch.setOpacity(1);
+            isSimpleSearch = true;
         }
     }
 }
