@@ -23,6 +23,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import jdk.jshell.spi.ExecutionControl;
 
 import java.io.IOException;
@@ -130,8 +131,16 @@ public class MovieListController implements Initializable {
 
 
 
-        Label label1 = new Label("");
-        movieCard.add(label1, 0,0);
+        Label lblTitleCard = new Label("");
+        lblTitleCard.setFont(Font.font(20));
+        lblTitleCard.setWrapText(true);
+
+        Label lblDescriptionCard = new Label("");
+        lblDescriptionCard.setMinSize(130,130);
+        lblDescriptionCard.setWrapText(true);
+
+        VBox vBox1 = new VBox(lblTitleCard, lblDescriptionCard);
+        movieCard.add(vBox1, 0,0);
 
         Button button = new Button();
         Button button1 = new Button();
@@ -140,8 +149,13 @@ public class MovieListController implements Initializable {
         button1.setText("se info");
         vBox.setAlignment(Pos.CENTER);
         movieCard.add(vBox, 2,0);
+
+
         button.setOpacity(0);
         button1.setOpacity(0);
+
+
+
         button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -155,9 +169,9 @@ public class MovieListController implements Initializable {
                 imgView.setOpacity(0.3);
                 button.setOpacity(1);
                 button1.setOpacity(1);
-                label1.setMinSize(130,170);
-                label1.setWrapText(true);
-                label1.setText("forklaring og info om filmen bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla");
+
+                lblTitleCard.setText(movie.getTitle());
+                lblDescriptionCard.setText("forklaring og info om filmen bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla");
 
 
             }
@@ -168,7 +182,8 @@ public class MovieListController implements Initializable {
                 imgView.setOpacity(1);
                 button.setOpacity(0);
                 button1.setOpacity(0);
-                label1.setText("");
+                lblTitleCard.setText("");
+                lblDescriptionCard.setText("");
             }
         });
         return movieCard; // the finished movieCard with information

@@ -36,7 +36,6 @@ public class MovieController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //mediaView.setMediaPlayer(new MediaPlayer(new Media("/Movies/mp4 sample.mp4")));
 
-        System.out.println("ff");
     }
 
 
