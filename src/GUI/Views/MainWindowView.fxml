@@ -70,7 +70,7 @@
             <Separator maxHeight="-Infinity" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="50.0" prefWidth="50.0" visible="false" HBox.hgrow="ALWAYS" />
             <HBox HBox.hgrow="ALWAYS">
                <children>
-                  <TextField fx:id="textSearch" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="50.0" prefHeight="30.0" prefWidth="205.0" promptText="Filter..." HBox.hgrow="ALWAYS">
+                  <TextField fx:id="textSearch" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="50.0" onKeyPressed="#handleEnter" prefHeight="30.0" prefWidth="205.0" promptText="Filter..." HBox.hgrow="ALWAYS">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>

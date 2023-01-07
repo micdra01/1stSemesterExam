@@ -56,7 +56,7 @@ public class MovieListController implements Initializable {
      * creates the gridPane for movieContent
      * fills it with movies from list
      */
-    private void createContentGrid() {
+    public void createContentGrid() {
         //Create a grid in the ScrollPane to hold all movies
         GridPane grid = new GridPane();
         movieListView.setContent(grid);

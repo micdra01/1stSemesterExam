@@ -6,6 +6,8 @@ import BLL.MovieManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class MovieModel {
 
     private IMovieManager movieManager;
@@ -36,5 +38,16 @@ public class MovieModel {
     }
     public Movie getMovieById(int movieId) throws Exception{
         return movieManager.getMovieFromId(movieId);
+    }
+
+    /**
+     * Filter the list of movies using a search query
+     * @param query, a String to search for.
+     */
+    public void search(String query) throws Exception {
+        List<Movie> searchResults = movieManager.search(query);
+
+        moviesInList.clear();
+        moviesInList.addAll(searchResults);
     }
 }

@@ -9,11 +9,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,6 +33,7 @@ public class MainController implements Initializable {
     private BorderPane borderPane;
 
     private MovieModel movieModel;
+    private MovieListController movieListController;
 
     public MainController(){
         try {
@@ -71,9 +72,9 @@ public class MainController implements Initializable {
             new Exception("Failed to open 'open all movies'", e);
         }
 
-        MovieListController controller = loader.getController();
-        controller.setMovieModel(movieModel);
-        controller.setMainController(this);
+        movieListController = loader.getController();
+        movieListController.setMovieModel(movieModel);
+        movieListController.setMainController(this);
         borderPane.setCenter(root);
 
         textSceneTitle.setText("all movies");
@@ -104,7 +105,7 @@ public class MainController implements Initializable {
         try {
             root = loader.load();
         } catch (IOException e) {
-            new Exception("Failed to show movie info'", e);
+            new Exception("Failed to show 'movie info'", e);
         }
 
         MovieController controller = loader.getController();
@@ -121,24 +122,42 @@ public class MainController implements Initializable {
         textSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
             if(!textSearch.getText().isEmpty()) {
                 btnSearch.setDisable(false);
+                //If query is changed after 1 search, symbol changes back to 🔍.
+                // fx. 1st search: "Far", more precise 2nd search to limit results: "Far til fire".
+                btnSearch.setText("🔍");
             } else {
                 btnSearch.setDisable(true);
             }
         });
     }
 
-    public void handleSearch(ActionEvent actionEvent) {
-        if (btnSearch.getText().equals("🔍")) {
-            btnSearch.setText("✖");
-            //TODO: Search functionality here
-            //movieModel.search(textSearch.getText());
-        } else {
-            btnSearch.setText("🔍");
-            textSearch.setText("");
-            //TODO: Clear search functionality here
-            //movieModel.search("");
-        }
-        //todo: Add search functionality
+    public void handleSearch() {
+        try {
+            if (btnSearch.getText().equals("🔍")) {
+                btnSearch.setText("✖");
+                addSearchListener();
 
+                movieModel.search(textSearch.getText());
+                movieListController.createContentGrid();
+            } else {
+                btnSearch.setText("🔍");
+                textSearch.setText("");
+
+                movieModel.search(textSearch.getText());
+                movieListController.createContentGrid();
+            }
+        } catch (Exception e) {
+            new Exception("Failed to search", e);
+        }
+    }
+
+    /**
+     * Allows searching by pressing Enter (instead of using the 🔍-button).
+     * @param keyEvent, a key-press
+     */
+    public void handleEnter(KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+            handleSearch();
+        }
     }
 }

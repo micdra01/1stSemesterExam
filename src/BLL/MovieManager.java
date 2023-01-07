@@ -2,6 +2,7 @@ package BLL;
 
 import BE.Movie;
 import BLL.Interfaces.IMovieManager;
+import BLL.Util.MovieSearcher;
 import DAL.Interfaces.IMovieDAO;
 import DAL.MovieDAO;
 
@@ -10,9 +11,11 @@ import java.util.List;
 public class MovieManager implements IMovieManager {
 
     private IMovieDAO databaseAccess;
+    private MovieSearcher movieSearcher;
 
     public MovieManager() {
         databaseAccess = new MovieDAO();
+        movieSearcher = new MovieSearcher();
     }
 
     /**
@@ -59,12 +62,15 @@ public class MovieManager implements IMovieManager {
     /**
      * Filter the list of movies in library using a search query
      * @param query, the string input used to filter
-     * @return a list of movies matching the query in either title or category...
+     * @return a list of movies matching the query in title
      * @throws Exception If it fails to search.
      */
     @Override
     public List<Movie> search(String query) throws Exception {
-        return null;
+        List<Movie> allMovies = getAllMovies();
+        List<Movie> searchResult = movieSearcher.search(allMovies, query);
+
+        return searchResult;
     }
 
     /**
