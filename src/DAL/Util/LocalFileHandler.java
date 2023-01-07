@@ -10,6 +10,11 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 public class LocalFileHandler {
 
 
+    /**
+     * todo make delete function
+     * @param path
+     * @throws Exception
+     */
     public static void deleteLocalFile(String path) throws Exception {}
 
 

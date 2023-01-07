@@ -33,6 +33,7 @@ public class AddMovieController{
      * todo write comments for all methods in class
      * todo save name of files from each file chooser as local variable in handle save method, so we can make file links later
      * todo save the movie files and picture files from file chooser in resources folder.
+     * todo check if all input fields are filled, before save button is activated.
      * @param event
      */
     public void handleMovieFile(ActionEvent event) {
