@@ -102,7 +102,8 @@ public class MovieListController implements Initializable {
             throw new RuntimeException(e);
         }
 
-        Image img = new Image("/images/play.PNG");//todo get the real image file link when it is saved correct in db
+        Movie movie = movieModel.getMoviesInList().get(numberInList);
+        Image img = new Image(movie.getPictureFileLink());
         ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it
         imgView.setPreserveRatio(true);
         imgView.fitWidthProperty().bind(movieCard.widthProperty());//sets it to the cards full size

@@ -31,9 +31,10 @@ public class LocalFileHandler {
 
             if (fileType == FileType.IMAGE) relativeFilePath += "images//";
 
+
             Path originalFile = Paths.get(path);
             File file = new File(relativeFilePath+=fileName);
-            Path finalFile = Paths.get(file.getPath());
+            Path finalFile = Paths.get(file.getAbsolutePath());
             Files.copy(originalFile, finalFile, REPLACE_EXISTING);
             return finalFile;
 
