@@ -49,7 +49,7 @@ public class MovieListController implements Initializable {
             throw new RuntimeException(e);
         }
 
-       createContentGrid();
+        createContentGrid();
     }
 
     /**
@@ -151,7 +151,4 @@ public class MovieListController implements Initializable {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
-
-
-
 }

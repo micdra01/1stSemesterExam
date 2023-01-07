@@ -5,19 +5,28 @@ import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * todo write comments for all methods
  */
-public class MainController {
+public class MainController implements Initializable {
+    @FXML
+    private TextField textSearch;
+    @FXML
+    private Button btnSearch;
     @FXML
     private Label textSceneTitle;
     @FXML
@@ -31,6 +40,12 @@ public class MainController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        btnSearch.setDisable(true);
+        addSearchListener();
     }
 
     public void handleHome(ActionEvent actionEvent) throws IOException {
@@ -96,6 +111,34 @@ public class MainController {
         controller.setMovieModel(movieModel);
 
         borderPane.setCenter(root);
+
+    }
+
+    /**
+     * Adds a listener to the text field for movie searching.
+     */
+    private void addSearchListener() {
+        textSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            if(!textSearch.getText().isEmpty()) {
+                btnSearch.setDisable(false);
+            } else {
+                btnSearch.setDisable(true);
+            }
+        });
+    }
+
+    public void handleSearch(ActionEvent actionEvent) {
+        if (btnSearch.getText().equals("🔍")) {
+            btnSearch.setText("✖");
+            //TODO: Search functionality here
+            //movieModel.search(textSearch.getText());
+        } else {
+            btnSearch.setText("🔍");
+            textSearch.setText("");
+            //TODO: Clear search functionality here
+            //movieModel.search("");
+        }
+        //todo: Add search functionality
 
     }
 }
