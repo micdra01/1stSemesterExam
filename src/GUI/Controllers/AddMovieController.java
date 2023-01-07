@@ -26,7 +26,7 @@ public class AddMovieController{
 
     private MovieModel movieModel;
 
-    private File movieCover;
+    private File movieCover, movieFile, trailerFile;
 
 
     /**
@@ -41,7 +41,11 @@ public class AddMovieController{
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter movieExtensions = new FileChooser.ExtensionFilter("File types", "*.mp4", "*.mpeg4");
         fileChooser.getExtensionFilters().add(movieExtensions);
-        fileChooser.showOpenDialog(stage);
+        movieFile = fileChooser.showOpenDialog(stage);
+
+        if (movieFile != null) {
+            textMovieFile.setText(movieFile.getAbsolutePath());
+        }
     }
 
     public void handleTrailerFile(ActionEvent event) {
@@ -49,7 +53,11 @@ public class AddMovieController{
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter trailerExtensions = new FileChooser.ExtensionFilter("File types", "*.mp4", "*.mpeg4");
         fileChooser.getExtensionFilters().add(trailerExtensions);
-        fileChooser.showOpenDialog(stage);
+        trailerFile = fileChooser.showOpenDialog(stage);
+
+        if (trailerFile != null) {
+            textTrailerFile.setText(trailerFile.getAbsolutePath());
+        }
     }
 
     public void handleImageFile(ActionEvent event) {
@@ -70,9 +78,9 @@ public class AddMovieController{
         double personalRating = -1;
         double imdbRating = Double.parseDouble(textIMDBRating.getText());
         //todo next 3 variables should take the name of the file and send down so it can make the file link in dal
-        String movieLink = textMovieFile.getText();
+        String movieLink = movieFile != null ? movieFile.getAbsolutePath() : "";
         String coverPath = movieCover != null ? movieCover.getAbsolutePath() : "";//gets the absolute path for the file
-        String trailerLink = textTrailerFile.getText();
+        String trailerLink = trailerFile != null ? trailerFile.getAbsolutePath() : "";
         Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
         Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, trailerLink, lastViewed);
 

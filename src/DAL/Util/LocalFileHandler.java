@@ -31,15 +31,18 @@ public class LocalFileHandler {
             String fileName = localFilePath.getName();
 
             String relativeFilePath = "resources//";
+            String folder = "";
 
-            if (fileType == FileType.MOVIE) relativeFilePath += "movies//";
+            if (fileType == FileType.MOVIE) folder += "movies//";
 
-            if (fileType == FileType.IMAGE) relativeFilePath += "images//";
+            if (fileType == FileType.TRAILER) folder += "trailers//";
+
+            if (fileType == FileType.IMAGE) folder += "images//";
 
 
             Path originalFile = Paths.get(path);
-            File file = new File(relativeFilePath+=fileName);
-            Path finalFile = Paths.get(file.getAbsolutePath());
+            File file = new File(relativeFilePath+=folder+=fileName);
+            Path finalFile = Paths.get(file.getPath());
             Files.copy(originalFile, finalFile, REPLACE_EXISTING);
             return finalFile;
 

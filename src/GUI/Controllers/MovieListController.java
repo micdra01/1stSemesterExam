@@ -114,7 +114,8 @@ public class MovieListController implements Initializable {
         Image img = new Image(movie.getPictureFileLink());
         ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it
         imgView.setPreserveRatio(true);
-        imgView.fitWidthProperty().bind(movieCard.widthProperty());//sets it to the cards full size
+        imgView.setFitWidth(200);
+        imgView.setFitHeight(200);
 
         //creates a label with the title of the movieCard
         Label lblTitle = new Label(movie.getTitle());
