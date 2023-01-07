@@ -94,9 +94,8 @@ public class MainController {
 
         MovieController controller = loader.getController();
         controller.setMovieModel(movieModel);
-
+        controller.setMovie(movie);
         borderPane.setCenter(root);
-        System.out.println(movie.getTitle());
 
     }
 }
