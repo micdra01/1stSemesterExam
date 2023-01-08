@@ -1,3 +1,4 @@
+import DAL.ImdbApi;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,8 @@ public class Main extends Application {
         primaryStage.setMinWidth(350);
         primaryStage.setMinHeight(350);
         primaryStage.show();
+
+        ImdbApi i = new ImdbApi();
     }
 
 
