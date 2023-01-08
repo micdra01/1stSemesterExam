@@ -9,10 +9,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ImdbApi implements IImdbAPI {
-
-
 
    public ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws IOException, InterruptedException {
        String searchWordString = searchWord.replace(" ", "%20");
@@ -25,14 +24,83 @@ public class ImdbApi implements IImdbAPI {
                .build();
 
        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-       ArrayList<ImdbInfo> result =getInfoFromSearchString(response);
+       ArrayList<ImdbInfo> result =getInfoFromResultString(response);
 
        return result;
    }
 
-    private ArrayList<ImdbInfo> getInfoFromSearchString(HttpResponse<String> response) throws IOException, InterruptedException {
+    /**
+     * todo implement method
+     * @param imdbId
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Override
+    public List<String> getMovieCategoriesFromApi(String imdbId) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-genres?tconst=tt0944947"))
+                .header("X-RapidAPI-Key", "758854346fmshb2e7f684695dca5p1c89b6jsn2aa78bdfb8af")
+                .header("X-RapidAPI-Host", "imdb8.p.rapidapi.com")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        return null;
+    }
+
+    /**
+     * todo implement method
+     * @param imdbId
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Override
+    public String getMovieDescriptionFromImdbId(String imdbId) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=tt12750922&currentCountry=US"))
+                .header("X-RapidAPI-Key", "758854346fmshb2e7f684695dca5p1c89b6jsn2aa78bdfb8af")
+                .header("X-RapidAPI-Host", "imdb8.p.rapidapi.com")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        return null;
+    }
+
+    /**
+     * todo implement method
+     * @param imdbId
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Override
+    public String getImdbRatingFromApi(String imdbId) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-ratings?tconst=tt0944947"))
+                .header("X-RapidAPI-Key", "758854346fmshb2e7f684695dca5p1c89b6jsn2aa78bdfb8af")
+                .header("X-RapidAPI-Host", "imdb8.p.rapidapi.com")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        return null;
+    }
+
+    /**
+     * todo get the year of release from string
+     * todo get actor list and names from string
+     * todo check if link is real before creating object
+     * @param response
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    private ArrayList<ImdbInfo> getInfoFromResultString(HttpResponse<String> response) throws IOException, InterruptedException {
         //test string so i can see full response
-        //System.out.println(response.body());
+        System.out.println(response.body());
 
         String segments[] = response.body().split("\"id\":\"/title/");
         ArrayList<ImdbInfo> resultList = new ArrayList<>();
