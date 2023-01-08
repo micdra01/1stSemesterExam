@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -25,6 +26,8 @@ import java.util.ResourceBundle;
  */
 public class MainController implements Initializable {
     @FXML
+    private Slider sliderRating;
+    @FXML
     private HBox boxAdvancedSearch;
     @FXML
     private TextField textSearch;
@@ -37,7 +40,7 @@ public class MainController implements Initializable {
 
     private MovieModel movieModel;
     private MovieListController movieListController;
-    private boolean isSimpleSearch;
+    private boolean isSimpleSearch = true;
 
     public MainController(){
         try {
@@ -137,18 +140,34 @@ public class MainController implements Initializable {
 
     public void handleSearch() {
         try {
-            if (btnSearch.getText().equals("🔍")) {
-                btnSearch.setText("✖");
-                addSearchListener();
+            if(isSimpleSearch) {
+                if (btnSearch.getText().equals("🔍")) {
+                    btnSearch.setText("✖");
+                    addSearchListener();
 
-                movieModel.search(textSearch.getText());
-                movieListController.createContentGrid();
+                    movieModel.search(textSearch.getText());
+                    movieListController.createContentGrid();
+                } else {
+                    btnSearch.setText("🔍");
+                    textSearch.setText("");
+
+                    movieModel.search(textSearch.getText());
+                    movieListController.createContentGrid();
+                }
             } else {
-                btnSearch.setText("🔍");
-                textSearch.setText("");
+                if (btnSearch.getText().equals("🔍")) {
+                    btnSearch.setText("✖");
+                    addSearchListener();
 
-                movieModel.search(textSearch.getText());
-                movieListController.createContentGrid();
+                    movieModel.searchAdvanced(textSearch.getText(), sliderRating.getValue());
+                    movieListController.createContentGrid();
+                } else {
+                    btnSearch.setText("🔍");
+                    textSearch.setText("");
+
+                    movieModel.search(textSearch.getText());
+                    movieListController.createContentGrid();
+                }
             }
         } catch (Exception e) {
             new Exception("Failed to search", e);
@@ -170,10 +189,10 @@ public class MainController implements Initializable {
      */
     public void handleSearchSettings() {
         if (isSimpleSearch) {
-            boxAdvancedSearch.setOpacity(0);
+            boxAdvancedSearch.setOpacity(1);
             isSimpleSearch = false;
         } else {
-            boxAdvancedSearch.setOpacity(1);
+            boxAdvancedSearch.setOpacity(0);
             isSimpleSearch = true;
         }
     }

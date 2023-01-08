@@ -82,7 +82,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Slider blockIncrement="1.0" majorTickUnit="1.0" max="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="0" prefHeight="20.0" prefWidth="125.0" showTickLabels="true" VBox.vgrow="ALWAYS">
+                        <Slider fx:id="sliderRating" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="0" prefHeight="20.0" prefWidth="125.0" showTickLabels="true" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets right="10.0" />
                            </VBox.margin>
