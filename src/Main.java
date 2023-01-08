@@ -18,7 +18,6 @@ public class Main extends Application {
         primaryStage.setMinWidth(350);
         primaryStage.setMinHeight(350);
         primaryStage.show();
-
         ImdbApi i = new ImdbApi();
     }
 
