@@ -55,19 +55,19 @@ public class ImdbApi {
                 String picture = pictureLinkRaw.substring(0, pictureLinkRaw.indexOf("\","));
 
 
+                /**
+                 * todo lav dem om til objekter og send til gui
+                 */
                 //prints movie info in console
                 System.out.println(movieId);
                 System.out.println(title);
                 System.out.println(picture);
-
-                //
             }
         }
-
     }
 
 
-   public HttpResponse getSearchResultStringFromApi(String searchWord) throws IOException, InterruptedException {
+   private HttpResponse getSearchResultStringFromApi(String searchWord) throws IOException, InterruptedException {
        HttpRequest request = HttpRequest.newBuilder()
                .uri(URI.create("https://imdb8.p.rapidapi.com/title/find?q=" + searchWord))
                .header("X-RapidAPI-Key", "758854346fmshb2e7f684695dca5p1c89b6jsn2aa78bdfb8af")
@@ -79,4 +79,6 @@ public class ImdbApi {
        return response;
 
    }
+
+
 }
