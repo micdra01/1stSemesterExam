@@ -1,6 +1,7 @@
 package GUI.Models;
 
 import BE.Category;
+import BE.Movie;
 import BLL.CategoryManager;
 import BLL.Interfaces.ICategoryManager;
 import javafx.collections.FXCollections;
@@ -23,4 +24,8 @@ public class CategoryModel {
         categoryManager.deleteCategory(category);
 
     }
+
+    public void addMovieToCategory(Category category, Movie movie) throws Exception {}
 }
+
+

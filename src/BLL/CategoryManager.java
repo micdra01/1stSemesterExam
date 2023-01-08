@@ -35,7 +35,7 @@ public class CategoryManager implements ICategoryManager {
      */
     @Override
     public void addMovieToCategory(Category category, Movie movie) throws Exception {
-
+        databaseAccess.addMovieToCategory(category, movie);
     }
 
     /**

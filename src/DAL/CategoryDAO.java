@@ -91,6 +91,18 @@ public class CategoryDAO implements ICategoryDAO {
         @Override
         public void addMovieToCategory (Category category, Movie movie) throws Exception {
 
+            String sql = "INSERT INTO CatMovie (MovieId, CategoryId) VALUES (?,?);";
+            try (Connection connection = databaseConnector.getConnection())
+            {
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setInt(1, movie.getId());
+                stmt.setInt(2, category.getId());
+                stmt.executeUpdate();
+
+            }catch (SQLException e) {
+                e.printStackTrace();
+                throw new Exception("Failed to add movie to category", e);
+            }
         }
 
 
