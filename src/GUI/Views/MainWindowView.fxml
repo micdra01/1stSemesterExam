@@ -47,6 +47,11 @@
                </VBox.margin>
             </MenuButton>
             <Separator maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="180.0" prefWidth="100.0" visible="false" VBox.vgrow="ALWAYS" />
+            <Button fx:id="btnAddCategory" mnemonicParsing="false" onAction="#handleAddCategory" prefHeight="35.0" prefWidth="85.0" text="Add Category">
+               <VBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
             <Button fx:id="btnAddMovie" mnemonicParsing="false" onAction="#handleAddMovie" prefHeight="35.0" prefWidth="85.0" text="Add Movie" VBox.vgrow="NEVER">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" top="10.0" />

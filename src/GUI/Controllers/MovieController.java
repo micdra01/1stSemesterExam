@@ -13,8 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -53,10 +51,16 @@ public class MovieController implements Initializable {
             new Exception("Failed to open 'Add category'", e);
         }
 
+        Stage stage = new Stage();
+        stage.setTitle("Add Category");
+        stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+
         MovieController controller = loader.getController();
         controller.setCategoryModel(categoryModel);
+        System.out.println(categoryModel);
 
-        //textCategoryName.setText("Add Movie");
     }
 
     public void handleSaveCategory(ActionEvent actionEvent) throws Exception {
