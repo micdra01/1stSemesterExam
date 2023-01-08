@@ -5,52 +5,78 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Arrays;
 
 public class ImdbApi {
 
     public ImdbApi() throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://1mdb-data-searching.p.rapidapi.com/om?s=far%20til"))
-                .header("X-RapidAPI-Key", "758854346fmshb2e7f684695dca5p1c89b6jsn2aa78bdfb8af")
-                .header("X-RapidAPI-Host", "1mdb-data-searching.p.rapidapi.com")
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
-        //gets the title of the movie
-        String segments[] = response.body().split(":");
+    }
 
+    /**
+     * todo should return a object of each search result
+     * @param searchWord
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    public void searchInAPI(String searchWord) throws IOException, InterruptedException {
+
+        String searchWordString = searchWord.replace(" ", "%20");
+        HttpResponse<String> response = getSearchResultStringFromApi(searchWordString);
+        getInfoFromSearchString(response);
+
+    }
+
+    private void getInfoFromSearchString(HttpResponse<String> response) throws IOException, InterruptedException {
+//saves the result from the api call
+
+
+        //test string so i can see full response
         System.out.println(response.body());
 
-        System.out.println(getResultsFromTitleSearch(segments[2]));
-        System.out.println(getResultsFromTitleSearch(segments[3]));
-        System.out.println(getResultsFromTitleSearch(segments[5]));
+        String segments[] = response.body().split("\"id\":\"/title/");
 
-       //getResultsFromTitleSearch(segments[3]);
+        for (int i = 0; segments.length > i; i++){
+            String httpResult = segments[i].substring(segments[i].lastIndexOf("/title/") + 1);
 
+
+            if(httpResult.contains("\"titleType\":\"movie\"")){
+
+                //movie id in api database
+                String movieIdRaw = httpResult.substring(httpResult.lastIndexOf("\"id\":\"/title/") + 1);
+                String movieId = movieIdRaw.substring(0, movieIdRaw.indexOf("/"));
+
+
+                //string title
+                String titleRaw = httpResult.substring(httpResult.lastIndexOf("title\":\"") + 8);
+                String title = titleRaw.substring(0, titleRaw.indexOf("\","));
+
+                //picture link
+                String pictureLinkRaw = httpResult.substring(httpResult.lastIndexOf("url\":\"") + 6);
+                String picture = pictureLinkRaw.substring(0, pictureLinkRaw.indexOf("\","));
+
+
+                //prints movie info in console
+                System.out.println(movieId);
+                System.out.println(title);
+                System.out.println(picture);
+
+                //
+            }
+        }
 
     }
 
 
-    public String getResultsFromTitleSearch(String str)
-    {
+   public HttpResponse getSearchResultStringFromApi(String searchWord) throws IOException, InterruptedException {
+       HttpRequest request = HttpRequest.newBuilder()
+               .uri(URI.create("https://imdb8.p.rapidapi.com/title/find?q=" + searchWord))
+               .header("X-RapidAPI-Key", "758854346fmshb2e7f684695dca5p1c89b6jsn2aa78bdfb8af")
+               .header("X-RapidAPI-Host", "imdb8.p.rapidapi.com")
+               .method("GET", HttpRequest.BodyPublishers.noBody())
+               .build();
+       HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
-        String yearTrim = str.substring(0, str.indexOf(","));
+       return response;
 
-        // Creating a StringBuilder object
-        StringBuilder sb = new StringBuilder(yearTrim);
-
-        // Removing the last character
-        // of a string
-        sb.deleteCharAt(yearTrim.length() - 1);
-
-        // Removing the first character
-        // of a string
-        sb.deleteCharAt(0);
-
-        // Converting StringBuilder into a string
-        // and return the modified string
-        return sb.toString();
-    }
+   }
 }
