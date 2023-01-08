@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
 
 public class MovieListController implements Initializable {
 
-    public ScrollPane movieListView;
+    public ScrollPane movieListView, homeView, listAllMovies;
     @FXML
     private MovieModel movieModel;
 
@@ -48,8 +48,42 @@ public class MovieListController implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        if (movieListView != null) {
+            createContentGrid();
+        }
+        if (homeView != null) {
+            //createTrendingList();
+            //createPopularList();
+            createAllMoviesList();
+        }
 
-       createContentGrid();
+    }
+
+    /**
+     * creates the gridPane for the All Movies list
+     * fills it with movies from list
+     */
+    private void createAllMoviesList() {
+        //Create a grid in the ScrollPane to hold all movies
+        GridPane grid = new GridPane();
+        listAllMovies.setContent(grid);
+
+        //used for placing
+        int col = 0;
+        int row = 0;
+        //loop for creating each movieCard and setting movie info
+        for (int i = 0; movieModel.getMoviesInList().size() > i; i++) {
+
+            GridPane movieCard = createMovieCard(i);//creates the movie card
+            grid.add(movieCard, col, row);//adds it to the content gridPane
+
+            //makes a space between all movies
+            col++;
+            grid.add(new Separator(Orientation.HORIZONTAL), col, row);
+            col++;
+
+            movieCardOnClickListener(i, movieCard);//creates the listener for each card
+        }
     }
 
     /**

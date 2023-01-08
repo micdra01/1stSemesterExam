@@ -34,7 +34,7 @@ public class MainController {
     }
 
     public void handleHome(ActionEvent actionEvent) throws IOException {
-        VBox home = FXMLLoader.load(getClass().getResource("/GUI/Views/HomeView.fxml"));
+        ScrollPane home = FXMLLoader.load(getClass().getResource("/GUI/Views/HomeView.fxml"));
         borderPane.setCenter(home);
         textSceneTitle.setText("Home");
     }
