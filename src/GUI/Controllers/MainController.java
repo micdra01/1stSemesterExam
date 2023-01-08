@@ -3,28 +3,32 @@ package GUI.Controllers;
 import BE.Movie;
 import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * todo write comments for all methods
  */
 public class MainController implements Initializable {
+    @FXML
+    private MenuButton menuBtnCategory, searchMenuBtnCategory;
     @FXML
     private Slider sliderRating;
     @FXML
@@ -34,7 +38,7 @@ public class MainController implements Initializable {
     @FXML
     private Button btnSearch;
     @FXML
-    private Label textSceneTitle;
+    private Label textSceneTitle, labelMinRating;
     @FXML
     private BorderPane borderPane;
 
@@ -54,7 +58,24 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         btnSearch.setDisable(true);
         addSearchListener();
+
+        //Loads all current categories in the category dropdown (both in sidebar & in search bar).
+        //Perhaps this should only happen when each of them is clicked to improve load time?
+        //initializeCategoryMenu();
     }
+
+    /**
+    private void initializeCategoryMenu() {
+        searchMenuBtnCategory.getItems().clear();
+        //TODO Add list of categories to the menuBtnCategory, something like this
+        for (int i = 0; i < categoryModel.getCategoriesInList.size() ; i++) {
+            CheckMenuItem checkMenuItem = new CheckMenuItem(categoryModel.getCategoriesInList.get(i).getTitle());
+            searchMenuBtnCategory.getItems().add(checkMenuItem);
+
+            MenuItem menuItem = new MenuItem(categoryModel.getCategoriesInList.get(i).getTitle());
+            menuBtnCategory.getItems().add(menuItem);
+        }
+    }*/
 
     public void handleHome(ActionEvent actionEvent) throws IOException {
         VBox home = FXMLLoader.load(getClass().getResource("/GUI/Views/HomeView.fxml"));
@@ -122,65 +143,77 @@ public class MainController implements Initializable {
 
     }
 
-    /**
-     * Adds a listener to the text field for movie searching.
-     */
-    private void addSearchListener() {
-        textSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            if(!textSearch.getText().isEmpty()) {
-                btnSearch.setDisable(false);
-                //If query is changed after 1 search, symbol changes back to 🔍.
-                // fx. 1st search: "Far", more precise 2nd search to limit results: "Far til fire".
-                btnSearch.setText("🔍");
-            } else {
-                btnSearch.setDisable(true);
-            }
-        });
-    }
-
     public void handleSearch() {
         try {
             if(isSimpleSearch) {
                 if (btnSearch.getText().equals("🔍")) {
-                    btnSearch.setText("✖");
-                    addSearchListener();
-
                     movieModel.search(textSearch.getText());
-                    movieListController.createContentGrid();
+                    setSearchNodes(false);
                 } else {
-                    btnSearch.setText("🔍");
-                    textSearch.setText("");
-
-                    movieModel.search(textSearch.getText());
-                    movieListController.createContentGrid();
+                    movieModel.search("");
+                    setSearchNodes(true);
                 }
             } else {
                 if (btnSearch.getText().equals("🔍")) {
-                    btnSearch.setText("✖");
-                    addSearchListener();
+                    //Stores selected menu items (categories) in a list
+                    List<String> selectedCategories = searchMenuBtnCategory.getItems().stream()
+                                    .map(CheckMenuItem.class::cast).filter(CheckMenuItem::isSelected)
+                                    .map(CheckMenuItem::getText).collect(Collectors.toList());
 
-                    movieModel.searchAdvanced(textSearch.getText(), sliderRating.getValue());
-                    movieListController.createContentGrid();
+                    movieModel.searchAdvanced(textSearch.getText(), sliderRating.getValue(), selectedCategories);
+                    setSearchNodes(false);
                 } else {
-                    btnSearch.setText("🔍");
-                    textSearch.setText("");
-
-                    movieModel.search(textSearch.getText());
-                    movieListController.createContentGrid();
+                    movieModel.search("");
+                    setSearchNodes(true);
                 }
             }
+            movieListController.createContentGrid();
         } catch (Exception e) {
             new Exception("Failed to search", e);
         }
     }
 
     /**
-     * Allows searching by pressing Enter (instead of using the 🔍-button).
-     * @param keyEvent, a key-press
+     * Adds a listener to the text field for movie searching.
      */
-    public void handleEnter(KeyEvent keyEvent) {
-        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-            handleSearch();
+    private void addSearchListener() {
+        textSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            if(!textSearch.getText().isEmpty()) {
+                setSearchNodes(false);
+                btnSearch.setText("🔍"); //If query is changed again switch from clear search back to search symbol
+            } else {
+                setSearchNodes(true);
+            }
+        });
+
+        sliderRating.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setSearchNodes(false);
+                btnSearch.setText("🔍");
+                double minRating = sliderRating.getValue();
+                DecimalFormat df = new DecimalFormat("0.00");
+                labelMinRating.setText("Min. Rating: " + df.format(minRating));
+            }
+        });
+        //TODO Add Listener for changes in selected categories
+    }
+
+    /**
+     * Allows for enabling/disabling the button for searching in the movies list
+     * and resetting the min. rating & selected categories
+     */
+    private void setSearchNodes(boolean disable) {
+        btnSearch.setDisable(disable);
+        if (!disable) {
+            btnSearch.setText("✖");
+            addSearchListener();
+        } else {
+            btnSearch.setText("🔍");
+            textSearch.setText("");
+            sliderRating.setValue(0);
+            labelMinRating.setText("Min. Rating");
+            //initializeCategoryMenu();
         }
     }
 
@@ -194,6 +227,16 @@ public class MainController implements Initializable {
         } else {
             boxAdvancedSearch.setOpacity(0);
             isSimpleSearch = true;
+        }
+    }
+
+    /**
+     * Allows searching by pressing Enter (instead of using the 🔍-button).
+     * @param keyEvent, a key-press
+     */
+    public void handleEnter(KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+            handleSearch();
         }
     }
 }

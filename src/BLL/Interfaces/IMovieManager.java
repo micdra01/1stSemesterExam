@@ -52,10 +52,11 @@ public interface IMovieManager {
      * Filter the list of movies in library using a search query, min. rating & category selection
      * @param query, the string input used to filter
      * @param minRating, the min. rating
+     * @param categories, the selected categories
      * @return a list of movies matching the query in title & the min. rating
      * @throws Exception If it fails to search.
      */
-    List<Movie> searchAdvanced(String query, double minRating) throws Exception;
+    List<Movie> searchAdvanced(String query, double minRating, List<String> categories) throws Exception;
 
 
     /**

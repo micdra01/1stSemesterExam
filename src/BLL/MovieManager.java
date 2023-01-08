@@ -80,9 +80,9 @@ public class MovieManager implements IMovieManager {
      * @return a list of movies matching the query in title & the min. rating
      * @throws Exception If it fails to search.
      */
-    public List<Movie> searchAdvanced(String query, double minRating) throws Exception {
+    public List<Movie> searchAdvanced(String query, double minRating, List<String> categories) throws Exception {
         List<Movie> allMovies = getAllMovies();
-        List<Movie> searchResult = movieSearcher.searchAdvanced(allMovies, query, minRating);
+        List<Movie> searchResult = movieSearcher.searchAdvanced(allMovies, query, minRating, categories);
 
         return searchResult;
     }

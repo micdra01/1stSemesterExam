@@ -55,8 +55,8 @@ public class MovieModel {
      * Filter the list of movies using a search query
      * @param query, a String to search for.
      */
-    public void searchAdvanced(String query, double minRating) throws Exception {
-        List<Movie> searchResults = movieManager.searchAdvanced(query, minRating);
+    public void searchAdvanced(String query, double minRating, List<String> categories) throws Exception {
+        List<Movie> searchResults = movieManager.searchAdvanced(query, minRating, categories);
 
         moviesInList.clear();
         moviesInList.addAll(searchResults);
