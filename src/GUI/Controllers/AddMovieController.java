@@ -91,7 +91,7 @@ public class AddMovieController{
     public void handleSearchOnImdb(ActionEvent actionEvent) {
         try {
             imdbApi = new ImdbApi();
-            imdbApi.searchInAPI(textTitle.getText());
+            imdbApi.getSearchResultFromApi(textTitle.getText());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
