@@ -33,11 +33,12 @@ import java.util.ResourceBundle;
 
 public class MovieListController implements Initializable {
 
-    public ScrollPane movieListView, homeView, listAllMovies;
+    public ScrollPane movieListView, homeView, listAllMovies, listPopular, listTrending;
     @FXML
     private MovieModel movieModel;
 
     MainController mainController;
+    private double minRatingPopular = 8.2;
 
 
     @Override
@@ -53,10 +54,9 @@ public class MovieListController implements Initializable {
         }
         if (homeView != null) {
             //createTrendingList();
-            //createPopularList();
+            createPopularList();
             createAllMoviesList();
         }
-
     }
 
     /**
@@ -83,6 +83,34 @@ public class MovieListController implements Initializable {
             col++;
 
             movieCardOnClickListener(i, movieCard);//creates the listener for each card
+        }
+    }
+
+    /**
+     * creates the gridPane for the Popular list
+     * fills it with movies from list
+     */
+    private void createPopularList() {
+        //Create a grid in the ScrollPane to hold all movies
+        GridPane grid = new GridPane();
+        listPopular.setContent(grid);
+
+        //used for placing
+        int col = 0;
+        int row = 0;
+        //loop for creating each movieCard and setting movie info
+        for (Movie movie : movieModel.getMoviesInList()) {
+            if (movie.getImdbRating() > minRatingPopular) {
+                GridPane movieCard = createMovieCard(movieModel.getMoviesInList().indexOf(movie));//creates the movie card
+                grid.add(movieCard, col, row);//adds it to the content gridPane
+
+                //makes a space between all movies
+                col++;
+                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
+                col++;
+
+                movieCardOnClickListener(movieModel.getMoviesInList().indexOf(movie), movieCard);//creates the listener for each card
+            }
         }
     }
 
@@ -117,12 +145,10 @@ public class MovieListController implements Initializable {
                 grid.add(new Separator(Orientation.VERTICAL), col, row);
                 row++;
             }
-
+            
             movieCardOnClickListener(i, movieCard);//creates the listener for each card
         }
     }
-
-
 
     /**
      * create the movieCard gridPane and fills it with info from chosen movie

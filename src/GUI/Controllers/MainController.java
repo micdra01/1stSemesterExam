@@ -34,8 +34,20 @@ public class MainController {
     }
 
     public void handleHome(ActionEvent actionEvent) throws IOException {
-        ScrollPane home = FXMLLoader.load(getClass().getResource("/GUI/Views/HomeView.fxml"));
-        borderPane.setCenter(home);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/HomeView.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            new Exception("Failed to open 'Home'", e);
+        }
+
+        MovieListController controller = loader.getController();
+        controller.setMovieModel(movieModel);
+        controller.setMainController(this);
+        borderPane.setCenter(root);
+
         textSceneTitle.setText("Home");
     }
 

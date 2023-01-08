@@ -16,7 +16,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <ScrollPane hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="60.0" minWidth="60.0" prefHeight="240.0" prefWidth="490.0" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+            <ScrollPane fx:id="listTrending" hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="60.0" minWidth="60.0" prefHeight="240.0" prefWidth="490.0" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                <content>
                   <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="60.0" prefHeight="230.0" prefWidth="2500.0" />
                </content>
@@ -29,7 +29,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <ScrollPane hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="240.0" prefWidth="490.0" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+            <ScrollPane fx:id="listPopular" hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="240.0" prefWidth="490.0" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                <content>
                   <HBox prefHeight="230.0" prefWidth="2500.0" />
                </content>
