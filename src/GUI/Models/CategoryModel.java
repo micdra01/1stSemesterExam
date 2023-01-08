@@ -25,7 +25,12 @@ public class CategoryModel {
 
     }
 
-    public void addMovieToCategory(Category category, Movie movie) throws Exception {}
+    public void addMovieToCategory(Category category, Movie movie) throws Exception {
+
+        Movie movie = categoryManager.addMovieToCategory(category, movie);
+
+
+    }
 }
 
 
