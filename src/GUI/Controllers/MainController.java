@@ -35,7 +35,7 @@ public class MainController implements Initializable {
     @FXML
     private TextField textCategoryName;
     @FXML
-    private Slider sliderRating;
+    private Slider sliderMinIMDBRating, sliderMaxIMDBRating, sliderMinPersonalRating, sliderMaxPersonalRating;
     @FXML
     private HBox boxAdvancedSearch;
     @FXML
@@ -43,9 +43,10 @@ public class MainController implements Initializable {
     @FXML
     private Button btnSearch;
     @FXML
-    private Label textSceneTitle, labelMinRating;
+    private Label textSceneTitle, labelMinIMDBRating, labelMaxIMDBRating, labelMinPersonalRating, labelMaxPersonalRating;
     @FXML
     private BorderPane borderPane;
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     public MovieModel getMovieModel() {
         return movieModel;
@@ -76,7 +77,7 @@ public class MainController implements Initializable {
         try {
             initializeCategoryMenu();
         } catch (Exception e) {
-            new Exception(e);
+            new Exception("Failed to load categories", e);
         }
     }
 
@@ -189,7 +190,7 @@ public class MainController implements Initializable {
                                     .map(CheckMenuItem.class::cast).filter(CheckMenuItem::isSelected)
                                     .map(CheckMenuItem::getText).collect(Collectors.toList());
 
-                    movieModel.searchAdvanced(textSearch.getText(), sliderRating.getValue(), selectedCategories);
+                    movieModel.searchAdvanced(textSearch.getText(), sliderMinIMDBRating.getValue(), selectedCategories);
                     setSearchNodes(false);
                 } else {
                     movieModel.search("");
@@ -215,16 +216,43 @@ public class MainController implements Initializable {
             }
         });
 
-        sliderRating.setOnMouseReleased(new EventHandler<MouseEvent>() {
+        sliderMinIMDBRating.setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 setSearchNodes(false);
                 btnSearch.setText("🔍");
-                double minRating = sliderRating.getValue();
-                DecimalFormat df = new DecimalFormat("0.00");
-                labelMinRating.setText("Min. Rating: " + df.format(minRating));
+                labelMinIMDBRating.setText(df.format(sliderMinIMDBRating.getValue()));
             }
         });
+
+        sliderMaxIMDBRating.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setSearchNodes(false);
+                btnSearch.setText("🔍");
+                labelMaxIMDBRating.setText(df.format(sliderMaxIMDBRating.getValue()));
+            }
+        });
+
+        sliderMinPersonalRating.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setSearchNodes(false);
+                btnSearch.setText("🔍");
+                labelMinPersonalRating.setText(df.format(sliderMinPersonalRating.getValue()));
+            }
+        });
+
+        sliderMaxPersonalRating.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setSearchNodes(false);
+                btnSearch.setText("🔍");
+                labelMaxPersonalRating.setText(df.format(sliderMaxPersonalRating.getValue()));
+            }
+        });
+
+
         //TODO Add better Listener for changes in selected categories
         searchMenuBtnCategory.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -247,9 +275,24 @@ public class MainController implements Initializable {
         } else {
             btnSearch.setText("🔍");
             textSearch.setText("");
-            sliderRating.setValue(0);
-            labelMinRating.setText("Min. Rating");
-            //initializeCategoryMenu();
+            sliderMinIMDBRating.setValue(0);
+            sliderMaxIMDBRating.setValue(10);
+            sliderMinPersonalRating.setValue(0);
+            sliderMaxPersonalRating.setValue(10);
+            labelMinIMDBRating.setText("0");
+            labelMaxIMDBRating.setText("10");
+            labelMinPersonalRating.setText("0");
+            labelMaxPersonalRating.setText("10");
+
+            /**
+             * This works, but seems to slow clearing a search down a lot
+             * TODO discuss: keep, improve or delete?
+            try {
+                initializeCategoryMenu();
+            } catch (Exception e) {
+                new Exception("Failed to load categories", e);
+            }
+             */
         }
     }
 
@@ -260,6 +303,7 @@ public class MainController implements Initializable {
         if (isSimpleSearch) {
             boxAdvancedSearch.setOpacity(1);
             isSimpleSearch = false;
+            setSearchNodes(true);
         } else {
             boxAdvancedSearch.setOpacity(0);
             isSimpleSearch = true;
