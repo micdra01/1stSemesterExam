@@ -36,8 +36,8 @@ public class MainController implements Initializable {
     @FXML
     private MenuButton menuBtnCategory, searchMenuBtnCategory;
     @FXML
-    private Label textSceneTitle;
-    public TextField textCategoryName;
+    private TextField textCategoryName;
+    @FXML
     private Slider sliderRating;
     @FXML
     private HBox boxAdvancedSearch;
