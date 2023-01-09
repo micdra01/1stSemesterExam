@@ -4,8 +4,6 @@ import BE.Category;
 import BE.Movie;
 import BLL.CategoryManager;
 import BLL.Interfaces.ICategoryManager;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class CategoryModel {
 
@@ -22,12 +20,12 @@ public class CategoryModel {
 
     public void deleteCategory(Category category) throws Exception {
         categoryManager.deleteCategory(category);
-
     }
 
     public void addMovieToCategory(Category category, Movie movie) throws Exception {
 
-        Movie movie = categoryManager.addMovieToCategory(category, movie);
+        //Movie mMovie = categoryManager.addMovieToCategory(category, movie);
+        //System.out.println(mMovie);
 
 
     }

@@ -63,10 +63,10 @@ public class CategoryDAO implements ICategoryDAO {
 
             //gets all variables from category and saves
             String title = category.getTitle();
-            ArrayList<Movie> movieList = category.getMovieList();
+            //ArrayList<Movie> movieList = category.getMovieList();
 
             statement.setString(1, title);
-            statement.setArray(2, (Array) movieList);
+            //statement.setArray(2, (Array) movieList);
 
             statement.executeUpdate();
 
@@ -76,7 +76,7 @@ public class CategoryDAO implements ICategoryDAO {
                 id = resultSet.getInt(1);
             }
 
-            Category generatedCategory = new Category(id, title, movieList);
+            Category generatedCategory = new Category(id, title, null);
             return generatedCategory;
 
         }catch (SQLException e) {

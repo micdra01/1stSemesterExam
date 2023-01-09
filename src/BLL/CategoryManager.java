@@ -5,7 +5,6 @@ import BE.Movie;
 import BLL.Interfaces.ICategoryManager;
 import DAL.CategoryDAO;
 import DAL.Interfaces.ICategoryDAO;
-import DAL.MovieDAO;
 
 import java.util.List;
 
@@ -33,9 +32,10 @@ public class CategoryManager implements ICategoryManager {
      * @param movie The song to add to the playlist.
      * @throws Exception If it fails to add the song to the playlist.
      */
+
     @Override
     public void addMovieToCategory(Category category, Movie movie) throws Exception {
-        databaseAccess.addMovieToCategory(category, movie);
+        //databaseAccess.addMovieToCategory(category, movie);
     }
 
     /**
@@ -53,6 +53,7 @@ public class CategoryManager implements ICategoryManager {
     public Category createCategory(Category category) throws Exception {
         return databaseAccess.createCategory(category);
     }
+
 
     @Override
     public void deleteCategory(Category category) throws Exception {
