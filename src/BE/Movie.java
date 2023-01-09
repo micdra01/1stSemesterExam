@@ -5,16 +5,23 @@ import java.sql.Timestamp;
 public class Movie {
 
     private int id;
-    private String title;
-    private double personalRating;
-    private double imdbRating;
-    private String movieFileLink;
-    private String pictureFileLink;
-    private String trailerFileLink;
-    private String category;
+
+    private double personalRating, imdbRating;
+    private String title, movieFileLink, pictureFileLink, trailerFileLink, category;
     private Timestamp lastViewed;
 
 
+    /**
+     * constructor with id, should be used a standard
+     * @param id
+     * @param title
+     * @param personalRating
+     * @param imdbRating
+     * @param movieFileLink
+     * @param pictureFileLink
+     * @param trailerFileLink
+     * @param lastViewed
+     */
     public Movie(int id, String title, double personalRating, double imdbRating, String movieFileLink,
                  String pictureFileLink, String trailerFileLink, Timestamp lastViewed) {
         this.id = id;
@@ -26,6 +33,18 @@ public class Movie {
         this.trailerFileLink = trailerFileLink;
         this.lastViewed = lastViewed;
     }
+
+    /**
+     * constructor without id
+     * used for making a movie, so we can send the new movie down to db where it gets the id.
+     * @param title
+     * @param personalRating
+     * @param imdbRating
+     * @param movieFileLink
+     * @param pictureFileLink
+     * @param trailerFileLink
+     * @param lastViewed
+     */
     public Movie(String title, double personalRating, double imdbRating, String movieFileLink,
                  String pictureFileLink, String trailerFileLink, Timestamp lastViewed) {
         this.title = title;

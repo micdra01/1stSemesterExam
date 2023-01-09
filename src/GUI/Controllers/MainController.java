@@ -16,12 +16,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * todo write comments for all methods
+ */
 public class MainController {
-
     @FXML
     private Label textSceneTitle;
     public TextField textCategoryName;
@@ -35,7 +38,6 @@ public class MainController {
     private MovieModel movieModel;
     private CategoryModel categoryModel;
 
-
     public MainController(){
         try {
             movieModel = new MovieModel();//sets the movieModel
@@ -46,23 +48,10 @@ public class MainController {
         }
     }
 
-
-
-
-
-
-
-
     public void handleHome(ActionEvent actionEvent) throws IOException {
         VBox home = FXMLLoader.load(getClass().getResource("/GUI/Views/HomeView.fxml"));
         borderPane.setCenter(home);
         textSceneTitle.setText("Home");
-    }
-
-    public void handleTrending(ActionEvent actionEvent) throws IOException {
-        ScrollPane trending = FXMLLoader.load(getClass().getResource("/GUI/Views/TrendingView.fxml"));
-        borderPane.setCenter(trending);
-        textSceneTitle.setText("Trending");
     }
 
 
@@ -70,21 +59,24 @@ public class MainController {
     }
 
     public void handleFavorites(ActionEvent actionEvent) throws IOException {
-        //TODO this is just testing, to be removed!!
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieView.fxml"));
+    }
+
+    public void handleAllMovies(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
         Parent root = null;
 
         try {
             root = loader.load();
         } catch (IOException e) {
-            new Exception("Failed to open 'Add movie'", e);
+            new Exception("Failed to open 'open all movies'", e);
         }
 
-        AddMovieController controller = loader.getController();
+        MovieListController controller = loader.getController();
         controller.setMovieModel(movieModel);
+        controller.setMainController(this);
         borderPane.setCenter(root);
 
-        textSceneTitle.setText("Add Movie");
+        textSceneTitle.setText("all movies");
     }
 
     public void handleAddMovie(ActionEvent actionEvent) throws IOException {
@@ -102,6 +94,23 @@ public class MainController {
         borderPane.setCenter(root);
 
         textSceneTitle.setText("Add Movie");
+    }
+
+    public void openMovieInfo(Movie movie){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieView.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            new Exception("Failed to show movie info'", e);
+        }
+
+        MovieController controller = loader.getController();
+        controller.setMovieModel(movieModel);
+
+        borderPane.setCenter(root);
+
     }
 
     public void handleAddCategory(ActionEvent event) {

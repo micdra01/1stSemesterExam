@@ -8,8 +8,12 @@ import java.sql.Connection;
 public class DatabaseConnector {
     private SQLServerDataSource dataSource;
 
+    /**
+     * todo set a class so we can hide login info
+     */
     public DatabaseConnector()
     {
+        //sets the information for database
         dataSource = new SQLServerDataSource();
         dataSource.setServerName("10.176.111.31");
         dataSource.setDatabaseName("Fjernbetjening");

@@ -9,13 +9,11 @@ import java.util.List;
 
 public class MovieDAO implements IMovieDAO {
 
-
     private DatabaseConnector databaseConnector;
 
     public MovieDAO() {
         databaseConnector = new DatabaseConnector();
     }
-
 
     /**
      * Creates a Movie.
@@ -25,8 +23,9 @@ public class MovieDAO implements IMovieDAO {
      */
     @Override
     public Movie createMovie(Movie movie) throws Exception {
-
+        //sql string for creating a movie in Movies table
         String sql = "INSERT INTO Movies (Title, PersonalRating, ImdbRating, MovieFileLink, PictureFileLink, TrailerFileLink, LastView) VALUES (?,?,?,?,?,?,?) ;";
+        //get connection with database
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -38,7 +37,7 @@ public class MovieDAO implements IMovieDAO {
             String pictureLink = movie.getPictureFileLink();
             String trailerLink = movie.getTrailerFileLink();
             Timestamp tS = movie.getLastViewed();
-
+            //binds all movie variables to statement
             statement.setString(1, title);
             statement.setDouble(2, pR);
             statement.setDouble(3, iR);
@@ -47,14 +46,15 @@ public class MovieDAO implements IMovieDAO {
             statement.setString(6, trailerLink);
             statement.setTimestamp(7, tS);
 
-            statement.executeUpdate();
+            statement.executeUpdate();//execute statement
 
-            int id = 0;
-            ResultSet resultSet = statement.getGeneratedKeys();
+            int id = 0;//variable for the movie id
+            ResultSet resultSet = statement.getGeneratedKeys();//gets the movie id back from db
             if (resultSet.next()) {
-                id = resultSet.getInt(1);
+                id = resultSet.getInt(1);//saves the movie id as id
             }
 
+            //creates the new movie object and sends it back
             Movie generatedMovie =new Movie(id, title, pR, iR, movieLink, pictureLink, trailerLink, tS);
             return generatedMovie;
 
@@ -73,6 +73,7 @@ public class MovieDAO implements IMovieDAO {
     public void deleteMovie(Movie movie) throws Exception {
         String sql = "DELETE FROM Movies WHERE Id = ?;";
 
+        //gets connection to db
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             // Bind parameters
@@ -134,13 +135,13 @@ public class MovieDAO implements IMovieDAO {
      */
     @Override
     public void updateMovie(Movie movie) throws Exception {
-
+        //UPDATE movies sql string
         String sql = "UPDATE Movies SET  Title=?, PersonalRating=?, ImdbRating=?, MovieFileLink=?, PictureFileLink=?, TrailerFileLink=?, LastView=? WHERE Id=?;";
 
+        //get connection with database
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-
-
+            //binds the movie info to statement
             statement.setString(1, movie.getTitle());
             statement.setDouble(2, movie.getPersonalRating());
             statement.setDouble(3, movie.getImdbRating());
@@ -149,7 +150,7 @@ public class MovieDAO implements IMovieDAO {
             statement.setString(6, movie.getTrailerFileLink());
             statement.setTimestamp(7, movie.getLastViewed());
             statement.setInt(8,movie.getId());
-
+            //execute statement
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -166,16 +167,18 @@ public class MovieDAO implements IMovieDAO {
     @Override
     public Movie getMovieFromId(int movieId) throws Exception {
         //SELECT * FROM Movies WHERE [condition]
-
         String sql = " SELECT * FROM Movies WHERE Id=?;";
-        Movie movie;
 
+        Movie movie;//movie that is returned from db
+
+        //get connection with database
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setInt(1,movieId);
-            ResultSet rs = statement.executeQuery(sql);
+            statement.setInt(1,movieId);//bind the movie id to sql statement
+            ResultSet rs = statement.executeQuery(sql);//execute the statement and get movie result
 
+            //get all variables from result set
             int id = rs.getInt("Id");
             String title =rs.getString("Title");
             double personalRating = rs.getDouble("PersonalRating");
@@ -187,9 +190,10 @@ public class MovieDAO implements IMovieDAO {
 
             //creates the movie and add it to the list allMovies
             movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink,trailerFileLink, lastView);
-
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("Failed to find movie", e);
         }
-        return  movie;
+        return  movie; //returns the found movie
     }
-
 }

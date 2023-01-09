@@ -15,27 +15,20 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
-public class AddMovieController implements Initializable {
+public class AddMovieController{
     public TextField textImageFile, textTrailerFile, textIMDBRating, textCategory, textTitle, textMovieFile;
     public Button btnMovieFile, btnTrailerFile, btnImageFile, btnSave;
     public Label lblImageFile, lblTrailerFile, lblIMDBRating, lblCategory, lblMovieFile, lblTitle;
 
-
-
     private MovieModel movieModel;
 
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        try {
-           // movieModel = new MovieModel();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
+    /**
+     * todo write comments for all methods in class
+     * todo save name of files from each file chooser as local variable in handle save method, so we can make file links later
+     * todo save the movie files and picture files from file chooser in resources folder.
+     * @param event
+     */
     public void handleMovieFile(ActionEvent event) {
         Stage stage = (Stage) btnMovieFile.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
@@ -65,22 +58,19 @@ public class AddMovieController implements Initializable {
         String title = textTitle.getText();
         double personalRating = -1;
         double imdbRating = Double.parseDouble(textIMDBRating.getText());
-        String movielink = textMovieFile.getText();
+        //todo next 3 variables should take the name of the file and send down so it can make the file link in dal
+        String movieLink = textMovieFile.getText();
         String pictureLink = textImageFile.getText();
         String trailerLink = textTrailerFile.getText();
         Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
-        Movie movie = new Movie(title, personalRating, imdbRating, movielink, pictureLink, trailerLink, lastViewed);
-
+        Movie movie = new Movie(title, personalRating, imdbRating, movieLink, pictureLink, trailerLink, lastViewed);
         movieModel.createMovie(movie);
-
 
     }
 
     public void setMovieModel(MovieModel movieModel) {
         this.movieModel = movieModel;
     }
-
-    //public TextField textImageFile, textTrailerFile, textIMDBRating, textCategory, textTitle, textMovieFile;
 
 }

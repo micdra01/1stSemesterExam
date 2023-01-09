@@ -4,6 +4,7 @@ import BE.Category;
 import BE.Movie;
 import GUI.Models.CategoryModel;
 import javafx.event.ActionEvent;
+import GUI.Models.MovieModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,10 +35,17 @@ public class MovieController implements Initializable {
 
     public AnchorPane anchorPane;
 
+    private MovieModel movieModel;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //mediaView.setMediaPlayer(new MediaPlayer(new Media("/Movies/mp4 sample.mp4")));
 
+    }
+
+
+    public void setMovieModel(MovieModel movieModel) {
+        this.movieModel = movieModel;
     }
 
     public void handleSaveCategory(ActionEvent actionEvent) throws Exception {
