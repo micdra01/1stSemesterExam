@@ -1,6 +1,7 @@
 package GUI.Controllers;
 
 import BE.Movie;
+import DAL.ImdbApi;
 import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -12,6 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,6 +29,8 @@ public class AddMovieController{
     private MovieModel movieModel;
 
     private File movieCover, movieFile, trailerFile;
+
+    private ImdbApi imdbApi;
 
 
     /**
@@ -92,4 +96,15 @@ public class AddMovieController{
         this.movieModel = movieModel;
     }
 
+    public void handleSearchOnImdb(ActionEvent actionEvent) {
+        try {
+            imdbApi = new ImdbApi();
+            imdbApi.getSearchResultFromApi(textTitle.getText());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

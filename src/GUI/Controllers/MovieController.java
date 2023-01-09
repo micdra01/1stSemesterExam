@@ -27,20 +27,20 @@ public class MovieController implements Initializable {
     private Movie movie;
 
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-        lblTittle.setText(movie.getTitle());
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //mediaView.setMediaPlayer(new MediaPlayer(new Media("/Movies/mp4 sample.mp4")));
 
     }
 
-
-
     public void setMovieModel(MovieModel movieModel) {
         this.movieModel = movieModel;
     }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+        lblTittle.setText(movie.getTitle());
+    }
 }
+
+

@@ -72,7 +72,7 @@ public class MovieListController implements Initializable {
         //loop for creating each movieCard and setting movie info
         for (int i = 0; movieModel.getMoviesInList().size() > i; i++) {
 
-            GridPane movieCard = createMovieCard(i);//creates the movie card
+            GridPane movieCard = createMovieCard(movieModel.getMoviesInList().get(i));//creates the movie card
             grid.add(movieCard, col, row);//adds it to the content gridPane
 
             //makes a space between all movies
@@ -91,16 +91,15 @@ public class MovieListController implements Initializable {
 
         }
     }
-
-
+    
 
     /**
      * create the movieCard gridPane and fills it with info from chosen movie
      * picture, title and rating
-     * @param numberInList
+     * @param movie
      * @return
      */
-    private GridPane createMovieCard(int numberInList) {
+    private GridPane createMovieCard(Movie movie) {
         GridPane movieCard = null;
         //loads the movieCard fxml
         try {
@@ -109,7 +108,6 @@ public class MovieListController implements Initializable {
             throw new RuntimeException(e);
         }
 
-        Movie movie = movieModel.getMoviesInList().get(numberInList);
 
         Image img = new Image(movie.getPictureFileLink());
         ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it
@@ -130,8 +128,6 @@ public class MovieListController implements Initializable {
         movieCard.add(lblRating, 2, 1);
 
 
-
-
         Label lblTitleCard = new Label("");
         lblTitleCard.setFont(Font.font(20));
         lblTitleCard.setWrapText(true);
@@ -143,21 +139,19 @@ public class MovieListController implements Initializable {
         VBox vBox1 = new VBox(lblTitleCard, lblDescriptionCard);
         movieCard.add(vBox1, 0,0);
 
-        Button button = new Button();
-        Button button1 = new Button();
-        VBox vBox = new VBox(button, button1);
-        button.setText("play");
-        button1.setText("se info");
+        Button btnPlay = new Button();
+        Button btnInfo = new Button();
+        VBox vBox = new VBox(btnPlay, btnInfo);
+        btnPlay.setText("play");
+        btnInfo.setText("se info");
         vBox.setAlignment(Pos.CENTER);
         movieCard.add(vBox, 2,0);
 
 
-        button.setOpacity(0);
-        button1.setOpacity(0);
+        btnPlay.setOpacity(0);
+        btnInfo.setOpacity(0);
 
-
-
-        button1.setOnAction(new EventHandler<ActionEvent>() {
+        btnInfo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 mainController.openMovieInfo(movie);
@@ -168,29 +162,25 @@ public class MovieListController implements Initializable {
             public void handle(MouseEvent event) {
 
                 imgView.setOpacity(0.3);
-                button.setOpacity(1);
-                button1.setOpacity(1);
+                btnPlay.setOpacity(1);
+                btnInfo.setOpacity(1);
 
                 lblTitleCard.setText(movie.getTitle());
                 lblDescriptionCard.setText("forklaring og info om filmen bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla");
-
-
             }
         });
         movieCard.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 imgView.setOpacity(1);
-                button.setOpacity(0);
-                button1.setOpacity(0);
+                btnPlay.setOpacity(0);
+                btnInfo.setOpacity(0);
                 lblTitleCard.setText("");
                 lblDescriptionCard.setText("");
             }
         });
         return movieCard; // the finished movieCard with information
     }
-
-
 
     public void setMovieModel(MovieModel movieModel) {
         this.movieModel = movieModel;
@@ -199,7 +189,6 @@ public class MovieListController implements Initializable {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
-
 
 
 }
