@@ -1,9 +1,9 @@
-package aGUI.Controllers;
+package GUI.Controllers;
 
 import BE.Category;
-import aGUI.Models.CategoryModel;
+import GUI.Models.CategoryModel;
 import javafx.event.ActionEvent;
-import aGUI.Models.MovieModel;
+import GUI.Models.MovieModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

@@ -1,7 +1,7 @@
-package aGUI.Controllers;
+package GUI.Controllers;
 
 import BE.Movie;
-import aGUI.Models.MovieModel;
+import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

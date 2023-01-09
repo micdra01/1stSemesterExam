@@ -1,7 +1,7 @@
-package aGUI.Controllers;
+package GUI.Controllers;
 
 import BE.Movie;
-import aGUI.Models.MovieModel;
+import GUI.Models.MovieModel;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -97,7 +97,7 @@ public class MovieListController implements Initializable {
         GridPane movieCard = null;
         //loads the movieCard fxml
         try {
-            movieCard = FXMLLoader.load(getClass().getResource("/aGUI/Views/MovieCard.fxml"));
+            movieCard = FXMLLoader.load(getClass().getResource("/GUI/Views/MovieCard.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,8 +1,8 @@
-package aGUI.Controllers;
+package GUI.Controllers;
 
 import BE.Movie;
-import aGUI.Models.CategoryModel;
-import aGUI.Models.MovieModel;
+import GUI.Models.CategoryModel;
+import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,7 +45,7 @@ public class MainController {
     }
 
     public void handleHome(ActionEvent actionEvent) throws IOException {
-        VBox home = FXMLLoader.load(getClass().getResource("/aGUI/Views/HomeView.fxml"));
+        VBox home = FXMLLoader.load(getClass().getResource("/GUI/Views/HomeView.fxml"));
         borderPane.setCenter(home);
         textSceneTitle.setText("Home");
     }
@@ -58,7 +58,7 @@ public class MainController {
     }
 
     public void handleAllMovies(ActionEvent actionEvent) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/aGUI/Views/MovieListView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
         Parent root = null;
 
         try {
@@ -76,7 +76,7 @@ public class MainController {
     }
 
     public void handleAddMovie(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/aGUI/Views/AddMovieView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/AddMovieView.fxml"));
         Parent root = null;
 
         try {
@@ -93,7 +93,7 @@ public class MainController {
     }
 
     public void openMovieInfo(Movie movie){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/aGUI/Views/MovieView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieView.fxml"));
         Parent root = null;
 
         try {
@@ -110,7 +110,7 @@ public class MainController {
     }
 
     public void handleAddCategory(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/aGUI/Views/AddCategoryView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/AddCategoryView.fxml"));
         Parent root = null;
 
         try {
