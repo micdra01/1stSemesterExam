@@ -26,7 +26,6 @@ public class CategoryDAO implements ICategoryDAO {
     @Override
     public List<Category> getAllCategories() throws Exception {
         ArrayList<Category> allCategories = new ArrayList<>();
-        ArrayList<Movie> movieList = new ArrayList<>();
 
         try(Connection connection = databaseConnector.getConnection();
             Statement statement = connection.createStatement()){
@@ -39,10 +38,8 @@ public class CategoryDAO implements ICategoryDAO {
                 int id = rs.getInt("Id");
                 String title =rs.getString("CategoryName");
 
-
                 //creates the movie and add it to the list allMovies
-
-                Category category = new Category(id, title, movieList);
+                Category category = new Category(id, title);
                 allCategories.add(category);
             }
         }catch (Exception e){
@@ -76,7 +73,7 @@ public class CategoryDAO implements ICategoryDAO {
                 id = resultSet.getInt(1);
             }
 
-            Category generatedCategory = new Category(id, title, null);
+            Category generatedCategory = new Category(id, title);
             return generatedCategory;
 
         }catch (SQLException e) {

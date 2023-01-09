@@ -19,9 +19,11 @@ import java.util.ResourceBundle;
 public class MovieController implements Initializable {
     public Button btnAddCategory;
     public Button btnSaveCategory;
-    public TextField textCategoryName;
+
     @FXML
     public ListView listCategories;
+    public TextField textAddCategory;
+    public Button btbDeleteCategory;
     @FXML
     private ScrollPane movieView;
     @FXML
@@ -31,6 +33,9 @@ public class MovieController implements Initializable {
     public AnchorPane anchorPane;
 
     private MovieModel movieModel;
+
+    private Category selectedCategory;
+
 
 
     public MovieController(){
@@ -47,18 +52,7 @@ public class MovieController implements Initializable {
         populateCategories();
     }
 
-    public void populateCategories(){
 
-        try {
-            for (Category category : categoryModel.getAllCategories()) {
-
-                listCategories.getItems().add(category.getTitle());
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 
     public void setMovieModel(MovieModel movieModel) {
         this.movieModel = movieModel;
@@ -67,17 +61,40 @@ public class MovieController implements Initializable {
     public void handleSaveCategory(ActionEvent actionEvent) throws Exception {
 
         int id = -1;
-        String title = textCategoryName.getText();
+        String title = textAddCategory.getText();
 
-        Category category = new Category(id, title, null);
+        Category category = new Category(id, title);
 
         categoryModel.createCategory(category);
         listCategories.getItems().clear();
         populateCategories();
+        textAddCategory.clear();
 
     }
 
     public void setCategoryModel(CategoryModel categoryModel){
         this.categoryModel = categoryModel;
     }
+
+    public void handleDeleteCategory(ActionEvent event) {
+        try {
+            selectedCategory = (Category) listCategories.getSelectionModel().getSelectedItem();
+            categoryModel.deleteCategory(selectedCategory);
+            listCategories.getItems().clear();
+            populateCategories();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void populateCategories(){
+        try {
+            for (Category category : categoryModel.getAllCategories()) {
+                listCategories.getItems().add(category);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

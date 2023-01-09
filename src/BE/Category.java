@@ -10,10 +10,14 @@ public class Category {
     private int id;
     private ArrayList<Movie> movieList;
 
-    public Category(int id, String title, ArrayList<Movie> movieList){
+    public Category(int id, String title){
         this.id = id;
         this.title = title;
-        this.movieList = movieList;
+    }
+
+    @Override
+    public String toString() {
+        return getTitle();
     }
 
     public String getTitle() {
