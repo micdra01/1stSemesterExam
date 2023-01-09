@@ -73,21 +73,25 @@ public class MainController implements Initializable {
 
         //Loads all current categories in the category dropdown (both in sidebar & in search bar).
         //Perhaps this should only happen when each of them is clicked to improve load time?
-        //initializeCategoryMenu();
+        try {
+            initializeCategoryMenu();
+        } catch (Exception e) {
+            new Exception(e);
+        }
     }
 
-    /**
-    private void initializeCategoryMenu() {
+
+    private void initializeCategoryMenu() throws Exception {
         searchMenuBtnCategory.getItems().clear();
         //TODO Add list of categories to the menuBtnCategory, something like this
-        for (int i = 0; i < categoryModel.getCategoriesInList.size() ; i++) {
-            CheckMenuItem checkMenuItem = new CheckMenuItem(categoryModel.getCategoriesInList.get(i).getTitle());
+        for (int i = 0; i < categoryModel.getAllCategories().size() ; i++) {
+            CheckMenuItem checkMenuItem = new CheckMenuItem(categoryModel.getAllCategories().get(i).getTitle());
             searchMenuBtnCategory.getItems().add(checkMenuItem);
 
-            MenuItem menuItem = new MenuItem(categoryModel.getCategoriesInList.get(i).getTitle());
+            MenuItem menuItem = new MenuItem(categoryModel.getAllCategories().get(i).getTitle());
             menuBtnCategory.getItems().add(menuItem);
         }
-    }*/
+    }
 
     public void handleHome(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/HomeView.fxml"));
