@@ -1,7 +1,6 @@
 package GUI.Models;
 
 import BE.Movie;
-
 import BLL.Interfaces.IMovieManager;
 import BLL.MovieManager;
 import javafx.collections.FXCollections;

@@ -2,7 +2,6 @@ package GUI.Controllers;
 
 import BE.Movie;
 import GUI.Models.MovieModel;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,22 +12,16 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import jdk.jshell.spi.ExecutionControl;
 
 import java.io.IOException;
 import java.net.URL;
-
 import java.util.ResourceBundle;
 
 /**

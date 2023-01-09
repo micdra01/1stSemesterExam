@@ -1,20 +1,15 @@
 package GUI.Controllers;
 
 import BE.Category;
-import GUI.Models.CategoryModel;
-import javafx.event.ActionEvent;
 import BE.Movie;
+import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaView;
-import javafx.scene.text.Font;
 
 import java.net.URL;
 import java.util.ResourceBundle;
