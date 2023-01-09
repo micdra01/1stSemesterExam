@@ -58,28 +58,28 @@ public class CategoryDAO implements ICategoryDAO {
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            //gets all variables from category and saves
-            String title = category.getTitle();
-            //ArrayList<Movie> movieList = category.getMovieList();
+                //gets all variables from category and saves
+                String title = category.getTitle();
+                //ArrayList<Movie> movieList = category.getMovieList();
 
-            statement.setString(1, title);
-            //statement.setArray(2, (Array) movieList);
+                statement.setString(1, title);
+                //statement.setArray(2, (Array) movieList);
 
-            statement.executeUpdate();
+                statement.executeUpdate();
 
-            int id = 0;
-            ResultSet resultSet = statement.getGeneratedKeys();
-            if (resultSet.next()) {
-                id = resultSet.getInt(1);
-            }
+                int id = 0;
+                ResultSet resultSet = statement.getGeneratedKeys();
+                if (resultSet.next()) {
+                    id = resultSet.getInt(1);
+                }
 
             Category generatedCategory = new Category(id, title);
             return generatedCategory;
 
-        }catch (SQLException e) {
-            e.printStackTrace();
-            throw new Exception("Failed to create category", e);
-        }
+            }catch (SQLException e) {
+                e.printStackTrace();
+                throw new Exception("Failed to create category", e);
+            }
 
 
         }
@@ -102,15 +102,24 @@ public class CategoryDAO implements ICategoryDAO {
             }
         }
 
-
         @Override
         public void removeCategoryFromMovie (Category category, Movie movie) throws Exception {
+            String sql = "DELETE FROM CatMovie WHERE MovieID = ? AND CategoryId = ?;";
 
+            try (Connection connection = databaseConnector.getConnection();
+                 PreparedStatement statement = connection.prepareStatement(sql)) {
+                // Bind parameters
+                statement.setInt(1, movie.getId());
+                statement.setInt(2, category.getId());
+
+                // Run the specified SQL Statement
+                statement.executeUpdate();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+                throw new Exception("Failed to delete category from movie", e);
+            }
         }
-
-
-
-
 
         @Override
         public void deleteCategory (Category category) throws Exception {
