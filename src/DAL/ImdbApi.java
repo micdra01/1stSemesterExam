@@ -119,8 +119,13 @@ public class ImdbApi implements IImdbAPI {
                 //picture link
                 String pictureLinkRaw = httpResult.substring(httpResult.lastIndexOf("url\":\"") + 6);
                 String picture = pictureLinkRaw.substring(0, pictureLinkRaw.indexOf("\","));
+
+                //year of release
+                String yearOfReleaseRaw = httpResult.substring(httpResult.lastIndexOf(",\"year\":") + 8 );
+                String yearOfRelease = yearOfReleaseRaw.substring(0, yearOfReleaseRaw.indexOf(",\""));
+
                 //makes imdbInfo object from response info
-                ImdbInfo imdbInfo = new ImdbInfo(movieId, title, picture);
+                ImdbInfo imdbInfo = new ImdbInfo(movieId, title, picture, yearOfRelease);
                 resultList.add(imdbInfo);
             }
         }
