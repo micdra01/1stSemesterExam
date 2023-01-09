@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.media.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
@@ -18,7 +13,7 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="movieView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" pannable="true" prefHeight="440.0" prefWidth="860.0" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MovieController">
+<ScrollPane fx:id="movieView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" pannable="true" prefHeight="440.0" prefWidth="860.0" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MovieController">
    <content>
       <VBox>
          <children>
@@ -76,11 +71,6 @@
                     <items>
                       <MenuItem mnemonicParsing="false" text="Action 1" />
                       <MenuItem mnemonicParsing="false" text="Action 2" />
-                        <MenuItem mnemonicParsing="false">
-                           <graphic>
-                              <Button  alignment="CENTER" contentDisplay="TEXT_ONLY" mnemonicParsing="false" onAction="#handleAddCategory" snapToPixel="false" text="➕ Add" />
-                           </graphic>
-                        </MenuItem>
                     </items>
                   </MenuButton>
                   <HBox layoutX="660.0" layoutY="31.0" prefHeight="30.0" prefWidth="100.0">

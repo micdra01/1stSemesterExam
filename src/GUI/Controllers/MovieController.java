@@ -102,7 +102,7 @@ public class MovieController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
+    
 }
 
 
