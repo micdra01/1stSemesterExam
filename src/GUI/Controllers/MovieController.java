@@ -5,12 +5,22 @@ import BE.Movie;
 import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaView;
+import javafx.scene.text.Font;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -49,6 +59,7 @@ public class MovieController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //mediaView.setMediaPlayer(new MediaPlayer(new Media("/Movies/mp4 sample.mp4")));
@@ -63,6 +74,8 @@ public class MovieController implements Initializable {
         this.movie = movie;
         lblTittle.setText(movie.getTitle());
     }
+
+
 
     public void handleSaveCategory(ActionEvent actionEvent) throws Exception {
 

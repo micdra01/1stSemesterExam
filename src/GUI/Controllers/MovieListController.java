@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -126,6 +127,7 @@ public class MovieListController implements Initializable {
             Movie movie = movieModel.getMoviesInList().get(i);
 
             GridPane movieCard = createMovieCard(movie);//creates the movie card
+
             grid.add(movieCard, col, row);//adds it to the content gridPane
 
             //makes a space between all movies
@@ -152,89 +154,21 @@ public class MovieListController implements Initializable {
      * @return
      */
     private GridPane createMovieCard(Movie movie) {
-        GridPane movieCard = null;
-        //loads the movieCard fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieCard.fxml"));
+        Parent root = null;
+
         try {
-            movieCard = FXMLLoader.load(getClass().getResource("/GUI/Views/MovieCard.fxml"));
+
+            root = loader.load();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            new Exception("Failed to make MovieCard'", e);
         }
 
-
-        Image img = new Image(movie.getPictureFileLink());
-        ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it
-        imgView.setPreserveRatio(true);
-        imgView.setFitWidth(200);
-        imgView.setFitHeight(200);
-
-        //creates a label with the title of the movieCard
-        Label lblTitle = new Label(movie.getTitle());
-
-        // creates a label with the rating info on
-        String rating = String.valueOf(movie.getImdbRating());
-        Label lblRating = new Label(rating);
-
-        //sets the movieCard information labels on the movieCard gridPane
-        movieCard.add(imgView, 0, 0);
-        movieCard.add(lblTitle, 0, 1);
-        movieCard.add(lblRating, 2, 1);
+        MovieCardController controller = loader.getController();
+        GridPane movieCard = controller.createMovieCard(movie);
+        return  movieCard;
 
 
-        Label lblTitleCard = new Label("");
-        lblTitleCard.setFont(Font.font(20));
-        lblTitleCard.setWrapText(true);
-
-        Label lblDescriptionCard = new Label("");
-        lblDescriptionCard.setMinSize(130,130);
-        lblDescriptionCard.setWrapText(true);
-
-        VBox vBox1 = new VBox(lblTitleCard, lblDescriptionCard);
-        movieCard.add(vBox1, 0,0);
-
-        Button btnPlay = new Button();
-        Button btnInfo = new Button();
-
-
-        VBox vBox = new VBox(btnPlay, btnInfo);
-        btnPlay.setText("play");
-        btnInfo.setText("se info");
-        vBox.setAlignment(Pos.CENTER);
-        movieCard.add(vBox, 2,0);
-
-
-        btnPlay.setOpacity(0);
-        btnInfo.setOpacity(0);
-
-        btnInfo.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                mainController.openMovieInfo(movie);
-            }
-        });
-        movieCard.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                imgView.setOpacity(0.3);
-                btnPlay.setOpacity(1);
-                btnInfo.setOpacity(1);
-
-                lblTitleCard.setText(movie.getTitle());
-                lblDescriptionCard.setText("forklaring og info om filmen bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla");
-            }
-        });
-        movieCard.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imgView.setOpacity(1);
-                btnPlay.setOpacity(0);
-                btnInfo.setOpacity(0);
-                lblTitleCard.setText("");
-                lblDescriptionCard.setText("");
-            }
-        });
-        return movieCard; // the finished movieCard with information
     }
 
     public void setMovieModel(MovieModel movieModel) {
