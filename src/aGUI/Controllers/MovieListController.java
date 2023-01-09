@@ -1,15 +1,13 @@
-package GUI.Controllers;
+package aGUI.Controllers;
 
 import BE.Movie;
-import GUI.Models.MovieModel;
+import aGUI.Models.MovieModel;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
-import javafx.geometry.VerticalDirection;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 
@@ -18,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
@@ -100,7 +97,7 @@ public class MovieListController implements Initializable {
         GridPane movieCard = null;
         //loads the movieCard fxml
         try {
-            movieCard = FXMLLoader.load(getClass().getResource("/GUI/Views/MovieCard.fxml"));
+            movieCard = FXMLLoader.load(getClass().getResource("/aGUI/Views/MovieCard.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

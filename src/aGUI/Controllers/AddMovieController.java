@@ -1,19 +1,16 @@
-package GUI.Controllers;
+package aGUI.Controllers;
 
 import BE.Movie;
-import GUI.Models.MovieModel;
+import aGUI.Models.MovieModel;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.ResourceBundle;
 
 public class AddMovieController{
     public TextField textImageFile, textTrailerFile, textIMDBRating, textCategory, textTitle, textMovieFile;

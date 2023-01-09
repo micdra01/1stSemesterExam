@@ -1,4 +1,4 @@
-package GUI.Models;
+package aGUI.Models;
 
 import BE.Category;
 import BE.Movie;

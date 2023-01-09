@@ -1,12 +1,8 @@
-package GUI.Controllers;
+package aGUI.Controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class MovieCardController {
 

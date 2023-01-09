@@ -11,7 +11,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MainWindowView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/aGUI/Views/MainWindowView.fxml"));
         Parent root = loader.load();
         primaryStage.setScene(new Scene(root));
         primaryStage.setMinWidth(350);
