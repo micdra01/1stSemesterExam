@@ -52,7 +52,7 @@ public interface ICategoryDAO {
      * @param category the category we want movies from
      * @return a list of all movies with a specific category
      */
-    public List<Movie> readAllMovieInCategory(Category category) throws Exception;
+    public List<Movie> readAllMoviesInCategory(Category category) throws Exception;
 
     /**
      * gets all categories from a specific movie

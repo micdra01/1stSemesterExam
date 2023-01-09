@@ -131,24 +131,5 @@ public class MainController {
 
         MovieController controller = loader.getController();
         controller.setCategoryModel(categoryModel);
-        System.out.println(categoryModel);
-
     }
-
-    public void handleSaveCategory(ActionEvent actionEvent) throws Exception {
-
-        int id = -1;
-        String title = textCategoryName.getText();
-        ArrayList<Movie> movieList = null;
-
-        Category category = new Category(id, title, movieList);
-
-        categoryModel.createCategory(category);
-    }
-
-    public void setCategoryModel(CategoryModel categoryModel){
-        this.categoryModel = categoryModel;
-    }
-
-
 }

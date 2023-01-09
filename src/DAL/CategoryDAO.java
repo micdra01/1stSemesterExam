@@ -135,7 +135,7 @@ public class CategoryDAO implements ICategoryDAO {
 
 
         @Override
-        public List<Movie> readAllMovieInCategory (Category category) throws Exception {
+        public List<Movie> readAllMoviesInCategory(Category category) throws Exception {
             return null;
         }
 

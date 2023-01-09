@@ -56,6 +56,7 @@ public class MovieController implements Initializable {
         Category category = new Category(id, title, null);
 
         categoryModel.createCategory(category);
+        System.out.println(categoryModel.getAllCategories());
     }
 
     public void setCategoryModel(CategoryModel categoryModel){
