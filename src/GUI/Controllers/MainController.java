@@ -78,8 +78,20 @@ public class MainController implements Initializable {
     }*/
 
     public void handleHome(ActionEvent actionEvent) throws IOException {
-        VBox home = FXMLLoader.load(getClass().getResource("/GUI/Views/HomeView.fxml"));
-        borderPane.setCenter(home);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/HomeView.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            new Exception("Failed to open 'Home'", e);
+        }
+
+        MovieListController controller = loader.getController();
+        controller.setMovieModel(movieModel);
+        controller.setMainController(this);
+        borderPane.setCenter(root);
+
         textSceneTitle.setText("Home");
     }
 
@@ -138,7 +150,7 @@ public class MainController implements Initializable {
 
         MovieController controller = loader.getController();
         controller.setMovieModel(movieModel);
-
+        controller.setMovie(movie);
         borderPane.setCenter(root);
 
     }
