@@ -2,7 +2,10 @@ package DAL;
 
 import BE.Movie;
 import DAL.Interfaces.IMovieDAO;
+import DAL.Util.FileType;
+import DAL.Util.LocalFileHandler;
 
+import java.nio.file.Path;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +32,18 @@ public class MovieDAO implements IMovieDAO {
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
+            Path relativeCoverPath = !movie.getPictureFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getPictureFileLink(), FileType.IMAGE) : null;
+            Path relativeMoviePath = !movie.getMovieFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getMovieFileLink(), FileType.MOVIE) : null;
+            Path relativeTrailerPath = !movie.getTrailerFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getTrailerFileLink(), FileType.TRAILER) : null;
+
+
             //gets all variables from movie and saves
             String title = movie.getTitle();
             double pR = movie.getPersonalRating();
             double iR = movie.getImdbRating();
-            String movieLink = movie.getMovieFileLink();
-            String pictureLink = movie.getPictureFileLink();
-            String trailerLink = movie.getTrailerFileLink();
+            String movieLink = relativeMoviePath != null ? String.valueOf(relativeMoviePath) : "";
+            String pictureLink = relativeCoverPath != null ? String.valueOf(relativeCoverPath) : "";
+            String trailerLink = relativeTrailerPath != null ? String.valueOf(relativeTrailerPath) : "";
             Timestamp tS = movie.getLastViewed();
             //binds all movie variables to statement
             statement.setString(1, title);

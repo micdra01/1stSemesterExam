@@ -3,20 +3,25 @@ package GUI.Controllers;
 import BE.Category;
 import GUI.Models.CategoryModel;
 import javafx.event.ActionEvent;
+import BE.Movie;
 import GUI.Models.MovieModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaView;
+import javafx.scene.text.Font;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MovieController implements Initializable {
+
+    public Label lblTittle;
     public Button btnAddCategory;
     public Button btnSaveCategory;
 
@@ -33,6 +38,9 @@ public class MovieController implements Initializable {
     public AnchorPane anchorPane;
 
     private MovieModel movieModel;
+
+    private Movie movie;
+
 
     private Category selectedCategory;
 
@@ -52,10 +60,13 @@ public class MovieController implements Initializable {
         populateCategories();
     }
 
-
-
     public void setMovieModel(MovieModel movieModel) {
         this.movieModel = movieModel;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+        lblTittle.setText(movie.getTitle());
     }
 
     public void handleSaveCategory(ActionEvent actionEvent) throws Exception {
@@ -98,3 +109,5 @@ public class MovieController implements Initializable {
     }
 
 }
+
+
