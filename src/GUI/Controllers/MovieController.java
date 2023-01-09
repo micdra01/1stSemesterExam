@@ -8,15 +8,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaView;
 
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class MovieController implements Initializable {
 
-    public Label lblTittle;
+    @FXML
+    private ImageView imageMoviePoster;
+    @FXML
+    private Label labelTitle, labelIMDBRating, labelPersonalRating, labelLastViewed;
     public Button btnAddCategory;
     public Button btnSaveCategory;
 
@@ -61,7 +68,11 @@ public class MovieController implements Initializable {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
-        lblTittle.setText(movie.getTitle());
+        labelTitle.setText(movie.getTitle());
+        labelIMDBRating.setText(String.valueOf(movie.getImdbRating()));
+        labelPersonalRating.setText(String.valueOf(movie.getPersonalRating()));
+        labelLastViewed.setText(String.valueOf(movie.getLastViewed()));
+        imageMoviePoster.setImage(new Image(movie.getPictureFileLink()));
     }
 
     public void handleSaveCategory(ActionEvent actionEvent) throws Exception {
