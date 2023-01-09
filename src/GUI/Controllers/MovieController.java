@@ -52,7 +52,7 @@ public class MovieController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //mediaView.setMediaPlayer(new MediaPlayer(new Media("/Movies/mp4 sample.mp4")));
-        populateCategories();
+       // populateCategories();
     }
 
     public void setMovieModel(MovieModel movieModel) {

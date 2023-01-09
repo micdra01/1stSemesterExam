@@ -78,7 +78,7 @@
                       <MenuItem mnemonicParsing="false" text="Action 2" />
                         <MenuItem mnemonicParsing="false">
                            <graphic>
-                              <Button fx:id="btnAddCategory" alignment="CENTER" contentDisplay="TEXT_ONLY" mnemonicParsing="false" onAction="#handleAddCategory" snapToPixel="false" text="➕ Add" />
+                              <Button  alignment="CENTER" contentDisplay="TEXT_ONLY" mnemonicParsing="false" onAction="#handleAddCategory" snapToPixel="false" text="➕ Add" />
                            </graphic>
                         </MenuItem>
                     </items>

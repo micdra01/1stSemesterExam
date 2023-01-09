@@ -160,14 +160,15 @@ public class MainController implements Initializable {
 
         try {
             root = loader.load();
+
         } catch (IOException e) {
             new Exception("Failed to show 'movie info'", e);
         }
 
         MovieController controller = loader.getController();
+        borderPane.setCenter(root);
         controller.setMovieModel(movieModel);
         controller.setMovie(movie);
-        borderPane.setCenter(root);
 
     }
 

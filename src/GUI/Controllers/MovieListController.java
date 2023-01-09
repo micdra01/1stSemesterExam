@@ -193,6 +193,8 @@ public class MovieListController implements Initializable {
 
         Button btnPlay = new Button();
         Button btnInfo = new Button();
+
+
         VBox vBox = new VBox(btnPlay, btnInfo);
         btnPlay.setText("play");
         btnInfo.setText("se info");
@@ -206,6 +208,7 @@ public class MovieListController implements Initializable {
         btnInfo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 mainController.openMovieInfo(movie);
             }
         });
