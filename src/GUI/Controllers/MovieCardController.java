@@ -1,5 +1,6 @@
 package GUI.Controllers;
 
+import BE.Movie;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -14,6 +15,7 @@ public class MovieCardController {
     private GridPane movieCard;
     @FXML
     private Label lblMovieCard;
+
 
 
 }
