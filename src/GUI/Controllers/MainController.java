@@ -276,6 +276,10 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Loads AddCategoryView FXML and populates the category listview.
+     * @param event
+     */
     public void handleAddCategory(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/AddCategoryView.fxml"));
         Parent root = null;
@@ -286,13 +290,9 @@ public class MainController implements Initializable {
             new Exception("Failed to open 'Add category'", e);
         }
 
-        Stage stage = new Stage();
-        stage.setTitle("Add Category");
-        stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-
-        MovieController controller = loader.getController();
+        AddCategoryController controller = loader.getController();
+        borderPane.setCenter(root);
         controller.setCategoryModel(categoryModel);
+        controller.populateCategories();
     }
 }
