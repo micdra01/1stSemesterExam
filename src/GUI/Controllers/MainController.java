@@ -196,7 +196,14 @@ public class MainController implements Initializable {
                 labelMinRating.setText("Min. Rating: " + df.format(minRating));
             }
         });
-        //TODO Add Listener for changes in selected categories
+        //TODO Add better Listener for changes in selected categories
+        searchMenuBtnCategory.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setSearchNodes(false);
+                btnSearch.setText("🔍");
+            }
+        });
     }
 
     /**
