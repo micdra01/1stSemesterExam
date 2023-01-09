@@ -53,6 +53,9 @@ public class AddCategoryController {
         }
     }
 
+    /**
+     * Loops through getAllCategories list and adds category objects to listview.
+     */
     public void populateCategories(){
         try {
             for (Category category : categoryModel.getAllCategories()) {
