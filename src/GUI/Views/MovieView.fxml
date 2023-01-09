@@ -108,7 +108,7 @@
                                        </font>
                                     </Button>
                                     <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="40.0" visible="false" HBox.hgrow="ALWAYS" />
-                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Play movie" HBox.hgrow="ALWAYS">
+                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handlePlayMovie" prefHeight="40.0" prefWidth="150.0" text="Play movie" HBox.hgrow="ALWAYS">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
