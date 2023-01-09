@@ -5,6 +5,8 @@ import BE.Movie;
 import BLL.CategoryManager;
 import BLL.Interfaces.ICategoryManager;
 
+import java.util.List;
+
 public class CategoryModel {
 
     private ICategoryManager categoryManager;
@@ -24,10 +26,18 @@ public class CategoryModel {
 
     public void addMovieToCategory(Category category, Movie movie) throws Exception {
 
-        //Movie mMovie = categoryManager.addMovieToCategory(category, movie);
-        //System.out.println(mMovie);
+        //Movie movie = categoryManager.addMovieToCategory(category, movie);
 
 
+    }
+
+    /**
+     * Return a list of Category objects.
+     * @return A list of all Categories.
+     * @throws Exception throws exception if it fails to return a list of categories objects.
+     */
+    public List<Category> getAllCategories() throws Exception {
+        return categoryManager.getAllCategories();
     }
 }
 

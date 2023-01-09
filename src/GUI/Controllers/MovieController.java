@@ -40,36 +40,12 @@ public class MovieController implements Initializable {
 
     }
 
-    public void handleAddCategory(ActionEvent actionEvent) throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/AddCategoryView.fxml"));
-        Parent root = null;
-
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            new Exception("Failed to open 'Add category'", e);
-        }
-
-        Stage stage = new Stage();
-        stage.setTitle("Add Category");
-        stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-
-        MovieController controller = loader.getController();
-        controller.setCategoryModel(categoryModel);
-        System.out.println(categoryModel);
-
-    }
-
     public void handleSaveCategory(ActionEvent actionEvent) throws Exception {
 
         int id = -1;
         String title = textCategoryName.getText();
-        ArrayList<Movie> movieList = null;
 
-        Category category = new Category(id, title, movieList);
+        Category category = new Category(id, title, null);
 
         categoryModel.createCategory(category);
     }
