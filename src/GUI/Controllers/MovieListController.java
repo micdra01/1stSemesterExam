@@ -79,16 +79,15 @@ public class MovieListController implements Initializable {
         int row = 0;
         //loop for creating each movieCard and setting movie info
         for (int i = 0; movieModel.getMoviesInList().size() > i; i++) {
+            Movie movie = movieModel.getMoviesInList().get(i);
 
-            GridPane movieCard = createMovieCard(i);//creates the movie card
+            GridPane movieCard = createMovieCard(movie);//creates the movie card
             grid.add(movieCard, col, row);//adds it to the content gridPane
 
             //makes a space between all movies
             col++;
             grid.add(new Separator(Orientation.HORIZONTAL), col, row);
             col++;
-
-            movieCardOnClickListener(i, movieCard);//creates the listener for each card
         }
     }
 
@@ -107,15 +106,13 @@ public class MovieListController implements Initializable {
         //loop for creating each movieCard and setting movie info
         for (Movie movie : movieModel.getMoviesInList()) {
             if (movie.getImdbRating() > minRatingPopular) {
-                GridPane movieCard = createMovieCard(movieModel.getMoviesInList().indexOf(movie));//creates the movie card
+                GridPane movieCard = createMovieCard(movie);//creates the movie card
                 grid.add(movieCard, col, row);//adds it to the content gridPane
 
                 //makes a space between all movies
                 col++;
                 grid.add(new Separator(Orientation.HORIZONTAL), col, row);
                 col++;
-
-                movieCardOnClickListener(movieModel.getMoviesInList().indexOf(movie), movieCard);//creates the listener for each card
             }
         }
     }
