@@ -71,8 +71,9 @@ public class MovieListController implements Initializable {
         int row = 0;
         //loop for creating each movieCard and setting movie info
         for (int i = 0; movieModel.getMoviesInList().size() > i; i++) {
+            Movie movie = movieModel.getMoviesInList().get(i);
 
-            GridPane movieCard = createMovieCard(movieModel.getMoviesInList().get(i));//creates the movie card
+            GridPane movieCard = createMovieCard(movie);//creates the movie card
             grid.add(movieCard, col, row);//adds it to the content gridPane
 
             //makes a space between all movies
@@ -96,7 +97,7 @@ public class MovieListController implements Initializable {
     /**
      * create the movieCard gridPane and fills it with info from chosen movie
      * picture, title and rating
-     * @param movie
+     * @param movie, the specific movie in the list
      * @return
      */
     private GridPane createMovieCard(Movie movie) {
