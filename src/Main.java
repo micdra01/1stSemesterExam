@@ -21,11 +21,10 @@ public class Main extends Application {
 
         //Shows alert box when loading main window
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("1");
-        alert.setContentText("2");
-        alert.setHeaderText("HT");
+        alert.setTitle("Alert");
+        alert.setContentText("Hover movie to delete");
+        alert.setHeaderText("Following movies has not been watched for two or more years" + "\n" + "or has a personal rating of 6 or lower");
         alert.show();
-
     }
 }
 

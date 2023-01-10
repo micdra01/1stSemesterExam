@@ -22,6 +22,8 @@ import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 /**
@@ -31,12 +33,16 @@ import java.util.ResourceBundle;
 
 public class MovieListController implements Initializable {
 
-    public ScrollPane movieListView, homeView, listAllMovies, listPopular, listTrending;
+    public ScrollPane movieListView, homeView, listAllMovies, listPopular, listTrending, warningView, listLowRating, listLowAndLast, listLastViewed;
+
     @FXML
     private MovieModel movieModel;
 
     MainController mainController;
     private double minRatingPopular = 8.2;
+
+    private double lowRating = 6.0;
+
 
 
     @Override
@@ -55,7 +61,106 @@ public class MovieListController implements Initializable {
             createPopularList();
             createAllMoviesList();
         }
+        if (warningView != null){
+            createLowRatedList();
+            createLastViewedList();
+            createLowAndLastList();
+        }
     }
+
+
+
+    private void createLastViewedList() {
+
+        GridPane grid = new GridPane();
+        listLastViewed.setContent(grid);
+
+        int col = 0;
+        int row = 0;
+
+        for (Movie movie : movieModel.getMoviesInList()){
+
+            if (movie.getLastViewed().before(Date.valueOf(LocalDate.now().minusYears(2)))){
+                GridPane movieCard = createMovieCard(movie);
+                grid.add(movieCard, col, row);
+
+                col++;
+                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
+                col++;
+            }
+        }
+
+    }
+    private void createLowAndLastList() {
+
+        GridPane grid = new GridPane();
+        listLowAndLast.setContent(grid);
+
+        int col = 0;
+        int row = 0;
+
+        for (Movie movie : movieModel.getMoviesInList()){
+            if(movie.getPersonalRating() < lowRating && movie.getLastViewed().before(Date.valueOf(LocalDate.now().minusYears(2)))) {
+                GridPane movieCard = createMovieCard(movie);
+                grid.add(movieCard, col, row);
+                col++;
+                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
+                col++;
+            }
+
+
+
+        }
+
+    }
+    private void createLowRatedList() {
+
+        GridPane grid = new GridPane();
+        listLowRating.setContent(grid);
+
+        //used for placing
+        int col = 0;
+        int row = 0;
+
+        for (Movie movie : movieModel.getMoviesInList()){
+            if(movie.getPersonalRating() < lowRating){
+                GridPane movieCard = createMovieCard(movie); //creates the movie card
+                grid.add(movieCard, col, row); //adds it to the content gridPane
+
+                col++;
+                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
+                col++;
+            }
+        }
+    }
+
+
+    /**
+     * creates the gridPane for the Popular list
+     * fills it with movies from list
+     */
+    private void createPopularList() {
+        //Create a grid in the ScrollPane to hold all movies
+        GridPane grid = new GridPane();
+        listPopular.setContent(grid);
+
+        //used for placing
+        int col = 0;
+        int row = 0;
+        //loop for creating each movieCard and setting movie info
+        for (Movie movie : movieModel.getMoviesInList()) {
+            if (movie.getImdbRating() > minRatingPopular) {
+                GridPane movieCard = createMovieCard(movie);//creates the movie card
+                grid.add(movieCard, col, row);//adds it to the content gridPane
+
+                //makes a space between all movies
+                col++;
+                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
+                col++;
+            }
+        }
+    }
+
 
     /**
      * creates the gridPane for the All Movies list
@@ -83,31 +188,7 @@ public class MovieListController implements Initializable {
         }
     }
 
-    /**
-     * creates the gridPane for the Popular list
-     * fills it with movies from list
-     */
-    private void createPopularList() {
-        //Create a grid in the ScrollPane to hold all movies
-        GridPane grid = new GridPane();
-        listPopular.setContent(grid);
 
-        //used for placing
-        int col = 0;
-        int row = 0;
-        //loop for creating each movieCard and setting movie info
-        for (Movie movie : movieModel.getMoviesInList()) {
-            if (movie.getImdbRating() > minRatingPopular) {
-                GridPane movieCard = createMovieCard(movie);//creates the movie card
-                grid.add(movieCard, col, row);//adds it to the content gridPane
-
-                //makes a space between all movies
-                col++;
-                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
-                col++;
-            }
-        }
-    }
 
     /**
      * creates the gridPane for movieContent

@@ -70,6 +70,7 @@ public class MainController implements Initializable {
         //Loads all current categories in the category dropdown (both in sidebar & in search bar).
         //Perhaps this should only happen when each of them is clicked to improve load time?
         try {
+            handleWarning();
             initializeCategoryMenu();
         } catch (Exception e) {
             new Exception(e);
@@ -105,6 +106,24 @@ public class MainController implements Initializable {
         borderPane.setCenter(root);
 
         textSceneTitle.setText("Home");
+    }
+
+    public void handleWarning() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/WarningView.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            new Exception("Failed to open 'Warning'", e);
+        }
+
+        MovieListController controller = loader.getController();
+        controller.setMovieModel(movieModel);
+        controller.setMainController(this);
+        borderPane.setCenter(root);
+
+        textSceneTitle.setText("Warning");
     }
 
 
