@@ -28,7 +28,7 @@ public class MovieController implements Initializable {
     @FXML
     private ImageView imageMoviePoster;
     @FXML
-    private Label labelTitle, labelIMDBRating, labelPersonalRating, labelLastViewed;
+    private Label labelTitle, labelYear, labelIMDBRating, labelPersonalRating, labelLastViewed;
     public Button btnAddCategory;
     public Button btnSaveCategory;
 
@@ -74,6 +74,7 @@ public class MovieController implements Initializable {
     public void setMovie(Movie movie) {
         this.movie = movie;
         labelTitle.setText(movie.getTitle());
+        labelYear.setText(String.valueOf(movie.getYearOfRelease()));
         labelIMDBRating.setText(String.valueOf(movie.getImdbRating()));
         labelPersonalRating.setText(String.valueOf(movie.getPersonalRating()));
         labelLastViewed.setText(String.valueOf(movie.getLastViewed()));

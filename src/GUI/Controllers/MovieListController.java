@@ -20,6 +20,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -210,6 +212,18 @@ public class MovieListController implements Initializable {
             public void handle(ActionEvent event) {
 
                 mainController.openMovieInfo(movie);
+            }
+        });
+
+        btnPlay.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    String moviePath = new File(movie.getMovieFileLink()).getAbsolutePath();
+                    Desktop.getDesktop().open(new File(moviePath));
+                } catch (IOException e) {
+                    new Exception("Failed to play movie"+e);
+                }
             }
         });
         movieCard.setOnMouseEntered(new EventHandler<MouseEvent>() {
