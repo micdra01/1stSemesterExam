@@ -78,9 +78,11 @@ public class AddMovieController{
         //todo next 3 variables should take the name of the file and send down so it can make the file link in dal
         String movieLink = movieFile != null ? movieFile.getAbsolutePath() : "";
         String coverPath = movieCover != null ? movieCover.getAbsolutePath() : "";//gets the absolute path for the file
-        String trailerLink = trailerFile != null ? trailerFile.getAbsolutePath() : "";
         Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
-        Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, trailerLink, lastViewed);
+        int yearOfRelease = 1950;//todo skal hentes fra imdb api
+        String movieDescription = "film beskrivelse hvor der skal stå en masse";
+
+        Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed, yearOfRelease, movieDescription);
 
         movieModel.createMovie(movie);
 
