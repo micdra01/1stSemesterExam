@@ -71,7 +71,7 @@ public class CategoryController {
     }
 
     /**
-     * Loops through AllCategories list and adds category objects to listview.
+     * Loops through list of all categories and adds category objects to listview.
      */
     public void populateCategories(){
         try {
