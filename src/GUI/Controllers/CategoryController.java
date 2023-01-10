@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
-public class AddCategoryController {
+public class CategoryController {
 
     public Button btbDeleteCategory;
     public ListView listCategories;
@@ -17,7 +17,7 @@ public class AddCategoryController {
     private Category selectedCategory;
 
 
-    public AddCategoryController(){
+    public CategoryController(){
         try {
             categoryModel = new CategoryModel();
         } catch (Exception e) {

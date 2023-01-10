@@ -9,15 +9,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -281,7 +278,7 @@ public class MainController implements Initializable {
      * @param event
      */
     public void handleAddCategory(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/AddCategoryView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/CategoryView.fxml"));
         Parent root = null;
 
         try {
@@ -290,7 +287,7 @@ public class MainController implements Initializable {
             new Exception("Failed to open 'Add category'", e);
         }
 
-        AddCategoryController controller = loader.getController();
+        CategoryController controller = loader.getController();
         borderPane.setCenter(root);
         controller.setCategoryModel(categoryModel);
         controller.populateCategories();
