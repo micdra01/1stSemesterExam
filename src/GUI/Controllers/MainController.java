@@ -44,6 +44,8 @@ public class MainController implements Initializable {
     private Button btnSearch;
     @FXML
     private Label textSceneTitle, labelMinRating;
+
+
     @FXML
     private BorderPane borderPane;
 
@@ -105,7 +107,6 @@ public class MainController implements Initializable {
 
         MovieListController controller = loader.getController();
         controller.setMovieModel(movieModel);
-        controller.setMainController(this);
         borderPane.setCenter(root);
 
         textSceneTitle.setText("Home");
@@ -128,13 +129,14 @@ public class MainController implements Initializable {
             new Exception("Failed to open 'open all movies'", e);
         }
 
+
         movieListController = loader.getController();
         movieListController.setMovieModel(movieModel);
-        movieListController.setMainController(this);
         borderPane.setCenter(root);
 
         textSceneTitle.setText("all movies");
     }
+
 
     public void handleAddMovie(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/AddMovieView.fxml"));
@@ -154,23 +156,6 @@ public class MainController implements Initializable {
         textSceneTitle.setText("Add Movie");
     }
 
-    public void openMovieInfo(Movie movie){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieView.fxml"));
-        Parent root = null;
-
-        try {
-            root = loader.load();
-
-        } catch (IOException e) {
-            new Exception("Failed to show 'movie info'", e);
-        }
-
-        MovieController controller = loader.getController();
-        borderPane.setCenter(root);
-        controller.setMovieModel(movieModel);
-        controller.setMovie(movie);
-
-    }
 
     public void handleSearch() {
         try {
@@ -295,4 +280,28 @@ public class MainController implements Initializable {
         MovieController controller = loader.getController();
         controller.setCategoryModel(categoryModel);
     }
+
+    public void openMovieInfo(Movie movie){
+        FXMLLoader loader = new FXMLLoader(MainController.class.getResource("/GUI/Views/MovieView.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+
+        } catch (IOException e) {
+            new Exception("Failed to show 'movie info'", e);
+        }
+
+        MovieController controller = loader.getController();
+
+        //borderPane.setCenter(root);
+        controller.setMovieModel(movieModel);
+        controller.setMovie(movie);
+
+
+    }
+    public BorderPane getBorderPane(){
+        return borderPane;
+    }
+
 }

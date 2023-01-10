@@ -165,7 +165,11 @@ public class MovieListController implements Initializable {
         }
 
         MovieCardController controller = loader.getController();
+        controller.setMovieModel(movieModel);
+
+
         GridPane movieCard = controller.createMovieCard(movie);
+
         return  movieCard;
 
 
@@ -175,7 +179,5 @@ public class MovieListController implements Initializable {
         this.movieModel = movieModel;
     }
 
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
+
 }

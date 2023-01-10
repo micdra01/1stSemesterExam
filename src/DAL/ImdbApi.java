@@ -13,6 +13,13 @@ import java.util.List;
 
 public class ImdbApi implements IImdbAPI {
 
+    /**
+     *
+     * @param searchWord
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
    public ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws IOException, InterruptedException {
        String searchWordString = searchWord.replace(" ", "%20");
 

@@ -1,19 +1,25 @@
 package GUI.Controllers;
 
 import BE.Movie;
+import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+
+import java.io.IOException;
 
 public class MovieCardController {
 
@@ -22,8 +28,19 @@ public class MovieCardController {
     @FXML
     private Label lblMovieCard;
 
+    private Parent borderPane;
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
     private MainController mainController;
 
+    public void setMovieModel(MovieModel movieModel) {
+        this.movieModel = movieModel;
+    }
+
+    private MovieModel movieModel;
 
     /**
      * create the movieCard gridPane and fills it with info from chosen movie
@@ -34,7 +51,6 @@ public class MovieCardController {
      */
     public GridPane createMovieCard(Movie movie) {
         GridPane movieCard = new GridPane();
-
         //creates image
         Image img = new Image(movie.getPictureFileLink());
         ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it
@@ -92,8 +108,8 @@ public class MovieCardController {
         btnInfo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+             mainController.openMovieInfo(movie);
 
-                mainController.openMovieInfo(movie);
             }
         });
         movieCard.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -120,5 +136,8 @@ public class MovieCardController {
         });
         return movieCard; // the finished movieCard with information
     }
+
+
+
 
 }
