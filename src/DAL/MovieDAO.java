@@ -27,14 +27,13 @@ public class MovieDAO implements IMovieDAO {
     @Override
     public Movie createMovie(Movie movie) throws Exception {
         //sql string for creating a movie in Movies table
-        String sql = "INSERT INTO Movies (Title, PersonalRating, ImdbRating, MovieFileLink, PictureFileLink, TrailerFileLink, LastView) VALUES (?,?,?,?,?,?,?) ;";
+        String sql = "INSERT INTO Movies (Title, PersonalRating, ImdbRating, MovieFileLink, PictureFileLink, TrailerFileLink, LastView, YearOfRelease, MovieDescription) VALUES (?,?,?,?,?,?,?,?,?) ;";
         //get connection with database
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             Path relativeCoverPath = !movie.getPictureFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getPictureFileLink(), FileType.IMAGE) : null;
             Path relativeMoviePath = !movie.getMovieFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getMovieFileLink(), FileType.MOVIE) : null;
-            Path relativeTrailerPath = !movie.getTrailerFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getTrailerFileLink(), FileType.TRAILER) : null;
 
 
             //gets all variables from movie and saves
@@ -43,16 +42,19 @@ public class MovieDAO implements IMovieDAO {
             double iR = movie.getImdbRating();
             String movieLink = relativeMoviePath != null ? String.valueOf(relativeMoviePath) : "";
             String pictureLink = relativeCoverPath != null ? String.valueOf(relativeCoverPath) : "";
-            String trailerLink = relativeTrailerPath != null ? String.valueOf(relativeTrailerPath) : "";
             Timestamp tS = movie.getLastViewed();
+            int yearOfRelease = movie.getYearOfRelease();
+            String movieDescription = movie.getMovieDescription();
+
             //binds all movie variables to statement
             statement.setString(1, title);
             statement.setDouble(2, pR);
             statement.setDouble(3, iR);
             statement.setString(4, movieLink);
             statement.setString(5, pictureLink);
-            statement.setString(6, trailerLink);
-            statement.setTimestamp(7, tS);
+            statement.setTimestamp(6, tS);
+            statement.setInt(7, yearOfRelease);
+            statement.setString(8, movieDescription);
 
             statement.executeUpdate();//execute statement
 
@@ -63,7 +65,7 @@ public class MovieDAO implements IMovieDAO {
             }
 
             //creates the new movie object and sends it back
-            Movie generatedMovie =new Movie(id, title, pR, iR, movieLink, pictureLink, trailerLink, tS);
+            Movie generatedMovie =new Movie(id, title, pR, iR, movieLink, pictureLink, tS, yearOfRelease, movieDescription);
             return generatedMovie;
 
         }catch (SQLException e) {
@@ -121,11 +123,12 @@ public class MovieDAO implements IMovieDAO {
                 double imdbRating = rs.getDouble("ImdbRating");
                 String movieFileLink = rs.getString("MovieFileLink");
                 String pictureFileLink = rs.getString("PictureFileLink");
-                String trailerFileLink = rs.getString("TrailerFileLink");
                 Timestamp lastView = rs.getTimestamp("LastView");
+                int yearOfRelease = rs.getInt("yearOfRelease");
+                String movieDescription = rs.getString("MovieDescription");
 
                 //creates the movie and add it to the list allMovies
-                Movie movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink,trailerFileLink, lastView);
+                Movie movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink, lastView, yearOfRelease, movieDescription);
                 allMovies.add(movie);
             }
         }catch (Exception e){
@@ -144,7 +147,7 @@ public class MovieDAO implements IMovieDAO {
     @Override
     public void updateMovie(Movie movie) throws Exception {
         //UPDATE movies sql string
-        String sql = "UPDATE Movies SET  Title=?, PersonalRating=?, ImdbRating=?, MovieFileLink=?, PictureFileLink=?, TrailerFileLink=?, LastView=? WHERE Id=?;";
+        String sql = "UPDATE Movies SET  Title=?, PersonalRating=?, ImdbRating=?, MovieFileLink=?, PictureFileLink=?, LastView=?, YearOfRelease=?, movieDescription=? WHERE Id=?;";
 
         //get connection with database
         try (Connection connection = databaseConnector.getConnection();
@@ -155,9 +158,10 @@ public class MovieDAO implements IMovieDAO {
             statement.setDouble(3, movie.getImdbRating());
             statement.setString(4, movie.getMovieFileLink());
             statement.setString(5, movie.getPictureFileLink());
-            statement.setString(6, movie.getTrailerFileLink());
             statement.setTimestamp(7, movie.getLastViewed());
-            statement.setInt(8,movie.getId());
+            statement.setInt(8, movie.getYearOfRelease());
+            statement.setString(9, movie.getMovieDescription());
+            statement.setInt(10,movie.getId());
             //execute statement
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -195,9 +199,11 @@ public class MovieDAO implements IMovieDAO {
             String pictureFileLink = rs.getString("PictureFileLink");
             String trailerFileLink = rs.getString("TrailerFileLink");
             Timestamp lastView = rs.getTimestamp("LastView");
+            int yearOfRelease = rs.getInt("YearOfRelease");
+            String movieDescription = rs.getString("MovieDescription");
 
             //creates the movie and add it to the list allMovies
-            movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink,trailerFileLink, lastView);
+            movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink, lastView, yearOfRelease, movieDescription);
         }catch (SQLException e) {
             e.printStackTrace();
             throw new Exception("Failed to find movie", e);

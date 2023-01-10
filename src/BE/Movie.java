@@ -7,8 +7,12 @@ public class Movie {
     private int id;
 
     private double personalRating, imdbRating;
-    private String title, movieFileLink, pictureFileLink, trailerFileLink, category;
+    private String title, movieFileLink, pictureFileLink, category;
     private Timestamp lastViewed;
+
+    private int yearOfRelease;
+
+    private String movieDescription;
 
 
     /**
@@ -19,19 +23,19 @@ public class Movie {
      * @param imdbRating
      * @param movieFileLink
      * @param pictureFileLink
-     * @param trailerFileLink
      * @param lastViewed
      */
     public Movie(int id, String title, double personalRating, double imdbRating, String movieFileLink,
-                 String pictureFileLink, String trailerFileLink, Timestamp lastViewed) {
+                 String pictureFileLink, Timestamp lastViewed, int yearOfRelease, String movieDescription) {
         this.id = id;
         this.title = title;
         this.personalRating = personalRating;
         this.imdbRating = imdbRating;
         this.movieFileLink = movieFileLink;
         this.pictureFileLink = pictureFileLink;
-        this.trailerFileLink = trailerFileLink;
         this.lastViewed = lastViewed;
+        this.yearOfRelease = yearOfRelease;
+        this.movieDescription = movieDescription;
     }
 
     /**
@@ -42,18 +46,17 @@ public class Movie {
      * @param imdbRating
      * @param movieFileLink
      * @param pictureFileLink
-     * @param trailerFileLink
      * @param lastViewed
      */
-    public Movie(String title, double personalRating, double imdbRating, String movieFileLink,
-                 String pictureFileLink, String trailerFileLink, Timestamp lastViewed) {
+    public Movie(String title, double personalRating, double imdbRating, String movieFileLink, String pictureFileLink, Timestamp lastViewed, int yearOfRelease, String movieDescription) {
         this.title = title;
         this.personalRating = personalRating;
         this.imdbRating = imdbRating;
         this.movieFileLink = movieFileLink;
         this.pictureFileLink = pictureFileLink;
-        this.trailerFileLink = trailerFileLink;
         this.lastViewed = lastViewed;
+        this.yearOfRelease = yearOfRelease;
+        this.movieDescription = movieDescription;
     }
 
     public int getId() {
@@ -106,14 +109,6 @@ public class Movie {
         this.pictureFileLink = pictureFileLink;
     }
 
-    public String getTrailerFileLink() {
-        return trailerFileLink;
-    }
-
-    public void setTrailerFileLink(String trailerFileLink) {
-        this.trailerFileLink = trailerFileLink;
-    }
-
     public String getCategory() {
         return category;
     }
@@ -130,5 +125,19 @@ public class Movie {
         this.lastViewed = lastViewed;
     }
 
+    public int getYearOfRelease() {
+        return yearOfRelease;
+    }
 
+    public void setYearOfRelease(int yearOfRelease) {
+        this.yearOfRelease = yearOfRelease;
+    }
+
+    public String getMovieDescription() {
+        return movieDescription;
+    }
+
+    public void setMovieDescription(String movieDescription) {
+        this.movieDescription = movieDescription;
+    }
 }
