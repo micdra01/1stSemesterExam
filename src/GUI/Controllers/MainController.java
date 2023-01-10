@@ -76,6 +76,7 @@ public class MainController implements Initializable {
         //Perhaps this should only happen when each of them is clicked to improve load time?
         try {
             initializeCategoryMenu();
+            initializeCategorySearchMenu();
         } catch (Exception e) {
             new Exception("Failed to load categories", e);
         }
@@ -83,14 +84,17 @@ public class MainController implements Initializable {
 
 
     private void initializeCategoryMenu() throws Exception {
+        for (int i = 0; i < categoryModel.getAllCategories().size() ; i++) {
+            MenuItem menuItem = new MenuItem(categoryModel.getAllCategories().get(i).getTitle());
+            menuBtnCategory.getItems().add(menuItem);
+        }
+    }
+
+    private void initializeCategorySearchMenu() throws Exception {
         searchMenuBtnCategory.getItems().clear();
-        //TODO Add list of categories to the menuBtnCategory, something like this
         for (int i = 0; i < categoryModel.getAllCategories().size() ; i++) {
             CheckMenuItem checkMenuItem = new CheckMenuItem(categoryModel.getAllCategories().get(i).getTitle());
             searchMenuBtnCategory.getItems().add(checkMenuItem);
-
-            MenuItem menuItem = new MenuItem(categoryModel.getAllCategories().get(i).getTitle());
-            menuBtnCategory.getItems().add(menuItem);
         }
     }
 
@@ -190,7 +194,8 @@ public class MainController implements Initializable {
                                     .map(CheckMenuItem.class::cast).filter(CheckMenuItem::isSelected)
                                     .map(CheckMenuItem::getText).collect(Collectors.toList());
 
-                    movieModel.searchAdvanced(textSearch.getText(), sliderMinIMDBRating.getValue(), selectedCategories);
+                    movieModel.searchAdvanced(textSearch.getText(), sliderMinIMDBRating.getValue(), sliderMaxIMDBRating.getValue(),
+                            sliderMinPersonalRating.getValue(), sliderMaxPersonalRating.getValue(), selectedCategories);
                     setSearchNodes(false);
                 } else {
                     movieModel.search("");
@@ -284,15 +289,11 @@ public class MainController implements Initializable {
             labelMinPersonalRating.setText("0");
             labelMaxPersonalRating.setText("10");
 
-            /**
-             * This works, but seems to slow clearing a search down a lot
-             * TODO discuss: keep, improve or delete?
             try {
-                initializeCategoryMenu();
+                initializeCategorySearchMenu();
             } catch (Exception e) {
-                new Exception("Failed to load categories", e);
+                new Exception("Failed to reset categories", e);
             }
-             */
         }
     }
 

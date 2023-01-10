@@ -28,14 +28,20 @@ public class MovieSearcher {
      * Filter the list of movies using a search query
      * @param searchBase, the list of all movies
      * @param query, the string input used to filter
-     * @param minRating, the min. rating
+     * @param minIMDBRating, the min. IMDB Rating to search for
+     * @param maxIMDBRating, the max. IMDB Rating to search for
+     * @param minPersonalRating, the min. Personal Rating to search for
+     * @param maxPersonalRating, the max. Personal Rating to search for
      * @return a list of movies matching the query in title
      */
-    public List<Movie> searchAdvanced(List<Movie> searchBase, String query, double minRating, List<String> categories) {
+    public List<Movie> searchAdvanced(List<Movie> searchBase, String query, double minIMDBRating, double maxIMDBRating,
+                                      double minPersonalRating, double maxPersonalRating, List<String> categories) {
         List<Movie> searchResult = new ArrayList<>();
 
         for (Movie movie: searchBase) {
-            if(compareToTitle(query, movie) && compareToRating(minRating, movie) && (categories.isEmpty() || compareToCategory(categories, movie))) {
+            if(compareToTitle(query, movie) && compareToIMDBRating(minIMDBRating, maxIMDBRating, movie)
+                    && compareToPersonalRating(minPersonalRating, maxPersonalRating, movie)
+                    && (categories.isEmpty() || compareToCategory(categories, movie))) {
                 searchResult.add(movie);
             }
         }
@@ -55,12 +61,24 @@ public class MovieSearcher {
 
     /**
      * Helper method to check if the movie rating is higher than the min. rating
-     * @param query, the double input to search for
+     * @param minIMDBRating, the min. IMDB Rating to search for
+     * @param maxIMDBRating, the max. IMDB Rating to search for
      * @param movie, the movie to check
      * @return true if there is a match, false if not.
      */
-    private boolean compareToRating(double query, Movie movie) {
-        return movie.getImdbRating() > query;
+    private boolean compareToIMDBRating(double minIMDBRating, double maxIMDBRating, Movie movie) {
+        return movie.getImdbRating() >= minIMDBRating && movie.getImdbRating() <= maxIMDBRating;
+    }
+
+    /**
+     * Helper method to check if the movie rating is higher than the min. rating
+     * @param minPersonalRating, the min. IMDB Rating to search for
+     * @param maxPersonalRating, the max. IMDB Rating to search for
+     * @param movie, the movie to check
+     * @return true if there is a match, false if not.
+     */
+    private boolean compareToPersonalRating(double minPersonalRating, double maxPersonalRating, Movie movie) {
+        return movie.getPersonalRating() >= minPersonalRating && movie.getPersonalRating() <= maxPersonalRating;
     }
 
     /**

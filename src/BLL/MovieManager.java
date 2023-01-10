@@ -76,13 +76,15 @@ public class MovieManager implements IMovieManager {
     /**
      * Filter the list of movies in library using a search query, min. rating & category selection
      * @param query, the string input used to filter
-     * @param minRating, the min. rating
+     * @param minIMDBRating, the min. rating
      * @return a list of movies matching the query in title & the min. rating
      * @throws Exception If it fails to search.
      */
-    public List<Movie> searchAdvanced(String query, double minRating, List<String> categories) throws Exception {
+    public List<Movie> searchAdvanced(String query, double minIMDBRating, double maxIMDBRating,
+                                      double minPersonalRating, double maxPersonalRating, List<String> categories) throws Exception {
         List<Movie> allMovies = getAllMovies();
-        List<Movie> searchResult = movieSearcher.searchAdvanced(allMovies, query, minRating, categories);
+        List<Movie> searchResult = movieSearcher.searchAdvanced(allMovies, query, minIMDBRating, maxIMDBRating,
+                minPersonalRating, maxPersonalRating, categories);
 
         return searchResult;
     }
