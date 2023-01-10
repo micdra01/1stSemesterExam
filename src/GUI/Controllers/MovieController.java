@@ -47,6 +47,29 @@ public class MovieController implements Initializable {
 
     }
 
+    private void createCategoryTag(Category category) {
+        //Creates label & button showing the category
+        Label categoryName = new Label(category.toString());
+        Button btnRemove = new Button("x");
+        categoryName.setPadding(new Insets(5));
+        HBox container = new HBox(categoryName, btnRemove);
+        vBoxCategories.getChildren().add(container);
+
+        //Adds listener to the remove button to be able to remove category from movie
+        btnRemove.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    //Removes category from movie, then removes label
+                    categoryModel.removeCategoryFromMovie(category, movie);
+                    vBoxCategories.getChildren().remove(container);
+                } catch (Exception e) {
+                    new Exception("Failed to remove category from movie", e);
+                }
+            }
+        });
+    }
+
     private void showCategories() {
         try {
             movieCategories = categoryModel.readAllCategoriesFromMovie(movie);
@@ -54,26 +77,7 @@ public class MovieController implements Initializable {
             throw new RuntimeException(e);
         }
         for (Category category : movieCategories) {
-            //Creates label & button showing the category
-            Label categoryName = new Label(category.toString());
-            Button btnRemove = new Button("X");
-            categoryName.setPadding(new Insets(5));
-            HBox container = new HBox(categoryName, btnRemove);
-            vBoxCategories.getChildren().add(container);
-
-            //Adds listener to the remove button to be able to remove category from movie
-            btnRemove.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    try {
-                        //Removes category from movie, then removes label
-                        categoryModel.removeCategoryFromMovie(category, movie);
-                        vBoxCategories.getChildren().remove(container);
-                    } catch (Exception e) {
-                        new Exception("Failed to remove category from movie", e);
-                    }
-                }
-            });
+            createCategoryTag(category);
         }
     }
 
@@ -96,27 +100,7 @@ public class MovieController implements Initializable {
                         try {
                             //Adds movie to the selected category
                             categoryModel.addMovieToCategory(category, movie);
-
-                            //Creates label & button showing the category
-                            Label categoryName = new Label(category.toString());
-                            Button btnRemove = new Button("X");
-                            categoryName.setPadding(new Insets(5));
-                            HBox container = new HBox(categoryName, btnRemove);
-                            vBoxCategories.getChildren().add(container);
-
-                            //Adds listener to the remove button to be able to remove category from movie
-                            btnRemove.setOnAction(new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent event) {
-                                    try {
-                                        //Removes category from movie, then removes label
-                                        categoryModel.removeCategoryFromMovie(category, movie);
-                                        vBoxCategories.getChildren().remove(container);
-                                    } catch (Exception e) {
-                                        new Exception("Failed to remove category from movie", e);
-                                    }
-                                }
-                            });
+                            createCategoryTag(category);
                         } catch (Exception e) {
                             new Exception("Failed to add movie to category", e);
                         }
