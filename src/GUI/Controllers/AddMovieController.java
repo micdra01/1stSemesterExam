@@ -79,8 +79,10 @@ public class AddMovieController{
         String movieLink = movieFile != null ? movieFile.getAbsolutePath() : "";
         String coverPath = movieCover != null ? movieCover.getAbsolutePath() : "";//gets the absolute path for the file
         Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
+        int yearOfRelease = 1950;//todo skal hentes fra imdb api
+        String movieDescription = "film beskrivelse hvor der skal stå en masse";
 
-        Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed);
+        Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed, yearOfRelease, movieDescription);
 
         movieModel.createMovie(movie);
 
