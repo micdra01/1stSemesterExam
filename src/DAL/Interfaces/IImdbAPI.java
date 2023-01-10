@@ -25,7 +25,7 @@ public interface IImdbAPI {
      * @throws IOException
      * @throws InterruptedException
      */
-    List<String> getMovieCategoriesFromApi(String imdbId) throws IOException, InterruptedException;
+    ArrayList<String> getMovieCategoriesFromApi(String imdbId) throws IOException, InterruptedException;
 
     /**
      * todo should get a description of the movie from the api using the movie id.

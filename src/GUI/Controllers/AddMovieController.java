@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddMovieController{
@@ -93,15 +94,27 @@ public class AddMovieController{
     }
 
     public void handleSearchOnImdb(ActionEvent actionEvent) {
+
+        ArrayList<String> categories;
+        String rating ="";
+        String description = "";
         try {
             imdbApi = new ImdbApi();
             imdbApi.getSearchResultFromApi(textTitle.getText());
-            imdbApi.getMovieCategoriesFromApi("tt0050377");
+            rating = imdbApi.getImdbRatingFromApi("tt0050377");
+            categories = imdbApi.getMovieCategoriesFromApi("tt0050377");
+            description = imdbApi.getMovieDescriptionFromImdbId("tt0051603");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
+        for (int i = 0; categories.size() > i; i++){
+            System.out.println(categories.get(i));
+        }
+        System.out.println(rating);
+        System.out.println(description);
 
     }
 }

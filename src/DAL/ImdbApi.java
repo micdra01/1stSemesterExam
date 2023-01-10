@@ -4,6 +4,7 @@ import BE.ImdbInfo;
 import DAL.Interfaces.IImdbAPI;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -37,23 +38,17 @@ public class ImdbApi implements IImdbAPI {
      * @throws InterruptedException
      */
     @Override
-    public List<String> getMovieCategoriesFromApi(String imdbId) throws IOException, InterruptedException {
+    public ArrayList<String> getMovieCategoriesFromApi(String imdbId) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-genres?tconst=tt0944947"))
+                .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-genres?tconst=" + imdbId))
                 .header("X-RapidAPI-Key", "758854346fmshb2e7f684695dca5p1c89b6jsn2aa78bdfb8af")
                 .header("X-RapidAPI-Host", "imdb8.p.rapidapi.com")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        //System.out.println(response.body());
 
         ArrayList<String> categoriesToMovie = getCategoryFromApiString(response);
-
-        for (int i = 0; categoriesToMovie.size() > i; i++){
-            System.out.println(categoriesToMovie.get(i));
-        }
-
-        return null;
+        return categoriesToMovie;
 
     }
 
@@ -66,15 +61,20 @@ public class ImdbApi implements IImdbAPI {
      */
     @Override
     public String getMovieDescriptionFromImdbId(String imdbId) throws IOException, InterruptedException {
+
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=tt12750922&currentCountry=US"))
+                .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=" + imdbId + "&currentCountry=US"))
                 .header("X-RapidAPI-Key", "758854346fmshb2e7f684695dca5p1c89b6jsn2aa78bdfb8af")
                 .header("X-RapidAPI-Host", "imdb8.p.rapidapi.com")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
-        return null;
+
+        String responseString = response.body();
+        String descriptionRaw = responseString.substring(responseString.lastIndexOf(",\"text\":\"") + 9);
+        String description = descriptionRaw.substring(0, descriptionRaw.indexOf(".\""));
+
+        return description;
     }
 
     /**
@@ -87,14 +87,17 @@ public class ImdbApi implements IImdbAPI {
     @Override
     public String getImdbRatingFromApi(String imdbId) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-ratings?tconst=tt0944947"))
+                .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-ratings?tconst=" + imdbId))
                 .header("X-RapidAPI-Key", "758854346fmshb2e7f684695dca5p1c89b6jsn2aa78bdfb8af")
                 .header("X-RapidAPI-Host", "imdb8.p.rapidapi.com")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
-        return null;
+
+        String responseString = response.body();
+        String ratingRaw = responseString.substring(responseString.lastIndexOf(",\"rating\":") + 10);
+        String rating = ratingRaw.substring(0, ratingRaw.indexOf(",\""));
+        return rating;
     }
 
     private ArrayList<String> getCategoryFromApiString(HttpResponse<String> response){
