@@ -57,7 +57,6 @@ public class MainController implements Initializable {
         try {
             movieModel = new MovieModel();//sets the movieModel
             categoryModel = new CategoryModel();//sets categoryModel
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
