@@ -96,6 +96,7 @@ public class AddMovieController{
         try {
             imdbApi = new ImdbApi();
             imdbApi.getSearchResultFromApi(textTitle.getText());
+            imdbApi.getMovieCategoriesFromApi("tt0050377");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {

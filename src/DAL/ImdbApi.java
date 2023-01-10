@@ -45,8 +45,16 @@ public class ImdbApi implements IImdbAPI {
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
+        //System.out.println(response.body());
+
+        ArrayList<String> categoriesToMovie = getCategoryFromApiString(response);
+
+        for (int i = 0; categoriesToMovie.size() > i; i++){
+            System.out.println(categoriesToMovie.get(i));
+        }
+
         return null;
+
     }
 
     /**
@@ -89,6 +97,20 @@ public class ImdbApi implements IImdbAPI {
         return null;
     }
 
+    private ArrayList<String> getCategoryFromApiString(HttpResponse<String> response){
+        String categoryRaw = response.body();
+        String categoryWithoutStart = categoryRaw.substring(categoryRaw.lastIndexOf("[\"") + 2);
+        String categoryWithoutEnd = categoryWithoutStart.substring(0, categoryWithoutStart.indexOf("\"]"));
+
+        ArrayList<String> categories = new ArrayList<>();
+
+        String segments[] = categoryWithoutEnd.split("\",\"");
+        for (int i = 0; segments.length > i; i++){
+            categories.add(segments[i]);
+        }
+        return categories;
+    }
+
     /**
      * todo get the year of release from string
      * todo get actor list and names from string
@@ -99,9 +121,6 @@ public class ImdbApi implements IImdbAPI {
      * @throws InterruptedException
      */
     private ArrayList<ImdbInfo> getInfoFromResultString(HttpResponse<String> response) throws IOException, InterruptedException {
-        //test string so i can see full response
-        System.out.println(response.body());
-
         String segments[] = response.body().split("\"id\":\"/title/");
         ArrayList<ImdbInfo> resultList = new ArrayList<>();
 
@@ -119,8 +138,12 @@ public class ImdbApi implements IImdbAPI {
                 //picture link
                 String pictureLinkRaw = httpResult.substring(httpResult.lastIndexOf("url\":\"") + 6);
                 String picture = pictureLinkRaw.substring(0, pictureLinkRaw.indexOf("\","));
+                //year of release
+                String yearOfReleaseRaw = httpResult.substring(httpResult.lastIndexOf("\",\"year\":") + 9);
+                String yearOfRelease = yearOfReleaseRaw.substring(0, yearOfReleaseRaw.indexOf(",\""));
+
                 //makes imdbInfo object from response info
-                ImdbInfo imdbInfo = new ImdbInfo(movieId, title, picture);
+                ImdbInfo imdbInfo = new ImdbInfo(movieId, title, picture, yearOfRelease);
                 resultList.add(imdbInfo);
             }
         }
