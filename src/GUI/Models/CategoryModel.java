@@ -13,7 +13,7 @@ public class CategoryModel {
 
 
     public CategoryModel() throws  Exception {
-        categoryManager = (ICategoryManager) new CategoryManager();
+        categoryManager = new CategoryManager();
     }
 
     public Category createCategory(Category category) throws Exception {
@@ -25,10 +25,13 @@ public class CategoryModel {
     }
 
     public void addMovieToCategory(Category category, Movie movie) throws Exception {
+        categoryManager.addMovieToCategory(category, movie);
 
-        //Movie movie = categoryManager.addMovieToCategory(category, movie);
 
+    }
 
+    public void removeCategoryFromMovie(Category category, Movie movie) throws Exception {
+        categoryManager.removeCategoryFromMovie(category, movie);
     }
 
     /**
