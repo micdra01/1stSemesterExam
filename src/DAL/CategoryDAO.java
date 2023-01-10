@@ -153,8 +153,35 @@ public class CategoryDAO implements ICategoryDAO {
 
 
         @Override
-        public List<Category> readAllCategoriesFromMovie (Movie movie) throws Exception {
-            return null;
+        public ArrayList<Category> readAllCategoriesFromMovie (Movie movie) throws Exception {
+            ArrayList<Category> allCategoriesFromMovie = new ArrayList<>();
+
+            try(Connection connection = databaseConnector.getConnection();
+                Statement statement1 = connection.createStatement();
+                Statement statement2 = connection.createStatement()){
+                //creates and executes the first sql string
+                String sql1 = "SELECT * FROM CatMovie WHERE MovieId =" + movie.getId() + ";";
+                ResultSet rs1 = statement1.executeQuery(sql1);
+
+                //loop that takes all information from CatMovie table in database and finds category info from it
+                while(rs1.next()) {
+                    int categoryId = rs1.getInt("CategoryId");
+
+                    //finds the category and adds it to the list allCategoriesFromMovie
+                    String sql2 = "SELECT * FROM Category WHERE Id = " + categoryId + ";";
+                    ResultSet rs2 = statement2.executeQuery(sql2);
+
+                    while(rs2.next()) {
+                        Category category = new Category(rs2.getInt("Id"), rs2.getString("CategoryName"));
+                        allCategoriesFromMovie.add(category);
+                    }
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                throw new Exception("Failed to retrieve categories", e);
+            }
+            //returns a list of all movies
+            return allCategoriesFromMovie;
         }
     }
 

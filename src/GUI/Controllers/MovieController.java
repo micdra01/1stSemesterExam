@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MovieController implements Initializable {
@@ -29,6 +30,7 @@ public class MovieController implements Initializable {
     private CategoryModel categoryModel;
     private MovieModel movieModel;
     private Movie movie;
+    ArrayList<Category> movieCategories;
 
     public MovieController() {
         try {
@@ -40,8 +42,39 @@ public class MovieController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO showCategories();
+
         initializeCategoryDropdown();
+
+    }
+
+    private void showCategories() {
+        try {
+            movieCategories = categoryModel.readAllCategoriesFromMovie(movie);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        for (Category category : movieCategories) {
+            //Creates label & button showing the category
+            Label categoryName = new Label(category.toString());
+            Button btnRemove = new Button("X");
+            categoryName.setPadding(new Insets(5));
+            HBox container = new HBox(categoryName, btnRemove);
+            vBoxCategories.getChildren().add(container);
+
+            //Adds listener to the remove button to be able to remove category from movie
+            btnRemove.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+                        //Removes category from movie, then removes label
+                        categoryModel.removeCategoryFromMovie(category, movie);
+                        vBoxCategories.getChildren().remove(container);
+                    } catch (Exception e) {
+                        new Exception("Failed to remove category from movie", e);
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -103,6 +136,7 @@ public class MovieController implements Initializable {
     public void setMovie(Movie movie) {
         this.movie = movie;
         lblTittle.setText(movie.getTitle());
+        showCategories();
     }
 
 }

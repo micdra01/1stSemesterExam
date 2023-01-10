@@ -3,6 +3,7 @@ package DAL.Interfaces;
 import BE.Category;
 import BE.Movie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ICategoryDAO {
@@ -59,6 +60,6 @@ public interface ICategoryDAO {
      * @param movie the movie we want categories from
      * @return a list of all categories on the specific movie
      */
-    public List<Category> readAllCategoriesFromMovie(Movie movie) throws Exception;
+    public ArrayList<Category> readAllCategoriesFromMovie(Movie movie) throws Exception;
 
 }
