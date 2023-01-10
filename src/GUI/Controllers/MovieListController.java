@@ -32,8 +32,8 @@ import java.util.ResourceBundle;
 
 
 public class MovieListController implements Initializable {
-
-    public ScrollPane movieListView, homeView, listAllMovies, listPopular, listTrending, warningView, listLowRating, listLowAndLast, listLastViewed;
+    @FXML
+    private ScrollPane movieListView, homeView, listAllMovies, listPopular, listTrending, warningView, listLowRating, listLowAndLast, listLastViewed;
 
     @FXML
     private MovieModel movieModel;
@@ -100,7 +100,7 @@ public class MovieListController implements Initializable {
         int row = 0;
 
         for (Movie movie : movieModel.getMoviesInList()){
-            if(movie.getPersonalRating() < lowRating && movie.getLastViewed().before(Date.valueOf(LocalDate.now().minusYears(2)))) {
+            if(movie.getPersonalRating() <= lowRating && movie.getLastViewed().before(Date.valueOf(LocalDate.now().minusYears(2)))) {
                 GridPane movieCard = createMovieCard(movie);
                 grid.add(movieCard, col, row);
                 col++;
@@ -123,7 +123,7 @@ public class MovieListController implements Initializable {
         int row = 0;
 
         for (Movie movie : movieModel.getMoviesInList()){
-            if(movie.getPersonalRating() < lowRating){
+            if(movie.getPersonalRating() <= lowRating){
                 GridPane movieCard = createMovieCard(movie); //creates the movie card
                 grid.add(movieCard, col, row); //adds it to the content gridPane
 
