@@ -7,7 +7,7 @@ public class Movie {
     private int id;
 
     private double personalRating, imdbRating;
-    private String title, movieFileLink, pictureFileLink, trailerFileLink, category;
+    private String title, movieFileLink, pictureFileLink, category;
     private Timestamp lastViewed;
 
 
@@ -19,18 +19,16 @@ public class Movie {
      * @param imdbRating
      * @param movieFileLink
      * @param pictureFileLink
-     * @param trailerFileLink
      * @param lastViewed
      */
     public Movie(int id, String title, double personalRating, double imdbRating, String movieFileLink,
-                 String pictureFileLink, String trailerFileLink, Timestamp lastViewed) {
+                 String pictureFileLink, Timestamp lastViewed) {
         this.id = id;
         this.title = title;
         this.personalRating = personalRating;
         this.imdbRating = imdbRating;
         this.movieFileLink = movieFileLink;
         this.pictureFileLink = pictureFileLink;
-        this.trailerFileLink = trailerFileLink;
         this.lastViewed = lastViewed;
     }
 
@@ -42,17 +40,14 @@ public class Movie {
      * @param imdbRating
      * @param movieFileLink
      * @param pictureFileLink
-     * @param trailerFileLink
      * @param lastViewed
      */
-    public Movie(String title, double personalRating, double imdbRating, String movieFileLink,
-                 String pictureFileLink, String trailerFileLink, Timestamp lastViewed) {
+    public Movie(String title, double personalRating, double imdbRating, String movieFileLink, String pictureFileLink, Timestamp lastViewed) {
         this.title = title;
         this.personalRating = personalRating;
         this.imdbRating = imdbRating;
         this.movieFileLink = movieFileLink;
         this.pictureFileLink = pictureFileLink;
-        this.trailerFileLink = trailerFileLink;
         this.lastViewed = lastViewed;
     }
 
@@ -104,14 +99,6 @@ public class Movie {
 
     public void setPictureFileLink(String pictureFileLink) {
         this.pictureFileLink = pictureFileLink;
-    }
-
-    public String getTrailerFileLink() {
-        return trailerFileLink;
-    }
-
-    public void setTrailerFileLink(String trailerFileLink) {
-        this.trailerFileLink = trailerFileLink;
     }
 
     public String getCategory() {

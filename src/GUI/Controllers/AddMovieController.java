@@ -78,9 +78,9 @@ public class AddMovieController{
         //todo next 3 variables should take the name of the file and send down so it can make the file link in dal
         String movieLink = movieFile != null ? movieFile.getAbsolutePath() : "";
         String coverPath = movieCover != null ? movieCover.getAbsolutePath() : "";//gets the absolute path for the file
-        String trailerLink = trailerFile != null ? trailerFile.getAbsolutePath() : "";
         Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
-        Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, trailerLink, lastViewed);
+
+        Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed);
 
         movieModel.createMovie(movie);
 
