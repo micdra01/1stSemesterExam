@@ -42,16 +42,20 @@ public class MovieController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         initializeCategoryDropdown();
-
     }
 
+    /**
+     * Creates a removable category tag for each category from the movie
+     * @param category, the category that needs a tag
+     */
     private void createCategoryTag(Category category) {
         //Creates label & button showing the category
         Label categoryName = new Label(category.toString());
-        Button btnRemove = new Button("x");
         categoryName.setPadding(new Insets(5));
+        Button btnRemove = new Button("x");
+
+        //Creates a container for the label & button and adds this to the correct container in the view
         HBox container = new HBox(categoryName, btnRemove);
         vBoxCategories.getChildren().add(container);
 
@@ -70,6 +74,9 @@ public class MovieController implements Initializable {
         });
     }
 
+    /**
+     * Shows all the categories from the movie
+     */
     private void showCategories() {
         try {
             movieCategories = categoryModel.readAllCategoriesFromMovie(movie);
