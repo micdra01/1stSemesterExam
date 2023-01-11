@@ -37,6 +37,13 @@ public interface IImdbAPI {
     String getMovieDescriptionFromImdbId(String imdbId) throws IOException, InterruptedException;
 
 
+    /**
+     * gets the rating from imdb api
+     * @param imdbId
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     String getImdbRatingFromApi(String imdbId) throws IOException, InterruptedException;
 
 

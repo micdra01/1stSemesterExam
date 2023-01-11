@@ -1,7 +1,9 @@
 package GUI.Controllers;
 
+import BE.ImdbInfo;
 import BE.Movie;
 import DAL.ImdbApi;
+import GUI.Models.ImdbInfoModel;
 import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -25,7 +27,7 @@ public class AddMovieController{
 
     private File movieCover, movieFile, trailerFile;
 
-    private ImdbApi imdbApi;
+    private ImdbInfoModel imdbInfoModel;
 
 
     /**
@@ -98,23 +100,39 @@ public class AddMovieController{
         ArrayList<String> categories;
         String rating ="";
         String description = "";
+        ArrayList<ImdbInfo> searchResult;
         try {
-            imdbApi = new ImdbApi();
-            imdbApi.getSearchResultFromApi(textTitle.getText());
-            rating = imdbApi.getImdbRatingFromApi("tt0050377");
-            categories = imdbApi.getMovieCategoriesFromApi("tt0050377");
-            description = imdbApi.getMovieDescriptionFromImdbId("tt0051603");
+            imdbInfoModel = new ImdbInfoModel();
+            searchResult = imdbInfoModel.getSearchResultFromApi(textTitle.getText());
+            rating = imdbInfoModel.getImdbRatingFromApi("tt0050377");
+            categories = imdbInfoModel.getMovieCategoriesFromApi("tt0050377");
+            description = imdbInfoModel.getMovieDescriptionFromImdbId("tt0051603");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
+
         for (int i = 0; categories.size() > i; i++){
             System.out.println(categories.get(i));
         }
         System.out.println(rating);
         System.out.println(description);
+
+        System.out.println("  ");
+        for (int i = 0; searchResult.size() > i; i++){
+            System.out.println(searchResult.get(i).getTitle());
+            System.out.println(searchResult.get(i).getImdbId());
+            System.out.println(searchResult.get(i).getYearOfRelease());
+            System.out.println(searchResult.get(i).getPictureLink());
+
+            for (int j = 0; searchResult.get(i).getCast().size() > j; j++){
+                System.out.println(searchResult.get(j).getCast().get(j));
+            }
+        }
+
+
 
     }
 }

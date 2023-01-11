@@ -14,6 +14,14 @@ import java.util.List;
 
 public class ImdbApi implements IImdbAPI {
 
+    /**
+     * gets all search result from imdb api
+     * makes an object with info
+     * @param searchWord
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
    public ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws IOException, InterruptedException {
        String searchWordString = searchWord.replace(" ", "%20");
 
@@ -31,7 +39,7 @@ public class ImdbApi implements IImdbAPI {
    }
 
     /**
-     * todo implement method
+     * gets a list of categories from the chosen movie from imdb api
      * @param imdbId
      * @return
      * @throws IOException
@@ -53,7 +61,7 @@ public class ImdbApi implements IImdbAPI {
     }
 
     /**
-     * todo implement method
+     * gets the description from a movie from imdb api
      * @param imdbId
      * @return
      * @throws IOException
@@ -78,7 +86,7 @@ public class ImdbApi implements IImdbAPI {
     }
 
     /**
-     * todo implement method
+     * gets the rating from imdb api
      * @param imdbId
      * @return
      * @throws IOException
@@ -100,13 +108,18 @@ public class ImdbApi implements IImdbAPI {
         return rating;
     }
 
+    /**
+     * gets the categories from imdb api
+     * @param response
+     * @return
+     */
     private ArrayList<String> getCategoryFromApiString(HttpResponse<String> response){
         String categoryRaw = response.body();
         String categoryWithoutStart = categoryRaw.substring(categoryRaw.lastIndexOf("[\"") + 2);
         String categoryWithoutEnd = categoryWithoutStart.substring(0, categoryWithoutStart.indexOf("\"]"));
 
         ArrayList<String> categories = new ArrayList<>();
-
+        //adds each category to list
         String segments[] = categoryWithoutEnd.split("\",\"");
         for (int i = 0; segments.length > i; i++){
             categories.add(segments[i]);
@@ -115,8 +128,7 @@ public class ImdbApi implements IImdbAPI {
     }
 
     /**
-     * todo get the year of release from string
-     * todo get actor list and names from string
+     * gets all the information from each movie in the result string, and creates an object from it.
      * todo check if link is real before creating object
      * @param response
      * @return
@@ -130,7 +142,7 @@ public class ImdbApi implements IImdbAPI {
         for (int i = 0; segments.length > i; i++){
             //gets a string for each object on the list
             String httpResult = segments[i];
-
+            //get all the information from each movie from string
             if(httpResult.contains("\"titleType\":\"movie\"")){//only selects movies from the list
                 //movie id in api database
                 String movieIdRaw = httpResult.substring(httpResult.lastIndexOf("\"id\":\"/title/") + 1);
@@ -145,8 +157,16 @@ public class ImdbApi implements IImdbAPI {
                 String yearOfReleaseRaw = httpResult.substring(httpResult.lastIndexOf("\",\"year\":") + 9);
                 String yearOfRelease = yearOfReleaseRaw.substring(0, yearOfReleaseRaw.indexOf(",\""));
 
+                //gets the names from cast
+                String castStringsRaw[] = httpResult.split("\"name\":\"");
+                ArrayList<String> castList = new ArrayList<>();
+                for (int j = 1; castStringsRaw.length > j; j++){
+                    String castString = castStringsRaw[j].substring(0, castStringsRaw[j].indexOf("\","));
+                    castList.add(castString);
+                }
+
                 //makes imdbInfo object from response info
-                ImdbInfo imdbInfo = new ImdbInfo(movieId, title, picture, yearOfRelease);
+                ImdbInfo imdbInfo = new ImdbInfo(movieId, title, picture, yearOfRelease, castList);
                 resultList.add(imdbInfo);
             }
         }
