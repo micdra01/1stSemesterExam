@@ -252,14 +252,16 @@ public class MovieListController implements Initializable {
         Label lblTitle = new Label(movie.getTitle());
 
         // creates a label with the rating info on
-        String rating = String.valueOf(movie.getImdbRating());
+        String rating = "⭐" + movie.getImdbRating();
+        String pRating = "❤" + movie.getPersonalRating();
         Label lblRating = new Label(rating);
+        Label lblPRating = new Label(pRating);
 
         //sets the movieCard information labels on the movieCard gridPane
         movieCard.add(imgView, 0, 0);
         movieCard.add(lblTitle, 0, 1);
         movieCard.add(lblRating, 2, 1);
-
+        movieCard.add(lblPRating, 1,1);
 
         Label lblTitleCard = new Label("");
         lblTitleCard.setFont(Font.font(20));
@@ -275,13 +277,11 @@ public class MovieListController implements Initializable {
         Button btnPlay = new Button();
         Button btnInfo = new Button();
 
-
         VBox vBox = new VBox(btnPlay, btnInfo);
         btnPlay.setText("play");
         btnInfo.setText("se info");
         vBox.setAlignment(Pos.CENTER);
         movieCard.add(vBox, 2,0);
-
 
         btnPlay.setOpacity(0);
         btnInfo.setOpacity(0);
