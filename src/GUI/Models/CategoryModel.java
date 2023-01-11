@@ -47,6 +47,10 @@ public class CategoryModel {
     public ArrayList<Category> readAllCategoriesFromMovie(Movie movie) throws Exception {
         return categoryManager.readAllCategoriesFromMovie(movie);
     }
+
+    public List<Movie> readAllMoviesInCategory(Category category) throws Exception {
+        return categoryManager.readAllMoviesInCategory(category);
+    }
 }
 
 

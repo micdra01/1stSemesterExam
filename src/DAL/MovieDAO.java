@@ -27,7 +27,7 @@ public class MovieDAO implements IMovieDAO {
     @Override
     public Movie createMovie(Movie movie) throws Exception {
         //sql string for creating a movie in Movies table
-        String sql = "INSERT INTO Movies (Title, PersonalRating, ImdbRating, MovieFileLink, PictureFileLink, TrailerFileLink, LastView, YearOfRelease, MovieDescription) VALUES (?,?,?,?,?,?,?,?,?) ;";
+        String sql = "INSERT INTO Movies (Title, PersonalRating, ImdbRating, MovieFileLink, PictureFileLink, LastView, YearOfRelease, MovieDescription) VALUES (?,?,?,?,?,?,?,?,?) ;";
         //get connection with database
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -197,7 +197,6 @@ public class MovieDAO implements IMovieDAO {
             double imdbRating = rs.getDouble("ImdbRating");
             String movieFileLink = rs.getString("MovieFileLink");
             String pictureFileLink = rs.getString("PictureFileLink");
-            String trailerFileLink = rs.getString("TrailerFileLink");
             Timestamp lastView = rs.getTimestamp("LastView");
             int yearOfRelease = rs.getInt("YearOfRelease");
             String movieDescription = rs.getString("MovieDescription");

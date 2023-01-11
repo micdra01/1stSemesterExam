@@ -64,8 +64,8 @@ public class CategoryManager implements ICategoryManager {
     }
 
     @Override
-    public List<Movie> readAllMovieInCategory(Category category) throws Exception {
-        return null;
+    public List<Movie> readAllMoviesInCategory(Category category) throws Exception {
+        return databaseAccess.readAllMoviesInCategory(category);
     }
 
     @Override

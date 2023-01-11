@@ -45,7 +45,7 @@ public interface ICategoryManager {
      * @return
      * @throws Exception
      */
-    public List<Movie> readAllMovieInCategory(Category category) throws Exception;
+    public List<Movie> readAllMoviesInCategory(Category category) throws Exception;
 
     /**
      *

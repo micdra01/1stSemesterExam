@@ -3,6 +3,7 @@ package DAL;
 import BE.Category;
 import BE.Movie;
 import DAL.Interfaces.ICategoryDAO;
+import DAL.Interfaces.IMovieDAO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,9 +12,11 @@ import java.util.List;
 public class CategoryDAO implements ICategoryDAO {
 
     private DatabaseConnector databaseConnector;
+    private IMovieDAO movieDAO;
 
     public CategoryDAO() {
         databaseConnector = new DatabaseConnector();
+        movieDAO = new MovieDAO();
     }
 
 
@@ -123,15 +126,10 @@ public class CategoryDAO implements ICategoryDAO {
 
         @Override
         public void deleteCategory (Category category) throws Exception {
-            String sql1 = "DELETE FROM CatMovie WHERE CategoryId = ?;"; //First delete category from all movies
             String sql2 = "DELETE FROM Category WHERE Id = ?;"; //Then delete the category itself
 
             try (Connection connection = databaseConnector.getConnection();
-                 PreparedStatement statement1 = connection.prepareStatement(sql1);
                  PreparedStatement statement2 = connection.prepareStatement(sql2)) {
-
-                statement1.setInt(1, category.getId());
-                statement1.executeUpdate();
 
                 // Bind parameters
                 statement2.setInt(1, category.getId());
@@ -148,7 +146,26 @@ public class CategoryDAO implements ICategoryDAO {
 
         @Override
         public List<Movie> readAllMoviesInCategory(Category category) throws Exception {
-            return null;
+            ArrayList<Movie> allMoviesInCategory = new ArrayList<>();
+
+            try (Connection connection = databaseConnector.getConnection();
+                 Statement statement1 = connection.createStatement()) {
+                //creates and executes the first sql string
+                String sql1 = "SELECT * FROM CatMovie WHERE CategoryId =" + category.getId() + ";";
+                ResultSet rs1 = statement1.executeQuery(sql1);
+
+                //loop that takes all information from CatMovie table in database and finds category info from it
+                while (rs1.next()) {
+                    int movieId = rs1.getInt("MovieId");
+                    Movie movie = movieDAO.getMovieFromId(movieId);
+
+                    allMoviesInCategory.add(movie);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new Exception("Failed to retrieve categories", e);
+            }
+            return allMoviesInCategory;
         }
 
 
