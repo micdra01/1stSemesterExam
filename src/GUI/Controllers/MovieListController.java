@@ -12,9 +12,6 @@ import javafx.scene.layout.GridPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * todo make a instance variable for movieModel.moviesInList so we can chose the specific list we want shown in our content window (categories, favourite mm)
- */
 
 
 public class MovieListController implements Initializable {
