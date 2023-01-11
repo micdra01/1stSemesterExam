@@ -102,7 +102,7 @@ public class MainController implements Initializable {
             new Exception("Failed to open 'Home'", e);
         }
 
-        MovieListController controller = loader.getController();
+        HomeViewController controller = loader.getController();
         controller.setMovieModel(movieModel);
         controller.setMainController(this);
         borderPane.setCenter(root);
@@ -120,7 +120,7 @@ public class MainController implements Initializable {
             new Exception("Failed to open 'Warning'", e);
         }
 
-        MovieListController controller = loader.getController();
+        WarningViewController controller = loader.getController();
         controller.setMovieModel(movieModel);
         controller.setMainController(this);
         borderPane.setCenter(root);
@@ -190,7 +190,7 @@ public class MainController implements Initializable {
         stage.setTitle("Movie info: " + movie.getTitle());
         stage.setScene(new Scene(root));
         stage.show();
-        MovieController controller = loader.getController();
+        MovieViewController controller = loader.getController();
         controller.setMovieModel(movieModel);
         controller.setMovieContent(movie);
     }
