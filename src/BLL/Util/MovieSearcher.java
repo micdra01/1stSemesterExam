@@ -1,11 +1,20 @@
 package BLL.Util;
 
+import BE.Category;
 import BE.Movie;
+import BLL.CategoryManager;
+import GUI.Models.CategoryModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MovieSearcher {
+    private CategoryManager categoryManager;
+
+    public MovieSearcher() {
+        categoryManager = new CategoryManager();
+    }
+
     /**
      * Filter the list of movies using a search query
      * @param searchBase, the list of all movies
@@ -35,11 +44,12 @@ public class MovieSearcher {
      * @return a list of movies matching the query in title
      */
     public List<Movie> searchAdvanced(List<Movie> searchBase, String query, double minIMDBRating, double maxIMDBRating,
-                                      double minPersonalRating, double maxPersonalRating, List<String> categories) {
+                                      double minPersonalRating, double maxPersonalRating, List<String> categories) throws Exception {
         List<Movie> searchResult = new ArrayList<>();
 
         for (Movie movie: searchBase) {
-            if(compareToTitle(query, movie) && compareToIMDBRating(minIMDBRating, maxIMDBRating, movie)
+            if(compareToTitle(query, movie)
+                    && compareToIMDBRating(minIMDBRating, maxIMDBRating, movie)
                     && compareToPersonalRating(minPersonalRating, maxPersonalRating, movie)
                     && (categories.isEmpty() || compareToCategory(categories, movie))) {
                 searchResult.add(movie);
@@ -87,9 +97,11 @@ public class MovieSearcher {
      * @param movie, the movie to check
      * @return true if there is a match, false if not.
      */
-    private boolean compareToCategory(List<String> categories, Movie movie) {
-        if (categories.get(0) == null) return true; //If no categories are selected, do not filter for this part.
-        if (movie.getCategory() == null) return false; //If movie does not have a category, do not include it.
-        return movie.getCategory().matches(categories.get(0)) || movie.getCategory().matches(categories.get(1));
+    private boolean compareToCategory(List<String> categories, Movie movie) throws Exception {
+        ArrayList<Category> movieCategories = categoryManager.readAllCategoriesFromMovie(movie);
+        if (movieCategories.isEmpty()) {
+            return false;
+        }
+        return movieCategories.get(0).getTitle().matches(categories.get(0));
     }
 }
