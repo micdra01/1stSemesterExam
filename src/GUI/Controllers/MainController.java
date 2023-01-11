@@ -9,12 +9,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -169,6 +171,10 @@ public class MainController implements Initializable {
         textSceneTitle.setText("Add Movie");
     }
 
+    /**
+     * Loads MovieView FXML with a Movie object if button is cliked.
+     * @param movie
+     */
     public void openMovieInfo(Movie movie){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieView.fxml"));
         Parent root = null;
@@ -180,11 +186,13 @@ public class MainController implements Initializable {
             new Exception("Failed to show 'movie info'", e);
         }
 
+        Stage stage = new Stage();
+        stage.setTitle("Movie info: " + movie.getTitle());
+        stage.setScene(new Scene(root));
+        stage.show();
         MovieController controller = loader.getController();
-        borderPane.setCenter(root);
         controller.setMovieModel(movieModel);
         controller.setMovie(movie);
-
     }
 
     public void handleSearch() {

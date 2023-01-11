@@ -19,16 +19,16 @@ public interface IImdbAPI {
 
 
     /**
-     * todo should get the categories from a specific movie and return them as a list of strings
+     *
      * @param imdbId
      * @return
      * @throws IOException
      * @throws InterruptedException
      */
-    List<String> getMovieCategoriesFromApi(String imdbId) throws IOException, InterruptedException;
+    ArrayList<String> getMovieCategoriesFromApi(String imdbId) throws IOException, InterruptedException;
 
     /**
-     * todo should get a description of the movie from the api using the movie id.
+     *
      * @param imdbId
      * @return
      * @throws IOException
@@ -37,6 +37,13 @@ public interface IImdbAPI {
     String getMovieDescriptionFromImdbId(String imdbId) throws IOException, InterruptedException;
 
 
+    /**
+     * gets the rating from imdb api
+     * @param imdbId
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     String getImdbRatingFromApi(String imdbId) throws IOException, InterruptedException;
 
 
