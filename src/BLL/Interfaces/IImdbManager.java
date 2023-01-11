@@ -17,7 +17,7 @@ public interface IImdbManager {
 
 
     /**
-     * todo should get the categories from a specific movie and return them as a list of strings
+     *
      * @param imdbId
      * @return
      * @throws IOException
@@ -26,7 +26,7 @@ public interface IImdbManager {
     ArrayList<String> getMovieCategoriesFromApi(String imdbId) throws IOException, InterruptedException;
 
     /**
-     * todo should get a description of the movie from the api using the movie id.
+     *
      * @param imdbId
      * @return
      * @throws IOException

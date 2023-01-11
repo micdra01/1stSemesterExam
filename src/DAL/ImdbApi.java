@@ -69,7 +69,6 @@ public class ImdbApi implements IImdbAPI {
      */
     @Override
     public String getMovieDescriptionFromImdbId(String imdbId) throws IOException, InterruptedException {
-
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=" + imdbId + "&currentCountry=US"))
                 .header("X-RapidAPI-Key", "758854346fmshb2e7f684695dca5p1c89b6jsn2aa78bdfb8af")

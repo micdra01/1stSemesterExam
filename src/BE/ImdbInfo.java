@@ -12,7 +12,7 @@ public class ImdbInfo {
 
     private String yearOfRelease;
 
-    private ArrayList<String> cast = new ArrayList<>();
+    private ArrayList<String> cast;
 
     public ImdbInfo(String imdbId, String title, String pictureLink, String yearOfRelease, ArrayList<String> cast){
         this.imdbId = imdbId;
