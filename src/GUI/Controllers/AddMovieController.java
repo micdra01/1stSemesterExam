@@ -5,13 +5,25 @@ import BE.Movie;
 import DAL.ImdbApi;
 import GUI.Models.ImdbInfoModel;
 import GUI.Models.MovieModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -22,6 +34,7 @@ public class AddMovieController{
     public TextField textImageFile, textTrailerFile, textIMDBRating, textCategory, textTitle, textMovieFile;
     public Button btnMovieFile, btnTrailerFile, btnImageFile, btnSave;
     public Label lblImageFile, lblTrailerFile, lblIMDBRating, lblCategory, lblMovieFile, lblTitle;
+    public GridPane grid;
 
     private MovieModel movieModel;
 
@@ -29,11 +42,10 @@ public class AddMovieController{
 
     private ImdbInfoModel imdbInfoModel;
 
+    private ImdbInfo chosenMovie;
 
     /**
      * todo write comments for all methods in class
-     * todo save name of files from each file chooser as local variable in handle save method, so we can make file links later
-     * todo save the movie files and picture files from file chooser in resources folder.
      * todo check if all input fields are filled, before save button is activated.
      * @param event
      */
@@ -49,17 +61,7 @@ public class AddMovieController{
         }
     }
 
-    public void handleTrailerFile(ActionEvent event) {
-        Stage stage = (Stage) btnTrailerFile.getScene().getWindow();
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter trailerExtensions = new FileChooser.ExtensionFilter("File types", "*.mp4", "*.mpeg4");
-        fileChooser.getExtensionFilters().add(trailerExtensions);
-        trailerFile = fileChooser.showOpenDialog(stage);
 
-        if (trailerFile != null) {
-            textTrailerFile.setText(trailerFile.getAbsolutePath());
-        }
-    }
 
     public void handleImageFile(ActionEvent event) {
         Stage stage = (Stage) btnImageFile.getScene().getWindow();
@@ -74,19 +76,27 @@ public class AddMovieController{
     }
 
     public void handleSave(ActionEvent event) throws Exception {
-
         String title = textTitle.getText();
         double personalRating = -1;
-        double imdbRating = Double.parseDouble(textIMDBRating.getText());
-        //todo next 3 variables should take the name of the file and send down so it can make the file link in dal
+        double imdbRating = 0;// todo set up with imdb rating
         String movieLink = movieFile != null ? movieFile.getAbsolutePath() : "";
-        String coverPath = movieCover != null ? movieCover.getAbsolutePath() : "";//gets the absolute path for the file
+        String coverPath;
+        if(movieCover == null) {
+            coverPath = chosenMovie.getPictureLink();
+        }else
+            coverPath = movieCover != null ? movieCover.getAbsolutePath() : "";//gets the absolute path for the file
+
+
+
         Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
         int yearOfRelease = 1950;//todo skal hentes fra imdb api
-        String movieDescription = "film beskrivelse hvor der skal stå en masse";
+        String movieDescription = "film beskrivelse hvor der skal stå en masse";//todo skal hentes fra api
+
 
         Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed, yearOfRelease, movieDescription);
-
+        if(chosenMovie != null){
+            movie.setImdbId(chosenMovie.getImdbId());
+        }
         movieModel.createMovie(movie);
 
     }
@@ -96,16 +106,73 @@ public class AddMovieController{
     }
 
     public void handleSearchOnImdb(ActionEvent actionEvent) {
+        ArrayList<ImdbInfo> searchResult1;
 
+        try {
+            imdbInfoModel = new ImdbInfoModel();
+            searchResult1 = imdbInfoModel.getSearchResultFromApi(textTitle.getText());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        ObservableList<String> wordsList = FXCollections.observableArrayList();
+        for (int i = 0; searchResult1.size()> i; i++){
+            ImdbInfo info = searchResult1.get(i);
+            wordsList.add(info.getTitle() + "   "+info.getYearOfRelease());
+
+        }
+        ListView<String> searchResult = new ListView<>(wordsList);
+        searchResult.setMaxSize(300, 350);
+        grid.add(searchResult, 1,3);
+
+
+        searchResult.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println(searchResult.getSelectionModel().getSelectedItem());
+                chosenMovie = searchResult1.get(searchResult.getSelectionModel().getSelectedIndex());
+
+                Image img = new Image(chosenMovie.getPictureLink());
+                ImageView imageView = new ImageView(img);
+                imageView.setFitWidth(200);
+                imageView.setFitHeight(275);
+                grid.add(imageView, 2,3);
+
+                ObservableList<String> categories = FXCollections.observableArrayList();
+                ArrayList<String> categoryResult;
+                try {
+                    categoryResult = imdbInfoModel.getMovieCategoriesFromApi(chosenMovie.getImdbId());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+
+                for (int j = 0; categoryResult.size() > j; j++){
+                    categories.add(categoryResult.get(j));
+                    System.out.println(categoryResult.get(j));
+                }
+
+                ListView categoryList = new ListView<>(categories);
+                grid.add(categoryList, 1, 6);
+
+            }
+        });
+
+
+        /**
 
         //todo just a test for checking all methods works from imdb crud
         ArrayList<String> categories;
         String rating ="";
         String description = "";
-        ArrayList<ImdbInfo> searchResult;
         try {
-            imdbInfoModel = new ImdbInfoModel();
-            searchResult = imdbInfoModel.getSearchResultFromApi(textTitle.getText());
+            searchResult1 = imdbInfoModel.getSearchResultFromApi(textTitle.getText());
             rating = imdbInfoModel.getImdbRatingFromApi("tt0050377");
             categories = imdbInfoModel.getMovieCategoriesFromApi("tt0050377");
             description = imdbInfoModel.getMovieDescriptionFromImdbId("tt0051603");
@@ -116,6 +183,7 @@ public class AddMovieController{
         }
 
 
+
         for (int i = 0; categories.size() > i; i++){
             System.out.println(categories.get(i));
         }
@@ -123,16 +191,16 @@ public class AddMovieController{
         System.out.println(description);
 
         System.out.println("  ");
-        for (int i = 0; searchResult.size() > i; i++){
-            System.out.println(searchResult.get(i).getTitle());
-            System.out.println(searchResult.get(i).getImdbId());
-            System.out.println(searchResult.get(i).getYearOfRelease());
-            System.out.println(searchResult.get(i).getPictureLink());
+        for (int i = 0; searchResult1.size() > i; i++){
+            System.out.println(searchResult1.get(i).getImdbId());
+            System.out.println(searchResult1.get(i).getPictureLink());
 
-            for (int j = 0; searchResult.get(i).getCast().size() > j; j++){
-                System.out.println(searchResult.get(j).getCast().get(j));
+            for (int j = 0; searchResult1.get(i).getCast().size() > j; j++){
+                System.out.println(searchResult1.get(j).getCast().get(j));
             }
         }
 
+         */
     }
+
 }

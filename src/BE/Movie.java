@@ -4,6 +4,15 @@ import java.sql.Timestamp;
 
 public class Movie {
 
+    public String getImdbId() {
+        return imdbId;
+    }
+
+    public void setImdbId(String imdbId) {
+        this.imdbId = imdbId;
+    }
+
+    private String imdbId;
     private int id;
 
     private double personalRating, imdbRating;
