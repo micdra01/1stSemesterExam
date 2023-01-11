@@ -1,10 +1,13 @@
 package GUI.Controllers;
 
 import BE.Movie;
+import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,11 +16,22 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MovieCardController {
     private MainController mainController;
+
+    private MovieModel movieModel;
+
+    public MovieCardController(){
+        try {
+            // = new MovieModel();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * create the movieCard gridPane and fills it with info from chosen movie
@@ -83,7 +97,7 @@ public class MovieCardController {
             @Override
             public void handle(ActionEvent event) {
 
-                mainController.openMovieInfo(movie);
+                openMovieInfo(movie);
             }
         });
         movieCard.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -111,7 +125,29 @@ public class MovieCardController {
         return movieCard; // the finished movieCard with information
     }
 
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
+    /**
+     * Loads MovieView FXML with a Movie object if button is cliked.
+     * @param movie
+     */
+    public void openMovieInfo(Movie movie){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieView.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+            //System.out.println(root);
+
+        } catch (IOException e) {
+            new Exception("Failed to show 'movie info'", e);
+        }
+
+        Stage stage = new Stage();
+        stage.setTitle("Movie info: " + movie.getTitle());
+        stage.setScene(new Scene(root));
+        stage.show();
+        MovieViewController controller = loader.getController();
+        controller.setMovieModel(movieModel);
+        controller.setMovieContent(movie);
     }
+
 }

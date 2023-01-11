@@ -104,7 +104,6 @@ public class MainController implements Initializable {
 
         HomeViewController controller = loader.getController();
         controller.setMovieModel(movieModel);
-        controller.setMainController(this);
         borderPane.setCenter(root);
 
         textSceneTitle.setText("Home");
@@ -122,7 +121,6 @@ public class MainController implements Initializable {
 
         WarningViewController controller = loader.getController();
         controller.setMovieModel(movieModel);
-        controller.setMainController(this);
         borderPane.setCenter(root);
 
         textSceneTitle.setText("Warning");
@@ -147,7 +145,6 @@ public class MainController implements Initializable {
 
         movieListController = loader.getController();
         movieListController.setMovieModel(movieModel);
-        movieListController.setMainController(this);
         borderPane.setCenter(root);
 
         textSceneTitle.setText("all movies");
@@ -171,29 +168,6 @@ public class MainController implements Initializable {
         textSceneTitle.setText("Add Movie");
     }
 
-    /**
-     * Loads MovieView FXML with a Movie object if button is cliked.
-     * @param movie
-     */
-    public void openMovieInfo(Movie movie){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieView.fxml"));
-        Parent root = null;
-
-        try {
-            root = loader.load();
-
-        } catch (IOException e) {
-            new Exception("Failed to show 'movie info'", e);
-        }
-
-        Stage stage = new Stage();
-        stage.setTitle("Movie info: " + movie.getTitle());
-        stage.setScene(new Scene(root));
-        stage.show();
-        MovieViewController controller = loader.getController();
-        controller.setMovieModel(movieModel);
-        controller.setMovieContent(movie);
-    }
 
     public void handleSearch() {
         try {

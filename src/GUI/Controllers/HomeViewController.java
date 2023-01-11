@@ -96,7 +96,5 @@ public class HomeViewController implements Initializable {
         this.movieModel = movieModel;
     }
 
-    public void setMainController(MainController mainController) {
-        movieCardController.setMainController(mainController);
-    }
+
 }

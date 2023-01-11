@@ -114,7 +114,4 @@ public class WarningViewController implements Initializable {
         this.movieModel = movieModel;
     }
 
-    public void setMainController(MainController mainController) {
-        movieCardController.setMainController(mainController);
-    }
 }
