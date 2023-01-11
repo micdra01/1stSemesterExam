@@ -16,7 +16,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -61,7 +60,6 @@ public class MainController implements Initializable {
         try {
             movieModel = new MovieModel();//sets the movieModel
             categoryModel = new CategoryModel();//sets categoryModel
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -75,6 +73,7 @@ public class MainController implements Initializable {
         //Loads all current categories in the category dropdown (both in sidebar & in search bar).
         //Perhaps this should only happen when each of them is clicked to improve load time?
         try {
+            handleWarning();
             initializeCategoryMenu();
             initializeCategorySearchMenu();
         } catch (Exception e) {
@@ -114,6 +113,24 @@ public class MainController implements Initializable {
         borderPane.setCenter(root);
 
         textSceneTitle.setText("Home");
+    }
+
+    public void handleWarning() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/WarningView.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            new Exception("Failed to open 'Warning'", e);
+        }
+
+        MovieListController controller = loader.getController();
+        controller.setMovieModel(movieModel);
+        controller.setMainController(this);
+        borderPane.setCenter(root);
+
+        textSceneTitle.setText("Warning");
     }
 
 
@@ -159,6 +176,10 @@ public class MainController implements Initializable {
         textSceneTitle.setText("Add Movie");
     }
 
+    /**
+     * Loads MovieView FXML with a Movie object if button is cliked.
+     * @param movie
+     */
     public void openMovieInfo(Movie movie){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieView.fxml"));
         Parent root = null;
@@ -170,11 +191,13 @@ public class MainController implements Initializable {
             new Exception("Failed to show 'movie info'", e);
         }
 
+        Stage stage = new Stage();
+        stage.setTitle("Movie info: " + movie.getTitle());
+        stage.setScene(new Scene(root));
+        stage.show();
         MovieController controller = loader.getController();
-        borderPane.setCenter(root);
         controller.setMovieModel(movieModel);
-        controller.setMovie(movie);
-
+        controller.setMovieContent(movie);
     }
 
     public void handleSearch() {
@@ -321,8 +344,12 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Loads AddCategoryView FXML and populates the category listview.
+     * @param event
+     */
     public void handleAddCategory(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/AddCategoryView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/CategoryView.fxml"));
         Parent root = null;
 
         try {
@@ -331,13 +358,9 @@ public class MainController implements Initializable {
             new Exception("Failed to open 'Add category'", e);
         }
 
-        Stage stage = new Stage();
-        stage.setTitle("Add Category");
-        stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-
-        MovieController controller = loader.getController();
+        CategoryController controller = loader.getController();
+        borderPane.setCenter(root);
         controller.setCategoryModel(categoryModel);
+        controller.populateCategories();
     }
 }

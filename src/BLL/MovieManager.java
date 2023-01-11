@@ -97,6 +97,6 @@ public class MovieManager implements IMovieManager {
      */
     @Override
     public Movie getMovieFromId(int movieId) throws Exception {
-        return null;
+        return databaseAccess.getMovieFromId(movieId);
     }
 }

@@ -10,6 +10,10 @@ public class Movie {
     private String title, movieFileLink, pictureFileLink, category;
     private Timestamp lastViewed;
 
+    private int yearOfRelease;
+
+    private String movieDescription;
+
 
     /**
      * constructor with id, should be used a standard
@@ -22,7 +26,7 @@ public class Movie {
      * @param lastViewed
      */
     public Movie(int id, String title, double personalRating, double imdbRating, String movieFileLink,
-                 String pictureFileLink, Timestamp lastViewed) {
+                 String pictureFileLink, Timestamp lastViewed, int yearOfRelease, String movieDescription) {
         this.id = id;
         this.title = title;
         this.personalRating = personalRating;
@@ -30,6 +34,8 @@ public class Movie {
         this.movieFileLink = movieFileLink;
         this.pictureFileLink = pictureFileLink;
         this.lastViewed = lastViewed;
+        this.yearOfRelease = yearOfRelease;
+        this.movieDescription = movieDescription;
     }
 
     /**
@@ -42,13 +48,15 @@ public class Movie {
      * @param pictureFileLink
      * @param lastViewed
      */
-    public Movie(String title, double personalRating, double imdbRating, String movieFileLink, String pictureFileLink, Timestamp lastViewed) {
+    public Movie(String title, double personalRating, double imdbRating, String movieFileLink, String pictureFileLink, Timestamp lastViewed, int yearOfRelease, String movieDescription) {
         this.title = title;
         this.personalRating = personalRating;
         this.imdbRating = imdbRating;
         this.movieFileLink = movieFileLink;
         this.pictureFileLink = pictureFileLink;
         this.lastViewed = lastViewed;
+        this.yearOfRelease = yearOfRelease;
+        this.movieDescription = movieDescription;
     }
 
     public int getId() {
@@ -117,5 +125,19 @@ public class Movie {
         this.lastViewed = lastViewed;
     }
 
+    public int getYearOfRelease() {
+        return yearOfRelease;
+    }
 
+    public void setYearOfRelease(int yearOfRelease) {
+        this.yearOfRelease = yearOfRelease;
+    }
+
+    public String getMovieDescription() {
+        return movieDescription;
+    }
+
+    public void setMovieDescription(String movieDescription) {
+        this.movieDescription = movieDescription;
+    }
 }
