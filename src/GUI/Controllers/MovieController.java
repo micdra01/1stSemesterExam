@@ -124,7 +124,7 @@ public class MovieController implements Initializable {
         this.movieModel = movieModel;
     }
 
-    public void setMovie(Movie movie) {
+    public void setMovieContent(Movie movie) {
         this.movie = movie;
         lblTittle.setText(movie.getTitle());
         showCategories();

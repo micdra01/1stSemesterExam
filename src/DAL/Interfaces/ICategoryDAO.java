@@ -62,4 +62,12 @@ public interface ICategoryDAO {
      */
     public ArrayList<Category> readAllCategoriesFromMovie(Movie movie) throws Exception;
 
+    /**
+     * gets a category from the id
+     * @param categoryId, the category id
+     * @return the found category object from id.
+     * @throws Exception
+     */
+    public Category getCategoryFromId(int categoryId) throws Exception;
+
 }

@@ -192,7 +192,7 @@ public class MainController implements Initializable {
         stage.show();
         MovieController controller = loader.getController();
         controller.setMovieModel(movieModel);
-        controller.setMovie(movie);
+        controller.setMovieContent(movie);
     }
 
     public void handleSearch() {
