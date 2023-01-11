@@ -122,16 +122,16 @@ public class CategoryDAO implements ICategoryDAO {
 
     @Override
     public void deleteCategory(Category category) throws Exception {
-        String sql2 = "DELETE FROM Category WHERE Id = ?;"; //Then delete the category itself
+        String sql = "DELETE FROM Category WHERE Id = ?;"; //Then delete the category itself
 
         try (Connection connection = databaseConnector.getConnection();
-             PreparedStatement statement2 = connection.prepareStatement(sql2)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             // Bind parameters
-            statement2.setInt(1, category.getId());
+            statement.setInt(1, category.getId());
 
             // Run the specified SQL Statement
-            statement2.executeUpdate();
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new Exception("Failed to delete category", e);
