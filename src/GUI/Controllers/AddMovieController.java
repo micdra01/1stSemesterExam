@@ -21,9 +21,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -31,14 +28,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddMovieController{
-    public TextField textImageFile, textTrailerFile, textIMDBRating, textCategory, textTitle, textMovieFile;
-    public Button btnMovieFile, btnTrailerFile, btnImageFile, btnSave;
-    public Label lblImageFile, lblTrailerFile, lblIMDBRating, lblCategory, lblMovieFile, lblTitle;
+    public TextField textImageFile, textCategory, textTitle, textMovieFile;
+    public Button btnMovieFile, btnImageFile, btnSave;
+    public Label lblImageFile, lblCategory, lblMovieFile, lblTitle;
     public GridPane grid;
 
     private MovieModel movieModel;
 
-    private File movieCover, movieFile, trailerFile;
+    private File movieCover, movieFile;
 
     private ImdbInfoModel imdbInfoModel;
 
@@ -60,7 +57,6 @@ public class AddMovieController{
             textMovieFile.setText(movieFile.getAbsolutePath());
         }
     }
-
 
 
     public void handleImageFile(ActionEvent event) {
