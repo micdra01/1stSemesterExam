@@ -97,6 +97,8 @@ public class AddMovieController{
 
     public void handleSearchOnImdb(ActionEvent actionEvent) {
 
+
+        //todo just a test for checking all methods works from imdb crud
         ArrayList<String> categories;
         String rating ="";
         String description = "";
