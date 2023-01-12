@@ -1,6 +1,7 @@
 package GUI.Controllers;
 
 import BE.Category;
+import BE.Movie;
 import GUI.Models.CategoryModel;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -25,19 +26,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CategoryController {
-
+    
     @FXML
-    private ImageView imageMoviePoster;
+    private ListView listCategories;
     @FXML
-    private Label labelTitle, labelYear, labelIMDBRating, labelPersonalRating, labelLastViewed;
-    public Button btnAddCategory;
-    public Button btnSaveCategory;
-
-    @FXML
-    public Button btbDeleteCategory;
-    public ListView listCategories;
-    public Button btnSaveCategory;
-    public TextField textAddCategory;
+    private TextField textAddCategory;
     private CategoryModel categoryModel;
     private Category selectedCategory;
 
@@ -61,17 +54,6 @@ public class CategoryController {
         this.categoryModel = categoryModel;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-        labelTitle.setText(movie.getTitle());
-        labelYear.setText(String.valueOf(movie.getYearOfRelease()));
-        labelIMDBRating.setText(String.valueOf(movie.getImdbRating()));
-        labelPersonalRating.setText(String.valueOf(movie.getPersonalRating()));
-        labelLastViewed.setText(String.valueOf(movie.getLastViewed()));
-        imageMoviePoster.setImage(new Image(movie.getPictureFileLink()));
-    }
-
-    public void handleSaveCategory(ActionEvent actionEvent) throws Exception {
     /**
      * Creates category if button is clicked by calling CategoryModels createCategory method.
      * Populates the category list and clears text field.
@@ -90,10 +72,6 @@ public class CategoryController {
         populateCategories();
         textAddCategory.clear();
 
-    }
-
-    public void setCategoryModel(CategoryModel categoryModel){
-        this.categoryModel = categoryModel;
     }
 
     /**
@@ -121,15 +99,6 @@ public class CategoryController {
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    public void handlePlayMovie(ActionEvent actionEvent) {
-        try {
-            String moviePath = new File(movie.getMovieFileLink()).getAbsolutePath();
-            Desktop.getDesktop().open(new File(moviePath));
-        } catch (IOException e) {
-            new Exception("Failed to play movie"+e);
         }
     }
 }
