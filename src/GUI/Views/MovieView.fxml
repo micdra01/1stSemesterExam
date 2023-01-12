@@ -59,6 +59,11 @@
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </Label>
+                              <Button fx:id="btnSetPR" mnemonicParsing="false" prefHeight="30.0" text="Rate">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Button>
                            </children>
                         </HBox>
                         <VBox VBox.vgrow="ALWAYS">
