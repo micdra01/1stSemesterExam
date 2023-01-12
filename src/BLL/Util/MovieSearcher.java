@@ -93,15 +93,47 @@ public class MovieSearcher {
 
     /**
      * Helper method to check if the movie category matches the search query
-     * @param categories, the list of categories to search for
+     * @param selectedCategories, the list of selectedCategories to search for
      * @param movie, the movie to check
      * @return true if there is a match, false if not.
      */
-    private boolean compareToCategory(List<String> categories, Movie movie) throws Exception {
+    private boolean compareToCategory(List<String> selectedCategories, Movie movie) throws Exception {
         ArrayList<Category> movieCategories = categoryManager.readAllCategoriesFromMovie(movie);
+
         if (movieCategories.isEmpty()) {
             return false;
         }
-        return movieCategories.get(0).getTitle().matches(categories.get(0));
+
+        //If only one category is selected, loop through all the selectedCategories of the movie
+        if (selectedCategories.size()==1) {
+            for (int i = 0; i < movieCategories.size(); i++) {
+                boolean isMovieInCategory = movieCategories.get(i).getTitle().matches(selectedCategories.get(0));
+                if(isMovieInCategory) return true;
+            }
+            return false;
+        }
+
+        //If > 1 categories are selected. Up to three with this.
+        // Could continue, but there must be a more flexible way...
+        if(selectedCategories.size()>1) {
+            for (int i = 0; i < movieCategories.size(); i++) {
+                if(movieCategories.get(i).getTitle().matches(selectedCategories.get(0))) {
+                    for (int j = 0; j < movieCategories.size(); j++) {
+                        if(movieCategories.get(j).getTitle().matches(selectedCategories.get(1))) {
+                            if(selectedCategories.size()>2)
+                                for (int k = 0; k < movieCategories.size(); k++) {
+                                    if(movieCategories.get(k).getTitle().matches(selectedCategories.get(2))) {
+                                        return true;
+                                    }
+                                }
+                            else {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
