@@ -1,5 +1,6 @@
 package GUI.Controllers;
 
+import BE.Category;
 import BE.Movie;
 import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
@@ -82,17 +83,18 @@ public class MainController implements Initializable {
     }
 
 
-    private void initializeCategoryMenu() throws Exception {
-        for (int i = 0; i < categoryModel.getAllCategories().size() ; i++) {
-            MenuItem menuItem = new MenuItem(categoryModel.getAllCategories().get(i).getTitle());
+    public void initializeCategoryMenu() throws Exception {
+        menuBtnCategory.getItems().clear();
+        for (Category category : categoryModel.getAllCategories()) {
+            MenuItem menuItem = new MenuItem(category.getTitle());
             menuBtnCategory.getItems().add(menuItem);
         }
     }
 
-    private void initializeCategorySearchMenu() throws Exception {
+    public void initializeCategorySearchMenu() throws Exception {
         searchMenuBtnCategory.getItems().clear();
-        for (int i = 0; i < categoryModel.getAllCategories().size() ; i++) {
-            CheckMenuItem checkMenuItem = new CheckMenuItem(categoryModel.getAllCategories().get(i).getTitle());
+        for (Category category : categoryModel.getAllCategories()) {
+            CheckMenuItem checkMenuItem = new CheckMenuItem(category.getTitle());
             searchMenuBtnCategory.getItems().add(checkMenuItem);
         }
     }
@@ -361,6 +363,7 @@ public class MainController implements Initializable {
         CategoryController controller = loader.getController();
         borderPane.setCenter(root);
         controller.setCategoryModel(categoryModel);
+        controller.setMainController(this);
         controller.populateCategories();
     }
 }

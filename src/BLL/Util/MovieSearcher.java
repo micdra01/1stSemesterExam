@@ -98,8 +98,10 @@ public class MovieSearcher {
      * @return true if there is a match, false if not.
      */
     private boolean compareToCategory(List<String> selectedCategories, Movie movie) throws Exception {
+        //Load in all the categories from the movie
         ArrayList<Category> movieCategories = categoryManager.readAllCategoriesFromMovie(movie);
 
+        //If movie has no categories connected, it should not be shown in a search for category.
         if (movieCategories.isEmpty()) {
             return false;
         }

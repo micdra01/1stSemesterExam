@@ -15,6 +15,7 @@ public class CategoryController {
     public TextField textAddCategory;
     private CategoryModel categoryModel;
     private Category selectedCategory;
+    private MainController mainController;
 
 
     /**
@@ -52,6 +53,8 @@ public class CategoryController {
         categoryModel.createCategory(category);
         listCategories.getItems().clear();
         populateCategories();
+        mainController.initializeCategoryMenu();
+        mainController.initializeCategorySearchMenu();
         textAddCategory.clear();
     }
 
@@ -65,6 +68,8 @@ public class CategoryController {
             categoryModel.deleteCategory(selectedCategory);
             listCategories.getItems().clear();
             populateCategories();
+            mainController.initializeCategoryMenu();
+            mainController.initializeCategorySearchMenu();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -81,5 +86,12 @@ public class CategoryController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Sets MainController to be able to update the category dropdown with changes made in Edit Category
+     */
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 }
