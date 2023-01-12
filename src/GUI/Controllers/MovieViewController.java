@@ -20,7 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class MovieController implements Initializable {
+public class MovieViewController implements Initializable {
     @FXML
     private VBox vBoxCategories;
     @FXML
@@ -32,7 +32,7 @@ public class MovieController implements Initializable {
     private Movie movie;
     ArrayList<Category> movieCategories;
 
-    public MovieController() {
+    public MovieViewController() {
         try {
             categoryModel = new CategoryModel();
         } catch (Exception e) {

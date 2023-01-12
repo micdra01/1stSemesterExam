@@ -134,7 +134,5 @@ public class AddMovieController{
             }
         }
 
-
-
     }
 }
