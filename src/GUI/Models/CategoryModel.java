@@ -5,6 +5,7 @@ import BE.Movie;
 import BLL.CategoryManager;
 import BLL.Interfaces.ICategoryManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryModel {
@@ -13,7 +14,7 @@ public class CategoryModel {
 
 
     public CategoryModel() throws  Exception {
-        categoryManager = (ICategoryManager) new CategoryManager();
+        categoryManager = new CategoryManager();
     }
 
     public Category createCategory(Category category) throws Exception {
@@ -25,10 +26,13 @@ public class CategoryModel {
     }
 
     public void addMovieToCategory(Category category, Movie movie) throws Exception {
+        categoryManager.addMovieToCategory(category, movie);
 
-        //Movie movie = categoryManager.addMovieToCategory(category, movie);
 
+    }
 
+    public void removeCategoryFromMovie(Category category, Movie movie) throws Exception {
+        categoryManager.removeCategoryFromMovie(category, movie);
     }
 
     /**
@@ -38,6 +42,14 @@ public class CategoryModel {
      */
     public List<Category> getAllCategories() throws Exception {
         return categoryManager.getAllCategories();
+    }
+
+    public ArrayList<Category> readAllCategoriesFromMovie(Movie movie) throws Exception {
+        return categoryManager.readAllCategoriesFromMovie(movie);
+    }
+
+    public List<Movie> readAllMoviesInCategory(Category category) throws Exception {
+        return categoryManager.readAllMoviesInCategory(category);
     }
 }
 

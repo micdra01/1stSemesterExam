@@ -3,6 +3,7 @@ package BLL.Interfaces;
 import BE.Category;
 import BE.Movie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ICategoryManager {
@@ -36,7 +37,7 @@ public interface ICategoryManager {
      * @return
      * @throws Exception
      */
-    public List<Category> readAllCategoriesFromMovie(Movie movie) throws Exception;
+    public ArrayList<Category> readAllCategoriesFromMovie(Movie movie) throws Exception;
 
     /**
      *
@@ -44,7 +45,7 @@ public interface ICategoryManager {
      * @return
      * @throws Exception
      */
-    public List<Movie> readAllMovieInCategory(Category category) throws Exception;
+    public List<Movie> readAllMoviesInCategory(Category category) throws Exception;
 
     /**
      *

@@ -1,10 +1,11 @@
 package GUI.Controllers;
 
 import BE.Category;
-import BE.Movie;
 import GUI.Models.CategoryModel;
-import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MovieController implements Initializable {
+public class CategoryController {
 
     @FXML
     private ImageView imageMoviePoster;
@@ -33,42 +34,31 @@ public class MovieController implements Initializable {
     public Button btnSaveCategory;
 
     @FXML
-    public ListView listCategories;
-    public TextField textAddCategory;
     public Button btbDeleteCategory;
-    @FXML
-    private ScrollPane movieView;
-    @FXML
-    private MediaView mediaView;
+    public ListView listCategories;
+    public Button btnSaveCategory;
+    public TextField textAddCategory;
     private CategoryModel categoryModel;
-
-    public AnchorPane anchorPane;
-
-    private MovieModel movieModel;
-
-    private Movie movie;
-
-
     private Category selectedCategory;
 
 
-
-    public MovieController(){
-
+    /**
+     * Constructor which instantiate CategoryModel
+     */
+    public CategoryController(){
         try {
             categoryModel = new CategoryModel();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        //mediaView.setMediaPlayer(new MediaPlayer(new Media("/Movies/mp4 sample.mp4")));
-       // populateCategories();
-    }
 
-    public void setMovieModel(MovieModel movieModel) {
-        this.movieModel = movieModel;
+    /**
+     * Sets CategoryModel
+     * @param categoryModel
+     */
+    public void setCategoryModel(CategoryModel categoryModel){
+        this.categoryModel = categoryModel;
     }
 
     public void setMovie(Movie movie) {
@@ -82,6 +72,13 @@ public class MovieController implements Initializable {
     }
 
     public void handleSaveCategory(ActionEvent actionEvent) throws Exception {
+    /**
+     * Creates category if button is clicked by calling CategoryModels createCategory method.
+     * Populates the category list and clears text field.
+     * @param actionEvent
+     * @throws Exception
+     */
+    public void handleSaveCategory(ActionEvent actionEvent) throws Exception{
 
         int id = -1;
         String title = textAddCategory.getText();
@@ -99,6 +96,10 @@ public class MovieController implements Initializable {
         this.categoryModel = categoryModel;
     }
 
+    /**
+     * Delete selected category if button is clicked by calling CategoryModels deleteCategory method.
+     * @param event
+     */
     public void handleDeleteCategory(ActionEvent event) {
         try {
             selectedCategory = (Category) listCategories.getSelectionModel().getSelectedItem();
@@ -110,6 +111,9 @@ public class MovieController implements Initializable {
         }
     }
 
+    /**
+     * Loops through list of all categories and adds category objects to listview.
+     */
     public void populateCategories(){
         try {
             for (Category category : categoryModel.getAllCategories()) {
@@ -129,5 +133,3 @@ public class MovieController implements Initializable {
         }
     }
 }
-
-

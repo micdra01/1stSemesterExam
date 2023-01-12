@@ -27,7 +27,7 @@ public class MovieDAO implements IMovieDAO {
     @Override
     public Movie createMovie(Movie movie) throws Exception {
         //sql string for creating a movie in Movies table
-        String sql = "INSERT INTO Movies (Title, PersonalRating, ImdbRating, MovieFileLink, PictureFileLink, TrailerFileLink, LastView, YearOfRelease, MovieDescription) VALUES (?,?,?,?,?,?,?,?,?) ;";
+        String sql = "INSERT INTO Movies (Title, PersonalRating, ImdbRating, MovieFileLink, PictureFileLink, LastView, YearOfRelease, MovieDescription) VALUES (?,?,?,?,?,?,?,?,?) ;";
         //get connection with database
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -188,26 +188,32 @@ public class MovieDAO implements IMovieDAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1,movieId);//bind the movie id to sql statement
-            ResultSet rs = statement.executeQuery(sql);//execute the statement and get movie result
 
-            //get all variables from result set
-            int id = rs.getInt("Id");
-            String title =rs.getString("Title");
-            double personalRating = rs.getDouble("PersonalRating");
-            double imdbRating = rs.getDouble("ImdbRating");
-            String movieFileLink = rs.getString("MovieFileLink");
-            String pictureFileLink = rs.getString("PictureFileLink");
-            String trailerFileLink = rs.getString("TrailerFileLink");
-            Timestamp lastView = rs.getTimestamp("LastView");
-            int yearOfRelease = rs.getInt("YearOfRelease");
-            String movieDescription = rs.getString("MovieDescription");
 
-            //creates the movie and add it to the list allMovies
-            movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink, lastView, yearOfRelease, movieDescription);
+            ResultSet rs = statement.executeQuery();//execute the statement and get movie result
+
+            while (rs.next()) {
+                //get all variables from result set
+                int id = rs.getInt("Id");
+                String title = rs.getString("Title");
+                double personalRating = rs.getDouble("PersonalRating");
+                double imdbRating = rs.getDouble("ImdbRating");
+                String movieFileLink = rs.getString("MovieFileLink");
+                String pictureFileLink = rs.getString("PictureFileLink");
+                Timestamp lastView = rs.getTimestamp("LastView");
+                int yearOfRelease = rs.getInt("YearOfRelease");
+                String movieDescription = rs.getString("MovieDescription");
+
+
+
+                //creates the movie and add it to the list allMovies
+                movie = new Movie(id, title, personalRating, imdbRating, movieFileLink, pictureFileLink, lastView, yearOfRelease, movieDescription);
+                return movie;//returns the found movie
+            }
         }catch (SQLException e) {
             e.printStackTrace();
             throw new Exception("Failed to find movie", e);
         }
-        return  movie; //returns the found movie
+        return  null;
     }
 }

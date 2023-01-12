@@ -6,6 +6,8 @@ import BLL.Interfaces.ICategoryManager;
 import DAL.CategoryDAO;
 import DAL.Interfaces.ICategoryDAO;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryManager implements ICategoryManager {
@@ -62,12 +64,12 @@ public class CategoryManager implements ICategoryManager {
     }
 
     @Override
-    public List<Movie> readAllMovieInCategory(Category category) throws Exception {
-        return null;
+    public List<Movie> readAllMoviesInCategory(Category category) throws Exception {
+        return databaseAccess.readAllMoviesInCategory(category);
     }
 
     @Override
-    public List<Category> readAllCategoriesFromMovie(Movie movie) throws Exception {
-        return null;
+    public ArrayList<Category> readAllCategoriesFromMovie(Movie movie) throws Exception {
+        return databaseAccess.readAllCategoriesFromMovie(movie);
     }
 }
