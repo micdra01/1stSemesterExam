@@ -142,6 +142,7 @@ public class MovieCardController {
         }
 
         Stage stage = new Stage();
+        //stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("Movie info: " + movie.getTitle());
         stage.setScene(new Scene(root));
         stage.show();
