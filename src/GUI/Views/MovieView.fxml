@@ -65,7 +65,20 @@
                                  <items>
                                     <MenuItem mnemonicParsing="false" text="PR ❤">
                                        <graphic>
-                                          <Slider fx:id="sliderSetPR" blockIncrement="1.0" max="10.0" onDragDone="#handleSetPR" />
+                                          <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0">
+                                             <children>
+                                                <Slider fx:id="sliderSetPR" blockIncrement="1.0" max="10.0" onDragDone="#handleSetPR">
+                                                   <HBox.margin>
+                                                      <Insets top="7.0" />
+                                                   </HBox.margin>
+                                                </Slider>
+                                                <Button mnemonicParsing="false" onAction="#handleSetPR" text="Save">
+                                                   <HBox.margin>
+                                                      <Insets left="5.0" top="2.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                          </HBox>
                                        </graphic>
                                     </MenuItem>
                                  </items>
