@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MovieViewController implements Initializable {
+
+    @FXML
+    private Button btnSetPR;
     @FXML
     private VBox vBoxCategories;
     @FXML
@@ -150,6 +153,11 @@ public class MovieViewController implements Initializable {
         } catch (IOException e) {
             new Exception("Failed to play movie"+e);
         }
+    }
+
+    public void handleSetPR(ActionEvent actionEvent) {
+
+
     }
 }
 
