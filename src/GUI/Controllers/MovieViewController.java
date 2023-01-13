@@ -9,9 +9,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,12 +27,12 @@ import java.util.ResourceBundle;
 
 public class MovieViewController implements Initializable {
 
-    @FXML
-    private Button btnSetPR;
+
+    public Slider sliderSetPR;
     @FXML
     private VBox vBoxCategories;
     @FXML
-    private MenuButton menuBtnAddCategory;
+    private MenuButton menuBtnAddCategory, btnSetPR;
 
     @FXML
     private Label labelTitle, labelYear, labelIMDBRating, labelPersonalRating, labelLastViewed;
@@ -155,10 +155,18 @@ public class MovieViewController implements Initializable {
         }
     }
 
-    public void handleSetPR(ActionEvent actionEvent) {
+    public void handleSetPR(ActionEvent actionEvent) throws Exception {
 
+        Double pr = sliderSetPR.getValue();
+
+        movie.setPersonalRating(pr);
+        movieModel.updateMovie(movie);
+
+        labelPersonalRating.setText(String.valueOf(movie.getPersonalRating()));
 
     }
+
+
 }
 
 
