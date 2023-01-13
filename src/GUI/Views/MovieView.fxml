@@ -56,7 +56,7 @@
                               </Label>
                               <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="30.0" prefWidth="10.0" visible="false" HBox.hgrow="ALWAYS" />
                               <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" text="Personal Rating:" textAlignment="RIGHT" HBox.hgrow="ALWAYS" />
-                              <Label fx:id="labelPersonalRating" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                              <Label fx:id="labelPersonalRating" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="40.0" HBox.hgrow="NEVER">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>

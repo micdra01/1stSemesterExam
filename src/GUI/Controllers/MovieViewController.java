@@ -9,10 +9,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -22,6 +22,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -46,6 +47,7 @@ public class MovieViewController implements Initializable {
     public MovieViewController() {
         try {
             categoryModel = new CategoryModel();
+            movieModel = new MovieModel();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -157,13 +159,14 @@ public class MovieViewController implements Initializable {
 
     public void handleSetPR(ActionEvent actionEvent) throws Exception {
 
-        Double pr = sliderSetPR.getValue();
-
+        double pr = sliderSetPR.getValue();
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        System.out.println(df.format(pr));
         movie.setPersonalRating(pr);
         movieModel.updateMovie(movie);
 
         labelPersonalRating.setText(String.valueOf(movie.getPersonalRating()));
-
     }
 
 

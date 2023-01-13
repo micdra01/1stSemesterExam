@@ -27,7 +27,7 @@ public class MovieCardController {
 
     public MovieCardController(){
         try {
-            // = new MovieModel();
+            movieModel = new MovieModel();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
