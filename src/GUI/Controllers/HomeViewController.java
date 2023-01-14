@@ -19,7 +19,7 @@ public class HomeViewController implements Initializable {
     @FXML
     private ScrollPane listAllMovies, listPopular, listTrending;
 
-    private double minRatingPopular = 8.2;
+    private final double minRatingPopular = 7.5;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

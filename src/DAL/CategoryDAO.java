@@ -228,5 +228,41 @@ public class CategoryDAO implements ICategoryDAO {
         }
         return category;
     }
+
+    /**
+     * gets a category from the id
+     *
+     * @param categoryName, the category name
+     * @return the found category object from id.
+     * @throws Exception
+     */
+    @Override
+    public Category getCategoryFromName(String categoryName) throws Exception {
+        //SELECT * FROM Movies WHERE [condition]
+        String sql = " SELECT * FROM Category WHERE CategoryName=?;";
+
+        Category category = null; //category that is returned from db
+
+        //get connection with database
+        try (Connection connection = databaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, categoryName);//bind the category id to sql statement
+            ResultSet rs = statement.executeQuery();//execute the statement and get category result
+
+            while (rs.next()) {
+                //get all variables from result set
+                int id = rs.getInt("Id");
+                String name = rs.getString("CategoryName");
+
+                //creates the category object
+                category = new Category(id, name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("Failed to find category", e);
+        }
+        return category;
+    }
 }
 

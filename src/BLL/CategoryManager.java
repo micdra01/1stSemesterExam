@@ -53,6 +53,11 @@ public class CategoryManager implements ICategoryManager {
     }
 
     @Override
+    public Category getCategoryFromName(String categoryName) throws Exception {
+        return databaseAccess.getCategoryFromName(categoryName);
+    }
+
+    @Override
     public Category createCategory(Category category) throws Exception {
         return databaseAccess.createCategory(category);
     }

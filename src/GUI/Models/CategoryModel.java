@@ -51,6 +51,10 @@ public class CategoryModel {
     public List<Movie> readAllMoviesInCategory(Category category) throws Exception {
         return categoryManager.readAllMoviesInCategory(category);
     }
+
+    public Category getCategoryFromName(String categoryName) throws Exception {
+        return categoryManager.getCategoryFromName(categoryName);
+    }
 }
 
 
