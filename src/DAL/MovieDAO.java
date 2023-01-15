@@ -166,10 +166,10 @@ public class MovieDAO implements IMovieDAO {
             statement.setDouble(3, movie.getImdbRating());
             statement.setString(4, movie.getMovieFileLink());
             statement.setString(5, movie.getPictureFileLink());
-            statement.setTimestamp(7, movie.getLastViewed());
-            statement.setInt(8, movie.getYearOfRelease());
-            statement.setString(9, movie.getMovieDescription());
-            statement.setInt(10,movie.getId());
+            statement.setTimestamp(6, movie.getLastViewed());
+            statement.setInt(7, movie.getYearOfRelease());
+            statement.setString(8, movie.getMovieDescription());
+            statement.setInt(9,movie.getId());
             //execute statement
             statement.executeUpdate();
         } catch (SQLException e) {

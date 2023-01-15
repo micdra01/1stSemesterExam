@@ -73,7 +73,6 @@ public class WarningViewController implements Initializable {
         for (Movie movie : movieModel.getMoviesInList()){
             //If the movie is both low rated & last view is > 2 years ago ...
             if(movie.getPersonalRating() <= lowRating && movie.getLastViewed().before(Date.valueOf(LocalDate.now().minusYears(2)))) {
-
                 //... it creates a movieCard for said movie and adds it to the content grid
                 GridPane movieCard = movieCardController.createMovieCard(movie);
 

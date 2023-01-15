@@ -11,22 +11,34 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MovieViewController implements Initializable {
+
+
+    public Slider sliderSetPR;
     @FXML
     private VBox vBoxCategories;
     @FXML
-    private MenuButton menuBtnAddCategory;
+    private MenuButton menuBtnAddCategory, btnSetPR;
 
-    public Label lblTittle;
+    @FXML
+    private Label labelTitle, labelYear, labelIMDBRating, labelPersonalRating, labelLastViewed;
+    @FXML
+    private ImageView imageMoviePoster;
     private CategoryModel categoryModel;
     private MovieModel movieModel;
     private Movie movie;
@@ -35,6 +47,7 @@ public class MovieViewController implements Initializable {
     public MovieViewController() {
         try {
             categoryModel = new CategoryModel();
+            movieModel = new MovieModel();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -126,9 +139,36 @@ public class MovieViewController implements Initializable {
 
     public void setMovieContent(Movie movie) {
         this.movie = movie;
-        lblTittle.setText(movie.getTitle());
         showCategories();
+        labelTitle.setText(movie.getTitle());
+        labelYear.setText(String.valueOf(movie.getYearOfRelease()));
+        labelIMDBRating.setText(String.valueOf(movie.getImdbRating()));
+        labelPersonalRating.setText(String.valueOf(movie.getPersonalRating()));
+        labelLastViewed.setText(String.valueOf(movie.getLastViewed()));
+        imageMoviePoster.setImage(new Image(movie.getPictureFileLink()));
     }
+
+    public void handlePlayMovie(ActionEvent actionEvent) {
+        try {
+            String moviePath = new File(movie.getMovieFileLink()).getAbsolutePath();
+            Desktop.getDesktop().open(new File(moviePath));
+        } catch (IOException e) {
+            new Exception("Failed to play movie"+e);
+        }
+    }
+
+    public void handleSetPR(ActionEvent actionEvent) throws Exception {
+
+        double pr = sliderSetPR.getValue();
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        System.out.println(df.format(pr));
+        movie.setPersonalRating(pr);
+        movieModel.updateMovie(movie);
+
+        labelPersonalRating.setText(String.valueOf(movie.getPersonalRating()));
+    }
+
 
 }
 
