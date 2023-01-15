@@ -22,6 +22,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -152,8 +153,14 @@ public class MovieViewController implements Initializable {
         try {
             String moviePath = new File(movie.getMovieFileLink()).getAbsolutePath();
             Desktop.getDesktop().open(new File(moviePath));
+
+            movie.setLastViewed(new Timestamp(System.currentTimeMillis()));
+            movieModel.updateMovie(movie);
+            labelLastViewed.setText(String.valueOf(movie.getLastViewed()));
         } catch (IOException e) {
             new Exception("Failed to play movie"+e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
