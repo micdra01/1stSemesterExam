@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -23,11 +24,13 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.ResourceBundle;
 
-public class AddMovieController{
+public class AddMovieController implements Initializable {
     public TextField textImageFile, textCategory, textTitle, textMovieFile;
     public Button btnMovieFile, btnImageFile, btnSave;
     public Label lblImageFile, lblCategory, lblMovieFile, lblTitle;
@@ -42,8 +45,46 @@ public class AddMovieController{
     private ImdbInfo chosenMovie;
     private ListView<String> searchResultListView;
 
+    private boolean textFillMovie, textFillPicture, textFillTitle;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        btnSave.setDisable(true);
+        textTitle.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(textTitle.getText().isEmpty()){
+                textFillTitle = false;
+            }else{
+                textFillTitle = true;
+                checkSaveBtn();
+            }
+        });
+        textImageFile.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(textImageFile.getText().isEmpty()){
+                textFillPicture = false;
+            }else{
+                textFillPicture = true;
+                checkSaveBtn();
+            }
+        });
+        textMovieFile.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(textMovieFile.getText().isEmpty()){
+                textFillMovie = false;
+            }else{
+                textFillMovie = true;
+                checkSaveBtn();
+            }
+        });
+    }
+
+    private void checkSaveBtn() {
+        if(textFillMovie && textFillPicture && textFillTitle){
+            btnSave.setDisable(false);
+        }
+    }
+
+
+
     /**
-     * todo check if all input fields are filled, before save button is activated.
      * @param event
      */
     public void handleMovieFile(ActionEvent event) {
@@ -174,13 +215,9 @@ public class AddMovieController{
 
         for (int j = 0; categoryResult.size() > j; j++){
             categories.add(categoryResult.get(j));
-            //System.out.println(categoryResult.get(j));
         }
 
         ListView categoryList = new ListView<>(categories);
         grid.add(categoryList, 1, 5);
-
-
     }
-
 }
