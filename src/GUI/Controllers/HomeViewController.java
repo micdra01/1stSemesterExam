@@ -17,7 +17,7 @@ public class HomeViewController implements Initializable {
     private MovieCardController movieCardController;
 
     @FXML
-    private ScrollPane listAllMovies, listPopular, listTrending;
+    private ScrollPane listAllMovies, listPopular, listRecentlyAdded;
 
     private double minRatingPopular = 8.2;
 
@@ -33,7 +33,32 @@ public class HomeViewController implements Initializable {
         //createTrendingList();
         createPopularList();
         createAllMoviesList();
+        createRecentlyAddedList();
     }
+
+    private void createRecentlyAddedList() {
+
+        GridPane grid = new GridPane();
+        listRecentlyAdded.setContent(grid);
+
+        int col = 0;
+        int row = 0;
+
+        for (Movie movie : movieModel.getMoviesInList()){
+            if (movie.getId() == 10) {
+                //movie.getDateAdded().before(Date.valueOf(LocalDate.now().minusWeeks(3)))
+                GridPane movieCard = movieCardController.createMovieCard(movie); //creates the movie card
+                grid.add(movieCard, col, row); //adds it to the content gridPane
+
+                //makes a space between all movies
+                col++;
+                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
+                col++;
+            }
+        }
+
+    }
+
 
     /**
      * creates the gridPane for the Popular list
