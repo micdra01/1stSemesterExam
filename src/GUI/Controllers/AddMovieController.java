@@ -100,6 +100,8 @@ public class AddMovieController{
         }
         movieModel.createMovie(movie);
 
+        //todo should set the categories to the movie in database
+        //todo should have an get category by name crud method
     }
 
     public void setMovieModel(MovieModel movieModel) {
@@ -177,6 +179,7 @@ public class AddMovieController{
 
         ListView categoryList = new ListView<>(categories);
         grid.add(categoryList, 1, 5);
+
 
     }
 

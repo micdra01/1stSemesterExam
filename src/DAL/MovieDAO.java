@@ -5,6 +5,8 @@ import DAL.Interfaces.IMovieDAO;
 import DAL.Util.FileType;
 import DAL.Util.LocalFileHandler;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
 import java.util.ArrayList;
@@ -130,7 +132,12 @@ public class MovieDAO implements IMovieDAO {
                 double personalRating = rs.getDouble("PersonalRating");
                 double imdbRating = rs.getDouble("ImdbRating");
                 String movieFileLink = rs.getString("MovieFileLink");
+
                 String pictureFileLink = rs.getString("PictureFileLink");
+                if(!Files.exists(Path.of(pictureFileLink))){
+                    pictureFileLink = "images/ImageNotFound.jpg";
+                }
+
                 Timestamp lastView = rs.getTimestamp("LastView");
                 int yearOfRelease = rs.getInt("yearOfRelease");
                 String movieDescription = rs.getString("MovieDescription");
