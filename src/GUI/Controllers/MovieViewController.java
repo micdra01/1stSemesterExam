@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.File;
@@ -170,6 +171,15 @@ public class MovieViewController implements Initializable {
     }
 
 
+    public void deleteMovie(ActionEvent actionEvent) {
+        try {
+            movieModel.deleteMovie(movie);
+            Stage stage = (Stage) btnSetPR.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 
 
