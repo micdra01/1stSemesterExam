@@ -72,22 +72,49 @@ public class AddMovieController{
     }
 
     public void handleSave(ActionEvent event) throws Exception {
-        String title = textTitle.getText();
+
+        String title = "";
+        if(chosenMovie != null) {
+            title = chosenMovie.getTitle();
+        }else {
+            title = textTitle.getText();
+        }
+
+
         double personalRating = -1;
-        double imdbRating = 0;// todo set up with imdb rating
+
+        double imdbRating;
+        if(chosenMovie != null){
+            imdbRating = Double.parseDouble(imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId()));
+        }else {
+            imdbRating = 0;
+        }
+
         String movieLink = movieFile != null ? movieFile.getAbsolutePath() : "";
-        String coverPath;
-        if(movieCover == null) {
+
+        String coverPath = "";
+
+        if(chosenMovie.getPictureLink() != null) {
             coverPath = chosenMovie.getPictureLink();
-        }else
-            coverPath = movieCover != null ? movieCover.getAbsolutePath() : "";//gets the absolute path for the file
-
-
+        }else {
+            coverPath = movieCover.getAbsolutePath();
+        }
 
         Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
-        int yearOfRelease = 1950;//todo skal hentes fra imdb api
-        String movieDescription = "film beskrivelse hvor der skal stå en masse";//todo skal hentes fra api
 
+        int yearOfRelease;
+        if(chosenMovie.getYearOfRelease() != null){
+            yearOfRelease = Integer.parseInt(chosenMovie.getYearOfRelease());
+        }else {
+            yearOfRelease = 0;
+        }
+
+        String movieDescription;
+        if(chosenMovie != null){
+            movieDescription = imdbInfoModel.getMovieDescriptionFromImdbId(chosenMovie.getImdbId());
+        }else{
+            movieDescription = "der er ingen beskrivelse for denne film";
+        }
 
         Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed, yearOfRelease, movieDescription);
         if(chosenMovie != null){
@@ -118,7 +145,6 @@ public class AddMovieController{
         for (int i = 0; searchResult1.size()> i; i++){
             ImdbInfo info = searchResult1.get(i);
             wordsList.add(info.getTitle() + "   "+info.getYearOfRelease());
-
         }
         ListView<String> searchResult = new ListView<>(wordsList);
         searchResult.setMaxSize(300, 350);
@@ -128,7 +154,7 @@ public class AddMovieController{
         searchResult.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println(searchResult.getSelectionModel().getSelectedItem());
+                //System.out.println(searchResult.getSelectionModel().getSelectedItem());
                 chosenMovie = searchResult1.get(searchResult.getSelectionModel().getSelectedIndex());
 
                 Image img = new Image(chosenMovie.getPictureLink());
@@ -147,11 +173,9 @@ public class AddMovieController{
                     throw new RuntimeException(e);
                 }
 
-
-
                 for (int j = 0; categoryResult.size() > j; j++){
                     categories.add(categoryResult.get(j));
-                    System.out.println(categoryResult.get(j));
+                    //System.out.println(categoryResult.get(j));
                 }
 
                 ListView categoryList = new ListView<>(categories);
