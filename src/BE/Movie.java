@@ -109,9 +109,9 @@ public class Movie {
     }
 
     public String getPictureFileLink() {
-        pictureFileLink = pictureFileLink.replaceAll("resources//", "");
-        pictureFileLink = pictureFileLink.replaceAll("resources\\\\", "");
-        return pictureFileLink;
+       // pictureFileLink = pictureFileLink.replaceAll("resources//", "");
+
+        return pictureFileLink.replaceAll("resources\\\\", "");
     }
 
     public void setPictureFileLink(String pictureFileLink) {

@@ -141,6 +141,13 @@ public class AddMovieController implements Initializable {
         }
         movieModel.createMovie(movie);
 
+        Label savedText = new Label("you did it, you saved the movie in your database ");
+        grid.add(savedText,1,8);
+
+        textMovieFile.clear();
+        textImageFile.clear();
+        textTitle.clear();
+
         //todo should set the categories to the movie in database
         //todo should have an get category by name crud method
     }

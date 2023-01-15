@@ -134,7 +134,7 @@ public class MovieDAO implements IMovieDAO {
                 String movieFileLink = rs.getString("MovieFileLink");
 
                 String pictureFileLink = rs.getString("PictureFileLink");
-                if(!Files.exists(Path.of(pictureFileLink))){
+                if(!Files.exists(Path.of(pictureFileLink)) && !Files.exists(Path.of("resources\\" + pictureFileLink))){
                     pictureFileLink = "images/ImageNotFound.jpg";
                 }
 

@@ -170,8 +170,6 @@ public class MovieViewController implements Initializable {
 
         labelPersonalRating.setText(String.valueOf(movie.getPersonalRating()));
     }
-
-
 }
 
 
