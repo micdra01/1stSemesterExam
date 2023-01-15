@@ -40,9 +40,9 @@ public class AddMovieController{
     private ImdbInfoModel imdbInfoModel;
 
     private ImdbInfo chosenMovie;
+    private ListView<String> searchResultListView;
 
     /**
-     * todo write comments for all methods in class
      * todo check if all input fields are filled, before save button is activated.
      * @param event
      */
@@ -71,6 +71,12 @@ public class AddMovieController{
         }
     }
 
+    /**
+     * creates a movie from either the inputfields if they are selected or the imdb info if it is created
+     *
+     * @param event
+     * @throws Exception
+     */
     public void handleSave(ActionEvent event) throws Exception {
 
         String title = "";
@@ -80,41 +86,13 @@ public class AddMovieController{
             title = textTitle.getText();
         }
 
-
         double personalRating = -1;
-
-        double imdbRating;
-        if(chosenMovie != null){
-            imdbRating = Double.parseDouble(imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId()));
-        }else {
-            imdbRating = 0;
-        }
-
+        double imdbRating =  chosenMovie != null ?  Double.parseDouble(imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId())) : 0;
         String movieLink = movieFile != null ? movieFile.getAbsolutePath() : "";
-
-        String coverPath = "";
-
-        if(chosenMovie.getPictureLink() != null) {
-            coverPath = chosenMovie.getPictureLink();
-        }else {
-            coverPath = movieCover.getAbsolutePath();
-        }
-
+        String coverPath = chosenMovie != null ? chosenMovie.getPictureLink() : movieCover.getAbsolutePath();
         Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
-
-        int yearOfRelease;
-        if(chosenMovie.getYearOfRelease() != null){
-            yearOfRelease = Integer.parseInt(chosenMovie.getYearOfRelease());
-        }else {
-            yearOfRelease = 0;
-        }
-
-        String movieDescription;
-        if(chosenMovie != null){
-            movieDescription = imdbInfoModel.getMovieDescriptionFromImdbId(chosenMovie.getImdbId());
-        }else{
-            movieDescription = "der er ingen beskrivelse for denne film";
-        }
+        int yearOfRelease = chosenMovie != null ? Integer.parseInt(chosenMovie.getYearOfRelease()) : 0;
+        String movieDescription = chosenMovie != null ? imdbInfoModel.getMovieDescriptionFromImdbId(chosenMovie.getImdbId()) :"der er ingen beskrivelse for denne film";
 
         Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed, yearOfRelease, movieDescription);
         if(chosenMovie != null){
@@ -128,99 +106,78 @@ public class AddMovieController{
         this.movieModel = movieModel;
     }
 
+    /**
+     * serach on imdb when seach button is hit.
+     * @param actionEvent
+     */
     public void handleSearchOnImdb(ActionEvent actionEvent) {
-        ArrayList<ImdbInfo> searchResult1;
+        ArrayList<ImdbInfo> searchResult;
 
+        //creates the imdb model, so we can call api operations.
         try {
             imdbInfoModel = new ImdbInfoModel();
-            searchResult1 = imdbInfoModel.getSearchResultFromApi(textTitle.getText());
+            searchResult = imdbInfoModel.getSearchResultFromApi(textTitle.getText());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-
+        //gets the results from the search and list them in an observable list, and ads it to the grid
         ObservableList<String> wordsList = FXCollections.observableArrayList();
-        for (int i = 0; searchResult1.size()> i; i++){
-            ImdbInfo info = searchResult1.get(i);
+        for (int i = 0; searchResult.size()> i; i++){
+            ImdbInfo info = searchResult.get(i);
             wordsList.add(info.getTitle() + "   "+info.getYearOfRelease());
         }
-        ListView<String> searchResult = new ListView<>(wordsList);
-        searchResult.setMaxSize(300, 350);
-        grid.add(searchResult, 1,3);
+        searchResultListView = new ListView<>(wordsList);
+        searchResultListView.setMaxSize(300, 350);
+        grid.add(searchResultListView, 1,2);
 
 
-        searchResult.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        //listener for when a result is selected on the listVIew
+        searchResultListView.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                //System.out.println(searchResult.getSelectionModel().getSelectedItem());
-                chosenMovie = searchResult1.get(searchResult.getSelectionModel().getSelectedIndex());
-
-                Image img = new Image(chosenMovie.getPictureLink());
-                ImageView imageView = new ImageView(img);
-                imageView.setFitWidth(200);
-                imageView.setFitHeight(275);
-                grid.add(imageView, 2,3);
-
-                ObservableList<String> categories = FXCollections.observableArrayList();
-                ArrayList<String> categoryResult;
-                try {
-                    categoryResult = imdbInfoModel.getMovieCategoriesFromApi(chosenMovie.getImdbId());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-                for (int j = 0; categoryResult.size() > j; j++){
-                    categories.add(categoryResult.get(j));
-                    //System.out.println(categoryResult.get(j));
-                }
-
-                ListView categoryList = new ListView<>(categories);
-                grid.add(categoryList, 1, 6);
-
+                chosenMovieListener(searchResult);
             }
         });
+    }
 
+    /**
+     * sets the image and categories for the movie and shows the image and list of categories in grid
+     * @param searchResult
+     */
+    private void chosenMovieListener(ArrayList<ImdbInfo> searchResult) {
+        //the selected movie from the ImdbResultListView
+        chosenMovie = searchResult.get(searchResultListView.getSelectionModel().getSelectedIndex());
 
-        /**
+        //sets the image from a url string
+        Image img = new Image(chosenMovie.getPictureLink());
+        ImageView imageView = new ImageView(img);
+        imageView.setFitWidth(200);
+        imageView.setFitHeight(275);
+        grid.add(imageView, 2,2);
+        textImageFile.setText(img.getUrl());
 
-        //todo just a test for checking all methods works from imdb crud
-        ArrayList<String> categories;
-        String rating ="";
-        String description = "";
+        //gets the results from the category search on the movie, and ads it to the grid
+        ObservableList<String> categories = FXCollections.observableArrayList();
+        ArrayList<String> categoryResult;
         try {
-            searchResult1 = imdbInfoModel.getSearchResultFromApi(textTitle.getText());
-            rating = imdbInfoModel.getImdbRatingFromApi("tt0050377");
-            categories = imdbInfoModel.getMovieCategoriesFromApi("tt0050377");
-            description = imdbInfoModel.getMovieDescriptionFromImdbId("tt0051603");
+            categoryResult = imdbInfoModel.getMovieCategoriesFromApi(chosenMovie.getImdbId());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-
-
-        for (int i = 0; categories.size() > i; i++){
-            System.out.println(categories.get(i));
-        }
-        System.out.println(rating);
-        System.out.println(description);
-
-        System.out.println("  ");
-        for (int i = 0; searchResult1.size() > i; i++){
-            System.out.println(searchResult1.get(i).getImdbId());
-            System.out.println(searchResult1.get(i).getPictureLink());
-
-            for (int j = 0; searchResult1.get(i).getCast().size() > j; j++){
-                System.out.println(searchResult1.get(j).getCast().get(j));
-            }
+        for (int j = 0; categoryResult.size() > j; j++){
+            categories.add(categoryResult.get(j));
+            //System.out.println(categoryResult.get(j));
         }
 
-         */
+        ListView categoryList = new ListView<>(categories);
+        grid.add(categoryList, 1, 5);
+
     }
 
 }
