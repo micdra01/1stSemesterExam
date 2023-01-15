@@ -52,7 +52,7 @@ public class MovieCardController {
         Image img = new Image(movie.getPictureFileLink());
         ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it
         imgView.setPreserveRatio(true);
-        imgView.setFitWidth(200);
+        imgView.setFitWidth(150);
         imgView.setFitHeight(200);
 
         //creates a label with the title of the movieCard
@@ -88,7 +88,7 @@ public class MovieCardController {
         btnPlay.setText("play");
         btnInfo.setText("se info");
         vBox.setAlignment(Pos.CENTER);
-        movieCard.add(vBox, 2,0);
+        movieCard.add(vBox, 0,1);
 
         btnPlay.setOpacity(0);
         btnInfo.setOpacity(0);
