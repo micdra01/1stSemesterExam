@@ -141,7 +141,7 @@ public class AddMovieController implements Initializable {
 
             String topCast = "";
             for(int i = 0; chosenMovie.getCast().size() > i; i++){
-                topCast = topCast +"," + chosenMovie.getCast().get(i);
+                topCast = topCast  + chosenMovie.getCast().get(i)+",";
             }
             movie.setTopCast(topCast);
         }

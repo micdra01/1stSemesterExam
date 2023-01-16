@@ -49,7 +49,6 @@ public class MovieCardController {
             throw new RuntimeException(e);
         }
 
-
         Image img = new Image(movie.getPictureFileLink());
         ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it
         imgView.setPreserveRatio(true);

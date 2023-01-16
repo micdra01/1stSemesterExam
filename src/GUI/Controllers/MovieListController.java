@@ -69,9 +69,4 @@ public class MovieListController implements Initializable {
             }
         }
     }
-
-    public void setMovieModel(MovieModel movieModel) {
-        this.movieModel = movieModel;
-    }
-
 }
