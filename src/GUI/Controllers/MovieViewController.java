@@ -182,7 +182,7 @@ public class MovieViewController implements Initializable {
     }
 
 
-    public void deleteMovie(ActionEvent actionEvent) {
+    public void deleteMovie() {
         try {
             movieModel.deleteMovie(movie);
             Stage stage = (Stage) btnSetPR.getScene().getWindow();

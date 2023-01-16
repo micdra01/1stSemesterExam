@@ -37,7 +37,6 @@ public class AddMovieController implements Initializable {
     public Button btnMovieFile, btnImageFile, btnSave;
     public Label lblImageFile, lblCategory, lblMovieFile, lblTitle;
     public GridPane grid;
-
     private MovieModel movieModel;
     private CategoryModel categoryModel;
 
@@ -54,9 +53,15 @@ public class AddMovieController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             categoryModel = new CategoryModel();
+            imdbInfoModel = new ImdbInfoModel();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        btnSave.setDisable(true);
+        checkForInputListener();
+    }
+
+    private void checkForInputListener() {
         btnSave.setDisable(true);
         textTitle.textProperty().addListener((observable, oldValue, newValue) -> {
             if(textTitle.getText().isEmpty()){
@@ -111,7 +116,6 @@ public class AddMovieController implements Initializable {
         FileChooser.ExtensionFilter imageExtensions = new FileChooser.ExtensionFilter("File types", "*.jpg", "*.jpeg", "*.png");
         fileChooser.getExtensionFilters().add(imageExtensions);
         movieCover = fileChooser.showOpenDialog(stage);
-
         if (movieCover != null) {
             textImageFile.setText(movieCover.getAbsolutePath());
         }
@@ -123,30 +127,23 @@ public class AddMovieController implements Initializable {
      * @throws Exception
      */
     public void handleSave(ActionEvent event) throws Exception {
-
-        String title = "";
-        if(chosenMovie != null) {
-            title = chosenMovie.getTitle();
-        }else {
-            title = textTitle.getText();
-        }
+        String title = chosenMovie != null ? chosenMovie.getTitle() : lblTitle.getText();
 
         double personalRating = -1;
-        double imdbRating = chosenMovie != null ?  Double.parseDouble(imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId())) : 0.00;
+        double imdbRating = chosenMovie != null ? Double.parseDouble(imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId())) : 0.00;
         String movieLink = movieFile != null ? movieFile.getAbsolutePath() : "";
-
         String coverPath = chosenMovie != null ? chosenMovie.getPictureLink() : movieCover.getAbsolutePath();
         Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
         int yearOfRelease = chosenMovie != null ? Integer.parseInt(chosenMovie.getYearOfRelease()) : 0;
-        String movieDescription = chosenMovie != null ? imdbInfoModel.getMovieDescriptionFromImdbId(chosenMovie.getImdbId()) :"der er ingen beskrivelse for denne film";
+        String movieDescription = chosenMovie != null ? imdbInfoModel.getMovieDescriptionFromImdbId(chosenMovie.getImdbId()) : "der er ingen beskrivelse for denne film";
 
         Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed, yearOfRelease, movieDescription);
-        if(chosenMovie != null){
+        //sets the topcast of the  movie
+        if (chosenMovie != null && chosenMovie.getCast() != null) {
             movie.setImdbId(chosenMovie.getImdbId());
-
             String topCast = "";
-            for(int i = 0; chosenMovie.getCast().size() > i; i++){
-                topCast = topCast  + chosenMovie.getCast().get(i)+",";
+            for (int i = 0; chosenMovie.getCast().size() > i; i++) {
+                topCast = topCast + chosenMovie.getCast().get(i) + ",";
             }
             movie.setTopCast(topCast);
         }
@@ -154,11 +151,23 @@ public class AddMovieController implements Initializable {
         movieModel.addMovieToList(movie);
         movie = movieModel.createMovie(movie); //Create movie in DAO and get the correct ID back
 
+        addCategoriesFromMovie(movie);
+        Label savedText = new Label("you did it, you saved the movie in your database ");
+        grid.add(savedText, 1, 8);
 
-        if(chosenMovie != null) {
+        clearImputFileds();
+        }
+
+    private void clearImputFileds() {
+        textMovieFile.clear();
+        textImageFile.clear();
+        textTitle.clear();
+    }
+
+    private void addCategoriesFromMovie(Movie movie) throws Exception {
+        if (chosenMovie != null) {
             //Create a list of all movie categories found from IMDB
             ArrayList<String> movieCategories = imdbInfoModel.getMovieCategoriesFromApi(chosenMovie.getImdbId());
-
             //Loop through all categories, and add the movie.
             //If the category does not exist it will be created through the CategoryModel
             for (int i = 0; i < movieCategories.size(); i++) {
@@ -166,17 +175,6 @@ public class AddMovieController implements Initializable {
                 categoryModel.addMovieToCategory(category, movie);
             }
         }
-
-        Label savedText = new Label("you did it, you saved the movie in your database ");
-        grid.add(savedText,1,8);
-
-        textMovieFile.clear();
-        textImageFile.clear();
-        textTitle.clear();
-    }
-
-    public void setMovieModel(MovieModel movieModel) {
-        this.movieModel = movieModel;
     }
 
     /**
@@ -188,14 +186,16 @@ public class AddMovieController implements Initializable {
 
         //creates the imdb model, so we can call api operations.
         try {
-            imdbInfoModel = new ImdbInfoModel();
             searchResult = imdbInfoModel.getSearchResultFromApi(textTitle.getText());
+        } catch (InterruptedException e) {
+            throw new RuntimeException("your search gave nothing back. Try being more specific or check the spelling");
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
+        createResultList(searchResult);
+    }
 
+    private void createResultList(ArrayList<ImdbInfo> searchResult) {
         //gets the results from the search and list them in an observable list, and ads it to the grid
         ObservableList<String> wordsList = FXCollections.observableArrayList();
         for (int i = 0; searchResult.size()> i; i++){
@@ -205,7 +205,6 @@ public class AddMovieController implements Initializable {
         searchResultListView = new ListView<>(wordsList);
         searchResultListView.setMaxSize(300, 350);
         grid.add(searchResultListView, 1,2);
-
 
         //listener for when a result is selected on the listVIew
         searchResultListView.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -249,5 +248,9 @@ public class AddMovieController implements Initializable {
 
         ListView categoryList = new ListView<>(categories);
         grid.add(categoryList, 1, 5);
+    }
+
+    public void setMovieModel(MovieModel movieModel) {
+        this.movieModel = movieModel;
     }
 }
