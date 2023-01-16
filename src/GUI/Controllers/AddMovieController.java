@@ -3,14 +3,11 @@ package GUI.Controllers;
 import BE.Category;
 import BE.ImdbInfo;
 import BE.Movie;
-import DAL.ImdbApi;
 import GUI.Models.CategoryModel;
 import GUI.Models.ImdbInfoModel;
 import GUI.Models.MovieModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -95,10 +92,7 @@ public class AddMovieController implements Initializable {
         }
     }
 
-    /**
-     * @param event
-     */
-    public void handleMovieFile(ActionEvent event) {
+    public void handleMovieFile() {
         Stage stage = (Stage) btnMovieFile.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter movieExtensions = new FileChooser.ExtensionFilter("File types", "*.mp4", "*.mpeg4");
@@ -110,7 +104,7 @@ public class AddMovieController implements Initializable {
         }
     }
 
-    public void handleImageFile(ActionEvent event) {
+    public void handleImageFile() {
         Stage stage = (Stage) btnImageFile.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter imageExtensions = new FileChooser.ExtensionFilter("File types", "*.jpg", "*.jpeg", "*.png");
@@ -123,10 +117,8 @@ public class AddMovieController implements Initializable {
 
     /**
      * creates a movie from either the inputfields if they are selected or the imdb info if it is created
-     * @param event
-     * @throws Exception
      */
-    public void handleSave(ActionEvent event) throws Exception {
+    public void handleSave() throws Exception {
         String title = chosenMovie != null ? chosenMovie.getTitle() : lblTitle.getText();
 
         double personalRating = -1;
@@ -141,11 +133,12 @@ public class AddMovieController implements Initializable {
         //sets the topcast of the  movie
         if (chosenMovie != null && chosenMovie.getCast() != null) {
             movie.setImdbId(chosenMovie.getImdbId());
-            String topCast = "";
+
+            StringBuilder topCast = new StringBuilder();
             for (int i = 0; chosenMovie.getCast().size() > i; i++) {
-                topCast = topCast + chosenMovie.getCast().get(i) + ",";
+                topCast.append(chosenMovie.getCast().get(i)).append(",");
             }
-            movie.setTopCast(topCast);
+            movie.setTopCast(topCast.toString());
         }
 
         movieModel.addMovieToList(movie);
@@ -170,8 +163,8 @@ public class AddMovieController implements Initializable {
             ArrayList<String> movieCategories = imdbInfoModel.getMovieCategoriesFromApi(chosenMovie.getImdbId());
             //Loop through all categories, and add the movie.
             //If the category does not exist it will be created through the CategoryModel
-            for (int i = 0; i < movieCategories.size(); i++) {
-                Category category = categoryModel.createCategoryIfNotExist(movieCategories.get(i));
+            for (String movieCategory : movieCategories) {
+                Category category = categoryModel.createCategoryIfNotExist(movieCategory);
                 categoryModel.addMovieToCategory(category, movie);
             }
         }
@@ -179,9 +172,8 @@ public class AddMovieController implements Initializable {
 
     /**
      * serach on imdb when seach button is hit.
-     * @param actionEvent
      */
-    public void handleSearchOnImdb(ActionEvent actionEvent) {
+    public void handleSearchOnImdb() {
         ArrayList<ImdbInfo> searchResult;
 
         //creates the imdb model, so we can call api operations.
@@ -198,9 +190,8 @@ public class AddMovieController implements Initializable {
     private void createResultList(ArrayList<ImdbInfo> searchResult) {
         //gets the results from the search and list them in an observable list, and ads it to the grid
         ObservableList<String> wordsList = FXCollections.observableArrayList();
-        for (int i = 0; searchResult.size()> i; i++){
-            ImdbInfo info = searchResult.get(i);
-            wordsList.add(info.getTitle() + "   "+info.getYearOfRelease());
+        for (ImdbInfo info : searchResult) {
+            wordsList.add(info.getTitle() + "   " + info.getYearOfRelease());
         }
         searchResultListView = new ListView<>(wordsList);
         searchResultListView.setMaxSize(300, 350);
@@ -217,7 +208,6 @@ public class AddMovieController implements Initializable {
 
     /**
      * sets the image and categories for the movie and shows the image and list of categories in grid
-     * @param searchResult
      */
     private void chosenMovieListener(ArrayList<ImdbInfo> searchResult) {
         //the selected movie from the ImdbResultListView
@@ -236,17 +226,13 @@ public class AddMovieController implements Initializable {
         ArrayList<String> categoryResult;
         try {
             categoryResult = imdbInfoModel.getMovieCategoriesFromApi(chosenMovie.getImdbId());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        for (int j = 0; categoryResult.size() > j; j++){
-            categories.add(categoryResult.get(j));
-        }
+        categories.addAll(categoryResult);
 
-        ListView categoryList = new ListView<>(categories);
+        ListView<String> categoryList = new ListView<>(categories);
         grid.add(categoryList, 1, 5);
     }
 

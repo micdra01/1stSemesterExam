@@ -20,17 +20,9 @@ public class HomeViewController implements Initializable {
     @FXML
     private ScrollPane listAllMovies, listPopular, listLastAdded;
 
-    private final double minRatingPopular = 7.5;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         movieCardController = new MovieCardController();
-        //sets the models
-        try {
-            //movieModel = new MovieModel();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void setContent(){
@@ -56,6 +48,7 @@ public class HomeViewController implements Initializable {
         //loop for creating each movieCard and setting movie info
         for (Movie movie : movieModel.getMoviesInList()) {
             //If the movie's IMDB Rating is greater than or equal to minRatingPopular variable ...
+            double minRatingPopular = 7.5;
             if (movie.getImdbRating() >= minRatingPopular) {
                 //... it creates a movieCard for said movie and adds it to the content grid
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
@@ -126,6 +119,4 @@ public class HomeViewController implements Initializable {
     public void setMovieModel(MovieModel movieModel) {
         this.movieModel = movieModel;
     }
-
-
 }

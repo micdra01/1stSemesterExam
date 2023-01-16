@@ -1,22 +1,18 @@
 package GUI.Controllers;
 
 import BE.Category;
-import BE.Movie;
 import GUI.Models.CategoryModel;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
+import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.fxml.FXML;
 
 public class CategoryController {
     
     @FXML
-    private ListView listCategories;
+    private ListView<Category> listCategories;
     @FXML
     private TextField textAddCategory;
     private CategoryModel categoryModel;
-    private Category selectedCategory;
     private MainController mainController;
 
 
@@ -33,7 +29,6 @@ public class CategoryController {
 
     /**
      * Sets CategoryModel
-     * @param categoryModel
      */
     public void setCategoryModel(CategoryModel categoryModel){
         this.categoryModel = categoryModel;
@@ -42,12 +37,9 @@ public class CategoryController {
     /**
      * Creates category if button is clicked by calling CategoryModels createCategory method.
      * Populates the category list and clears text field.
-     * @param actionEvent
-     * @throws Exception
      */
-    public void handleSaveCategory(ActionEvent actionEvent) throws Exception{
+    public void handleSaveCategory() throws Exception{
 
-        int id = -1;
         String title = textAddCategory.getText();
 
         categoryModel.createCategoryIfNotExist(title);
@@ -62,11 +54,10 @@ public class CategoryController {
 
     /**
      * Delete selected category if button is clicked by calling CategoryModels deleteCategory method.
-     * @param event
      */
-    public void handleDeleteCategory(ActionEvent event) {
+    public void handleDeleteCategory() {
         try {
-            selectedCategory = (Category) listCategories.getSelectionModel().getSelectedItem();
+            Category selectedCategory = (Category) listCategories.getSelectionModel().getSelectedItem();
             categoryModel.deleteCategory(selectedCategory);
             listCategories.getItems().clear();
             populateCategories();
@@ -82,9 +73,7 @@ public class CategoryController {
      */
     public void populateCategories(){
         try {
-            for (Category category : categoryModel.getAllCategories()) {
-                listCategories.getItems().add(category);
-            }
+                listCategories.getItems().addAll(categoryModel.getAllCategories());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
