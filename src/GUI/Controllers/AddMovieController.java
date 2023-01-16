@@ -138,8 +138,16 @@ public class AddMovieController implements Initializable {
         Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed, yearOfRelease, movieDescription);
         if(chosenMovie != null){
             movie.setImdbId(chosenMovie.getImdbId());
+
+            String topCast = "";
+            for(int i = 0; chosenMovie.getCast().size() > i; i++){
+                topCast = topCast +"," + chosenMovie.getCast().get(i);
+            }
+            movie.setTopCast(topCast);
         }
         movieModel.createMovie(movie);
+
+
 
         Label savedText = new Label("you did it, you saved the movie in your database ");
         grid.add(savedText,1,8);

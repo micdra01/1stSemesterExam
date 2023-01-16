@@ -29,7 +29,7 @@ public class MovieDAO implements IMovieDAO {
     @Override
     public Movie createMovie(Movie movie) throws Exception {
         //sql string for creating a movie in Movies table
-        String sql = "INSERT INTO Movies (Title, PersonalRating, ImdbRating, MovieFileLink, PictureFileLink, LastView, YearOfRelease, MovieDescription) VALUES (?,?,?,?,?,?,?,?) ;";
+        String sql = "INSERT INTO Movies (Title, PersonalRating, ImdbRating, MovieFileLink, PictureFileLink, LastView, YearOfRelease, MovieDescription, TopCast) VALUES (?,?,?,?,?,?,?,?,?) ;";
         //get connection with database
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -55,6 +55,7 @@ public class MovieDAO implements IMovieDAO {
             Timestamp tS = movie.getLastViewed();
             int yearOfRelease = movie.getYearOfRelease();
             String movieDescription = movie.getMovieDescription();
+            String topCast = movie.getTopCast();
 
             //binds all movie variables to statement
             statement.setString(1, title);
@@ -65,6 +66,7 @@ public class MovieDAO implements IMovieDAO {
             statement.setTimestamp(6, tS);
             statement.setInt(7, yearOfRelease);
             statement.setString(8, movieDescription);
+            statement.setString(9, topCast);
 
             statement.executeUpdate();//execute statement
 
@@ -141,9 +143,10 @@ public class MovieDAO implements IMovieDAO {
                 Timestamp lastView = rs.getTimestamp("LastView");
                 int yearOfRelease = rs.getInt("yearOfRelease");
                 String movieDescription = rs.getString("MovieDescription");
-
+                String topCast = rs.getString("TopCast");
                 //creates the movie and add it to the list allMovies
                 Movie movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink, lastView, yearOfRelease, movieDescription);
+                movie.setTopCast(topCast);
                 allMovies.add(movie);
             }
         }catch (Exception e){

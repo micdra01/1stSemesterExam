@@ -23,6 +23,16 @@ public class Movie {
 
     private String movieDescription;
 
+    public String getTopCast() {
+        return TopCast;
+    }
+
+    public void setTopCast(String topCast) {
+        TopCast = topCast;
+    }
+
+    public String TopCast;
+
 
     /**
      * constructor with id, should be used a standard
@@ -66,6 +76,18 @@ public class Movie {
         this.lastViewed = lastViewed;
         this.yearOfRelease = yearOfRelease;
         this.movieDescription = movieDescription;
+    }
+
+    public Movie(String title, double personalRating, double imdbRating, String movieFileLink, String pictureFileLink, Timestamp lastViewed, int yearOfRelease, String movieDescription, String topCast) {
+        this.title = title;
+        this.personalRating = personalRating;
+        this.imdbRating = imdbRating;
+        this.movieFileLink = movieFileLink;
+        this.pictureFileLink = pictureFileLink;
+        this.lastViewed = lastViewed;
+        this.yearOfRelease = yearOfRelease;
+        this.movieDescription = movieDescription;
+        this.TopCast = topCast;
     }
 
     public int getId() {

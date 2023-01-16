@@ -134,7 +134,7 @@ public class ImdbApi implements IImdbAPI {
      * @throws IOException
      * @throws InterruptedException
      */
-    private ArrayList<ImdbInfo> getInfoFromResultString(HttpResponse<String> response) throws IOException, InterruptedException {
+    private ArrayList<ImdbInfo> getInfoFromResultString(HttpResponse<String> response){
         String segments[] = response.body().split("\"id\":\"/title/");
         ArrayList<ImdbInfo> resultList = new ArrayList<>();
 
