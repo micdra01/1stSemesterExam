@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
  */
 public class MainController implements Initializable {
     public MenuItem menuItmTitleAZ;
+    public MenuButton menuBtnSortBy;
     @FXML
     private MenuButton menuBtnCategory, searchMenuBtnCategory;
     @FXML
