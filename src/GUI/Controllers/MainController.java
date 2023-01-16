@@ -1,6 +1,7 @@
 package GUI.Controllers;
 
 import BE.Category;
+import BE.Movie;
 import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ import javafx.scene.layout.HBox;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -56,6 +58,7 @@ public class MainController implements Initializable {
     private MovieListController movieListController;
     private boolean isSimpleSearch = true;
     private CategoryModel categoryModel;
+
 
     public MainController(){
         try {
@@ -115,6 +118,19 @@ public class MainController implements Initializable {
                 }
             });
         }
+
+        setSortByContent();
+    }
+
+    private void setSortByContent() {
+        menuItmTitleAZ.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                handleSort(Comparator.comparing(Movie::getTitle));
+                System.out.println("fff");
+            }
+        });
+
+
     }
 
     public void initializeCategorySearchMenu() throws Exception {
@@ -400,7 +416,7 @@ public class MainController implements Initializable {
     }
 
 
-    public void handleTitleAZ(ActionEvent actionEvent) {
+    private void handleSort(Comparator<Movie> com) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
         Parent root = null;
 
@@ -412,12 +428,8 @@ public class MainController implements Initializable {
         MovieListController controller = loader.getController();
         borderPane.setCenter(root);
         controller.setMovieModel(movieModel);
-        controller.sortTitle();
-
-
-
-
-
+        controller.sortTitle(com);
 
     }
+
 }

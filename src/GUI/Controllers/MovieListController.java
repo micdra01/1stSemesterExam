@@ -188,7 +188,7 @@ public class MovieListController implements Initializable {
         }
     }
 
-    public void sortTitle() {
+    public void sortTitle(Comparator<Movie> com) {
         GridPane grid = new GridPane();
         movieListView.setContent(grid);
 
@@ -196,7 +196,7 @@ public class MovieListController implements Initializable {
         int col = 0;
         int row = 0;
 
-        Comparator<Movie> movieComparator = Comparator.comparing(Movie::getTitle).reversed();
+        Comparator<Movie> movieComparator = com;
         ObservableList<Movie> getMoviesInList = movieModel.getMoviesInList();
         Collections.sort(getMoviesInList, movieComparator);
         SortedList<Movie> sortedMovie = new SortedList<>(getMoviesInList, movieComparator);
