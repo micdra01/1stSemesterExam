@@ -16,7 +16,6 @@ public class MovieModel {
 
     public MovieModel() throws Exception {
         movieManager = new MovieManager();
-
         //gets all movies in a list
         moviesInList = FXCollections.observableArrayList();
         moviesInList.addAll(movieManager.getAllMovies());

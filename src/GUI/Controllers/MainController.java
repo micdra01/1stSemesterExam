@@ -32,8 +32,6 @@ public class MainController implements Initializable {
     @FXML
     private MenuButton menuBtnCategory, searchMenuBtnCategory;
     @FXML
-    private TextField textCategoryName;
-    @FXML
     private Slider sliderMinIMDBRating, sliderMaxIMDBRating, sliderMinPersonalRating, sliderMaxPersonalRating;
     @FXML
     private HBox boxAdvancedSearch;
@@ -46,10 +44,6 @@ public class MainController implements Initializable {
     @FXML
     private BorderPane borderPane;
     private DecimalFormat df = new DecimalFormat("0.00");
-
-    public MovieModel getMovieModel() {
-        return movieModel;
-    }
 
     private MovieModel movieModel;
     private MovieListController movieListController;

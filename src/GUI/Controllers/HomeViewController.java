@@ -31,7 +31,6 @@ public class HomeViewController implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public void setContent(){
@@ -40,9 +39,6 @@ public class HomeViewController implements Initializable {
         createAllMoviesList();
         createLastAddedList();
     }
-
-
-
 
     /**
      * creates the gridPane for the Popular list

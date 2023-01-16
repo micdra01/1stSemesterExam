@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.net.URL;
 
 public class MovieCardController {
-    private MainController mainController;
 
     private MovieModel movieModel;
 
@@ -84,8 +83,6 @@ public class MovieCardController {
 
         VBox vBox1 = new VBox(lblTitleCard, lblDescriptionCard, hBox);
         movieCard.add(vBox1, 0,0);
-
-
 
         btnPlay.setOpacity(0);
         btnInfo.setOpacity(0);

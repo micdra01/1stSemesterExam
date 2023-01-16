@@ -30,23 +30,22 @@ import java.util.ResourceBundle;
 
 public class MovieViewController implements Initializable {
 
+    @FXML
+    private Slider sliderSetPR;
 
-    public Slider sliderSetPR;
-    public Label labelDescription;
-    public Label labelCast;
     @FXML
     private VBox vBoxCategories;
+
     @FXML
     private MenuButton menuBtnAddCategory, btnSetPR;
 
     @FXML
-    private Label labelTitle, labelYear, labelIMDBRating, labelPersonalRating, labelLastViewed;
+    private Label labelTitle, labelYear, labelIMDBRating, labelPersonalRating, labelLastViewed,labelDescription,labelCast;
     @FXML
     private ImageView imageMoviePoster;
     private CategoryModel categoryModel;
     private MovieModel movieModel;
     private Movie movie;
-    ArrayList<Category> movieCategories;
 
     public MovieViewController() {
         try {
@@ -95,6 +94,7 @@ public class MovieViewController implements Initializable {
      * Shows all the categories from the movie
      */
     private void showCategories() {
+        ArrayList<Category> movieCategories;
         try {
             movieCategories = categoryModel.readAllCategoriesFromMovie(movie);
         } catch (Exception e) {
@@ -131,7 +131,6 @@ public class MovieViewController implements Initializable {
                     }
                 });
             }
-
         } catch (Exception e) {
             new Exception("Failed to get all categories", e);
         }
