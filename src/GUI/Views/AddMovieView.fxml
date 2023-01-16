@@ -5,29 +5,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.AddMovieController">
+<GridPane fx:id="grid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.AddMovieController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="125.5" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="474.5" minWidth="10.0" prefWidth="474.5" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="93.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="538.1999999999999" minWidth="10.0" prefWidth="400.6" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="538.1999999999999" minWidth="10.0" prefWidth="115.39999999999998" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="78.39999618530274" minHeight="10.0" prefHeight="59.40000381469727" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="72.39999618530274" minHeight="10.0" prefHeight="64.79999237060548" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="74.60000000000001" minHeight="0.0" prefHeight="43.000000000000014" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="131.2" minHeight="10.0" prefHeight="89.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="93.2" minHeight="0.0" prefHeight="86.2" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="131.2" minHeight="10.0" prefHeight="51.39999999999998" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="47.400000000000006" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="88.79999999999998" minHeight="0.0" prefHeight="0.19999999999998863" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="81.59999999999997" minHeight="10.0" prefHeight="81.39999999999998" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="88.79999999999998" minHeight="0.0" prefHeight="73.60000000000002" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="81.59999999999997" minHeight="7.600000000000023" prefHeight="7.600000000000023" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button fx:id="btnTrailerFile" mnemonicParsing="false" onAction="#handleTrailerFile" text="Choose..." GridPane.columnIndex="1" GridPane.rowIndex="6">
-         <GridPane.margin>
-            <Insets left="360.0" />
-         </GridPane.margin>
-      </Button>
-      <TextField fx:id="textMovieFile" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="328.0" GridPane.columnIndex="1" />
       <Label fx:id="lblTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="82.0" text="Title:" GridPane.rowIndex="1">
          <font>
             <Font size="14.0" />
@@ -46,41 +41,33 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblIMDBRating" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="90.0" text="IMDB Rating:" GridPane.rowIndex="5">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblTrailerFile" alignment="CENTER" contentDisplay="CENTER" prefHeight="31.0" prefWidth="80.0" text="Trailer File:" GridPane.rowIndex="6">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
       <Label fx:id="lblImageFile" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="80.0" text="Image File:" GridPane.rowIndex="7">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="btnMovieFile" mnemonicParsing="false" onAction="#handleMovieFile" text="Choose..." GridPane.columnIndex="1">
-         <GridPane.margin>
-            <Insets left="360.0" />
-         </GridPane.margin>
-      </Button>
-      <Button fx:id="btnImageFile" mnemonicParsing="false" onAction="#handleImageFile" text="Choose..." GridPane.columnIndex="1" GridPane.rowIndex="7">
-         <GridPane.margin>
-            <Insets left="360.0" />
-         </GridPane.margin>
-      </Button>
-      <TextField fx:id="textTitle" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField fx:id="textCategory" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <TextField fx:id="textIMDBRating" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <TextField fx:id="textTrailerFile" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="328.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <TextField fx:id="textImageFile" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="328.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      <Button fx:id="btnSave" mnemonicParsing="false" onAction="#handleSave" prefHeight="17.0" prefWidth="66.0" text="Save..." GridPane.columnIndex="1" GridPane.rowIndex="8">
-         <GridPane.margin>
-            <Insets left="360.0" />
-         </GridPane.margin>
-      </Button>
-      <Button mnemonicParsing="false" onAction="#handleSearchOnImdb" text="Search on imdb" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+         <children>
+            <TextField fx:id="textMovieFile" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="328.0" />
+            <Button fx:id="btnMovieFile" mnemonicParsing="false" onAction="#handleMovieFile" text="Choose..." />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <TextField fx:id="textTitle" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="275.0" />
+            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSearchOnImdb" text="Search on imdb" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <children>
+            <TextField fx:id="textCategory" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="275.0" />
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+         <children>
+            <TextField fx:id="textImageFile" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="328.0" />
+            <Button fx:id="btnImageFile" mnemonicParsing="false" onAction="#handleImageFile" text="Choose..." />
+         </children></HBox>
+      <Button fx:id="btnSave" mnemonicParsing="false" onAction="#handleSave" prefHeight="17.0" prefWidth="66.0" text="Save..." GridPane.columnIndex="2" GridPane.rowIndex="7" />
    </children>
 </GridPane>

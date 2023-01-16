@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.media.MediaView?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<ScrollPane fx:id="movieView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" pannable="true" prefHeight="440.0" prefWidth="860.0" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MovieViewController">
+<ScrollPane fx:id="movieView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" pannable="true" prefHeight="440.0" prefWidth="860.0" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MovieViewController">
    <content>
-      <VBox>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="845.0">
          <children>
-            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="860.0">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="300.0" prefWidth="845.0" VBox.vgrow="ALWAYS">
                <children>
-                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0" prefWidth="430.0">
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="430.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label fx:id="lblTittle" prefHeight="35.0" prefWidth="430.0" text="Title:" wrapText="true">
+                        <Label fx:id="labelTitle" alignment="TOP_LEFT" prefHeight="75.0" prefWidth="425.0" wrapText="true" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -31,56 +25,150 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Label>
-                        <Label text="IMDB Rating:" />
-                        <Label text="Personal Rating:" />
-                        <Label text="Year:" />
-                        <Label layoutX="10.0" layoutY="10.0" text="Duration:" />
-                        <Label layoutX="10.0" layoutY="27.0" text="Age Restriction:" />
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="425.0">
+                           <children>
+                              <Label maxHeight="1.7976931348623157E308" maxWidth="-Infinity" text="Year:" HBox.hgrow="ALWAYS" />
+                              <Label fx:id="labelYear" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="30.0" prefWidth="10.0" visible="false" HBox.hgrow="ALWAYS" />
+                              <Label maxHeight="1.7976931348623157E308" maxWidth="-Infinity" text="Duration:" />
+                              <Label fx:id="labelDuration" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="30.0" prefWidth="10.0" visible="false" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" text="IMDB Rating:" HBox.hgrow="ALWAYS" />
+                              <Label fx:id="labelIMDBRating" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="30.0" prefWidth="10.0" visible="false" HBox.hgrow="ALWAYS" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" text="Personal Rating:" textAlignment="RIGHT" HBox.hgrow="ALWAYS" />
+                              <Label fx:id="labelPersonalRating" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="40.0" HBox.hgrow="NEVER">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <MenuButton fx:id="btnSetPR" mnemonicParsing="false" text="PR">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="PR ❤">
+                                       <graphic>
+                                          <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0">
+                                             <children>
+                                                <Slider fx:id="sliderSetPR" blockIncrement="1.0" max="10.0" onDragDone="#handleSetPR">
+                                                   <HBox.margin>
+                                                      <Insets top="7.0" />
+                                                   </HBox.margin>
+                                                </Slider>
+                                                <Button mnemonicParsing="false" onAction="#handleSetPR" text="Save">
+                                                   <HBox.margin>
+                                                      <Insets left="5.0" top="2.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                       </graphic>
+                                    </MenuItem>
+                                 </items>
+                              </MenuButton>
+                           </children>
+                        </HBox>
+                        <VBox VBox.vgrow="ALWAYS">
+                           <children>
+                              <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                 <children>
+                                    <Label contentDisplay="RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" text="Category:" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <MenuButton fx:id="menuBtnAddCategory" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" text="➕ Add to Movie" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                    </MenuButton>
+                                    <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="Last Viewed:" textAlignment="RIGHT" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="labelLastViewed" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <VBox fx:id="vBoxCategories" prefHeight="200.0" prefWidth="100.0" />
+                              <HBox VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="40.0" prefWidth="150.0" text="🗑 Delete movie" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Button>
+                                    <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="40.0" visible="false" HBox.hgrow="ALWAYS" />
+                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handlePlayMovie" prefHeight="40.0" prefWidth="150.0" text="Play movie" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
                      </children>
-                  </VBox>
-                  <ButtonBar prefHeight="40.0" prefWidth="200.0" />
-                  <MediaView fx:id="mediaView" fitHeight="300.0" fitWidth="300.0">
                      <HBox.margin>
-                        <Insets left="25.0" right="25.0" />
+                        <Insets />
                      </HBox.margin>
-                  </MediaView>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </VBox>
+                  <Separator orientation="VERTICAL" prefHeight="334.0" prefWidth="100.0" visible="false" HBox.hgrow="ALWAYS" />
+                  <ImageView fx:id="imageMoviePoster" fitHeight="300.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <AnchorPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="300.0" minWidth="300.0" prefHeight="400.0" prefWidth="860.0">
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="845.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label text="Description:">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Label alignment="TOP_LEFT" layoutY="38.0" prefHeight="285.0" prefWidth="500.0" text="This movie is REALLY BAD bruhhh &#10;erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher erheheherherherheher " textOverrun="CLIP" wrapText="true">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="510.0" layoutY="1.0" text="Category:" textAlignment="RIGHT">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <MenuButton fx:id="menuBtnAddCategory" layoutX="639.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="➕ Add Category" />
-                  <Label layoutX="660.0" layoutY="133.0" text="Cast:">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="TOP_LEFT" layoutX="660.0" layoutY="163.0" prefHeight="225.0" prefWidth="185.0" text="Actor 1 &#10;Actor 2&#10;Director?" />
-                  <Button layoutX="14.0" layoutY="336.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="125.0" text="🗑 Delete">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <VBox fx:id="vBoxCategories" layoutX="510.0" layoutY="38.0" prefHeight="200.0" prefWidth="150.0" />
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" text="Description:" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="labelDescription" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="285.0" prefWidth="600.0" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" visible="false" HBox.hgrow="ALWAYS" />
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" text="TopCast:" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelCast" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="225.0" prefWidth="185.0" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
                </children>
-            </AnchorPane>
+            </HBox>
          </children>
       </VBox>
    </content>

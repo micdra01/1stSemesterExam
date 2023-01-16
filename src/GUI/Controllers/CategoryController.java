@@ -1,18 +1,36 @@
 package GUI.Controllers;
 
 import BE.Category;
+import BE.Movie;
 import GUI.Models.CategoryModel;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.MediaView;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class CategoryController {
-
-    public Button btbDeleteCategory;
-    public ListView listCategories;
-    public Button btnSaveCategory;
-    public TextField textAddCategory;
+    
+    @FXML
+    private ListView listCategories;
+    @FXML
+    private TextField textAddCategory;
     private CategoryModel categoryModel;
     private Category selectedCategory;
     private MainController mainController;
@@ -56,13 +74,14 @@ public class CategoryController {
         mainController.initializeCategoryMenu();
         mainController.initializeCategorySearchMenu();
         textAddCategory.clear();
+
     }
 
     /**
      * Delete selected category if button is clicked by calling CategoryModels deleteCategory method.
      * @param event
      */
-    public void handleDeleteCategory(ActionEvent event){
+    public void handleDeleteCategory(ActionEvent event) {
         try {
             selectedCategory = (Category) listCategories.getSelectionModel().getSelectedItem();
             categoryModel.deleteCategory(selectedCategory);
@@ -80,7 +99,7 @@ public class CategoryController {
      */
     public void populateCategories(){
         try {
-            for (Category category : categoryModel.getAllCategories()){
+            for (Category category : categoryModel.getAllCategories()) {
                 listCategories.getItems().add(category);
             }
         } catch (Exception e) {

@@ -62,6 +62,13 @@ public interface ICategoryManager {
      */
     public void removeCategoryFromMovie(Category category, Movie movie) throws Exception;
 
-
+    /**
+     * gets a category from the id
+     *
+     * @param categoryName, the category name
+     * @return the found category object from id.
+     * @throws Exception
+     */
+    public Category getCategoryFromName(String categoryName) throws Exception;
 
 }

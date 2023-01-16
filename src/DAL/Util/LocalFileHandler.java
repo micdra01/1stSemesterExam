@@ -1,6 +1,11 @@
 package DAL.Util;
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+
+import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -44,6 +49,8 @@ public class LocalFileHandler {
             File file = new File(relativeFilePath+=folder+=fileName);
             Path finalFile = Paths.get(file.getPath());
             Files.copy(originalFile, finalFile, REPLACE_EXISTING);
+
+
             return finalFile;
 
         }
@@ -51,6 +58,18 @@ public class LocalFileHandler {
             e.printStackTrace();
             throw new Exception("Failed to create movie", e);
         }
+    }
+
+    public static Path saveFileFromApi(String imgString, String imdbId){
+
+        Image img = new Image(imgString);
+        File file = new File("resources/images/" + imdbId + ".png");
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(img, null), "PNG", file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return Paths.get(file.getPath());
     }
 
 }

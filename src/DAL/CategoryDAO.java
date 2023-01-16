@@ -5,6 +5,7 @@ import BE.Movie;
 import DAL.Interfaces.ICategoryDAO;
 import DAL.Interfaces.IMovieDAO;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class CategoryDAO implements ICategoryDAO {
     private DatabaseConnector databaseConnector;
     private IMovieDAO movieDAO;
 
-    public CategoryDAO() {
+    public CategoryDAO() throws IOException {
         databaseConnector = new DatabaseConnector();
         movieDAO = new MovieDAO();
     }
@@ -212,6 +213,42 @@ public class CategoryDAO implements ICategoryDAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, categoryId);//bind the category id to sql statement
+            ResultSet rs = statement.executeQuery();//execute the statement and get category result
+
+            while (rs.next()) {
+                //get all variables from result set
+                int id = rs.getInt("Id");
+                String name = rs.getString("CategoryName");
+
+                //creates the category object
+                category = new Category(id, name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("Failed to find category", e);
+        }
+        return category;
+    }
+
+    /**
+     * gets a category from the id
+     *
+     * @param categoryName, the category name
+     * @return the found category object from id.
+     * @throws Exception
+     */
+    @Override
+    public Category getCategoryFromName(String categoryName) throws Exception {
+        //SELECT * FROM Movies WHERE [condition]
+        String sql = " SELECT * FROM Category WHERE CategoryName=?;";
+
+        Category category = null; //category that is returned from db
+
+        //get connection with database
+        try (Connection connection = databaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, categoryName);//bind the category id to sql statement
             ResultSet rs = statement.executeQuery();//execute the statement and get category result
 
             while (rs.next()) {
