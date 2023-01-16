@@ -4,6 +4,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -63,9 +64,10 @@ public class LocalFileHandler {
     public static Path saveFileFromApi(String imgString, String imdbId){
 
         Image img = new Image(imgString);
-        File file = new File("resources/images/" + imdbId + ".png");
+        File file = new File("resources//images//" + imdbId + ".png");
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(img, null), "PNG", file);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
