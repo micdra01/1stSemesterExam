@@ -4,13 +4,11 @@ import BE.ImdbInfo;
 import DAL.Interfaces.IImdbAPI;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ImdbApi implements IImdbAPI {
 
@@ -34,7 +32,6 @@ public class ImdbApi implements IImdbAPI {
 
        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
        ArrayList<ImdbInfo> result =getInfoFromResultString(response);
-
        return result;
    }
 
@@ -155,7 +152,6 @@ public class ImdbApi implements IImdbAPI {
                 //year of release
                 String yearOfReleaseRaw = httpResult.substring(httpResult.lastIndexOf("\",\"year\":") + 9);
                 String yearOfRelease = yearOfReleaseRaw.substring(0, yearOfReleaseRaw.indexOf(",\""));
-
                 //gets the names from cast
                 String castStringsRaw[] = httpResult.split("\"name\":\"");
                 ArrayList<String> castList = new ArrayList<>();
@@ -163,7 +159,6 @@ public class ImdbApi implements IImdbAPI {
                     String castString = castStringsRaw[j].substring(0, castStringsRaw[j].indexOf("\","));
                     castList.add(castString);
                 }
-
                 //makes imdbInfo object from response info
                 ImdbInfo imdbInfo = new ImdbInfo(movieId, title, picture, yearOfRelease, castList);
                 resultList.add(imdbInfo);

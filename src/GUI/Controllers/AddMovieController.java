@@ -90,8 +90,6 @@ public class AddMovieController implements Initializable {
         }
     }
 
-
-
     /**
      * @param event
      */
@@ -107,7 +105,6 @@ public class AddMovieController implements Initializable {
         }
     }
 
-
     public void handleImageFile(ActionEvent event) {
         Stage stage = (Stage) btnImageFile.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
@@ -122,7 +119,6 @@ public class AddMovieController implements Initializable {
 
     /**
      * creates a movie from either the inputfields if they are selected or the imdb info if it is created
-     *
      * @param event
      * @throws Exception
      */
