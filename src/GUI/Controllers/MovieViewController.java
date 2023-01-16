@@ -150,9 +150,6 @@ public class MovieViewController implements Initializable {
         imageMoviePoster.setImage(new Image(movie.getPictureFileLink()));
         labelDescription.setText(movie.getMovieDescription());
         labelCast.setText(movie.getTopCast().replaceAll(",", "\n"));
-
-        System.out.println("Hello, world".replace(",", "\n"));
-
     }
 
     public void handlePlayMovie(ActionEvent actionEvent) {

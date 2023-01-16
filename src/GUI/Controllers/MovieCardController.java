@@ -27,11 +27,6 @@ public class MovieCardController {
     private MovieModel movieModel;
 
     public MovieCardController(){
-        try {
-            movieModel = new MovieModel();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /**
@@ -40,7 +35,7 @@ public class MovieCardController {
      * @param movie, the specific movie in the list
      * @return
      */
-    public GridPane createMovieCard(Movie movie) {
+    public GridPane createMovieCard(Movie movie, MovieModel movieModel) {
         GridPane movieCard = null;
         //loads the movieCard fxml
         try {
