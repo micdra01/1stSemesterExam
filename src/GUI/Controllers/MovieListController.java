@@ -92,7 +92,7 @@ public class MovieListController implements Initializable {
             //If the movie's IMDB Rating is greater than or equal to minRatingPopular variable ...
             if (movie.getImdbRating() >= minRatingPopular) {
                 //... it creates a movieCard for said movie and adds it to the content grid
-                GridPane movieCard = movieCardController.createMovieCard(movie);
+                GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
                 grid.add(movieCard, col, row);
 
                 //makes a space between all movies
@@ -130,7 +130,7 @@ public class MovieListController implements Initializable {
             //If the movie's IMDB Rating is greater than or equal to minRatingPopular variable ...
             if (movie.getPersonalRating() >= minRatingFavorite) {
                 //... it creates a movieCard for said movie and adds it to the content grid
-                GridPane movieCard = movieCardController.createMovieCard(movie);
+                GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
                 grid.add(movieCard, col, row);
 
                 //makes a space between all movies
@@ -163,11 +163,11 @@ public class MovieListController implements Initializable {
         int col = 0;
         int row = 0;
 
-        if(category.getMovieList() == null) {
+        if(categoryModel.readAllMoviesInCategory(category) != null) {
             //loop for creating each movieCard and setting movie info
             for (Movie movie : categoryModel.readAllMoviesInCategory(category)) {
                 //... it creates a movieCard for said movie and adds it to the content grid
-                GridPane movieCard = movieCardController.createMovieCard(movie);
+                GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
                 grid.add(movieCard, col, row);
 
                 //makes a space between all movies

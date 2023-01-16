@@ -93,13 +93,6 @@ public class MainController implements Initializable {
             menuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    try {
-                        //Category is shown as a String, this returns the category object
-                        categoryModel.getCategoryFromName(category.getTitle());
-                    } catch (Exception e) {
-                        new Exception("Failed to open movies in category: " + category, e);
-                    }
-
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
                     Parent root = null;
 

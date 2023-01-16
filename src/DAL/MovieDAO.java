@@ -219,14 +219,18 @@ public class MovieDAO implements IMovieDAO {
                 double imdbRating = rs.getDouble("ImdbRating");
                 String movieFileLink = rs.getString("MovieFileLink");
                 String pictureFileLink = rs.getString("PictureFileLink");
+                if(!Files.exists(Path.of(pictureFileLink)) && !Files.exists(Path.of("resources\\" + pictureFileLink))){
+                    pictureFileLink = "images/ImageNotFound.jpg";
+                }
                 Timestamp lastView = rs.getTimestamp("LastView");
                 int yearOfRelease = rs.getInt("YearOfRelease");
                 String movieDescription = rs.getString("MovieDescription");
-
+                String topCast = rs.getString("TopCast");
 
 
                 //creates the movie and add it to the list allMovies
                 movie = new Movie(id, title, personalRating, imdbRating, movieFileLink, pictureFileLink, lastView, yearOfRelease, movieDescription);
+                movie.setTopCast(topCast);
                 return movie;//returns the found movie
             }
         }catch (SQLException e) {
