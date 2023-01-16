@@ -76,16 +76,13 @@ public class MovieViewController implements Initializable {
         vBoxCategories.getChildren().add(container);
 
         //Adds listener to the remove button to be able to remove category from movie
-        btnRemove.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    //Removes category from movie, then removes label
-                    categoryModel.removeCategoryFromMovie(category, movie);
-                    vBoxCategories.getChildren().remove(container);
-                } catch (Exception e) {
-                    new Exception("Failed to remove category from movie", e);
-                }
+        btnRemove.setOnAction(event -> {
+            try {
+                //Removes category from movie, then removes label
+                categoryModel.removeCategoryFromMovie(category, movie);
+                vBoxCategories.getChildren().remove(container);
+            } catch (Exception e) {
+                new Exception("Failed to remove category from movie", e);
             }
         });
     }
@@ -154,7 +151,7 @@ public class MovieViewController implements Initializable {
         labelCast.setText(movie.getTopCast().replaceAll(",", "\n"));
     }
 
-    public void handlePlayMovie(ActionEvent actionEvent) {
+    public void handlePlayMovie() {
         try {
             String moviePath = new File(movie.getMovieFileLink()).getAbsolutePath();
             Desktop.getDesktop().open(new File(moviePath));
@@ -169,7 +166,7 @@ public class MovieViewController implements Initializable {
         }
     }
 
-    public void handleSetPR(ActionEvent actionEvent) throws Exception {
+    public void handleSetPR() throws Exception {
 
         double pr = sliderSetPR.getValue();
         DecimalFormat df = new DecimalFormat();
