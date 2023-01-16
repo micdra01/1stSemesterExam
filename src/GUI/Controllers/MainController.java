@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 public class MainController implements Initializable {
     public MenuItem menuItmTitleAZ;
     public MenuButton menuBtnSortBy;
+    public MenuItem menuItmTitleZA;
     @FXML
     private MenuButton menuBtnCategory, searchMenuBtnCategory;
     @FXML
@@ -122,15 +123,14 @@ public class MainController implements Initializable {
         setSortByContent();
     }
 
+    /**
+     * sets the listeners for menuItems with comparator.
+     * hust at sætte variabler inde i sceneBuilder
+     */
     private void setSortByContent() {
-        menuItmTitleAZ.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                handleSort(Comparator.comparing(Movie::getTitle));
-                System.out.println("fff");
-            }
-        });
+        menuItmTitleAZ.setOnAction(e -> handleSort(Comparator.comparing(Movie::getTitle)));
 
-
+        menuItmTitleZA.setOnAction(e -> handleSort(Comparator.comparing(Movie::getTitle).reversed()));
     }
 
     public void initializeCategorySearchMenu() throws Exception {
