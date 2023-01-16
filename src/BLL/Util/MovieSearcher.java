@@ -5,13 +5,14 @@ import BE.Movie;
 import BLL.CategoryManager;
 import GUI.Models.CategoryModel;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MovieSearcher {
     private CategoryManager categoryManager;
 
-    public MovieSearcher() {
+    public MovieSearcher() throws IOException {
         categoryManager = new CategoryManager();
     }
 
