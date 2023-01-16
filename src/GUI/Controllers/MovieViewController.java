@@ -150,6 +150,7 @@ public class MovieViewController implements Initializable {
         labelLastViewed.setText(String.valueOf(movie.getLastViewed()));
         imageMoviePoster.setImage(new Image(movie.getPictureFileLink()));
         labelDescription.setText(movie.getMovieDescription());
+        //TODO check if null. if null set "", else run below line
         labelCast.setText(movie.getTopCast().replaceAll(",", "\n"));
     }
 
@@ -180,6 +181,7 @@ public class MovieViewController implements Initializable {
             movieModel.deleteMovie(movie);
             Stage stage = (Stage) btnSetPR.getScene().getWindow();
             stage.close();
+            //TODO re-load previous stage, so removed movie is gone
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

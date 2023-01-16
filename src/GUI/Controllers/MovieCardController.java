@@ -37,6 +37,7 @@ public class MovieCardController {
      */
     public GridPane createMovieCard(Movie movie, MovieModel movieModel) {
         GridPane movieCard = null;
+        this.movieModel = movieModel;
         //loads the movieCard fxml
         try {
             movieCard = FXMLLoader.load(getClass().getResource("/GUI/Views/MovieCard.fxml"));
