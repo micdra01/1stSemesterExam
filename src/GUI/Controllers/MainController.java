@@ -144,7 +144,7 @@ public class MainController implements Initializable {
         }
 
         movieListController = loader.getController();
-        movieListController.setMovieModel(movieModel);
+        //movieListController.setMovieModel(movieModel);
         borderPane.setCenter(root);
 
         textSceneTitle.setText("all movies");

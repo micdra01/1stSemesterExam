@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.File;
@@ -31,6 +32,8 @@ public class MovieViewController implements Initializable {
 
 
     public Slider sliderSetPR;
+    public Label labelDescription;
+    public Label labelCast;
     @FXML
     private VBox vBoxCategories;
     @FXML
@@ -147,6 +150,9 @@ public class MovieViewController implements Initializable {
         labelPersonalRating.setText(String.valueOf(movie.getPersonalRating()));
         labelLastViewed.setText(String.valueOf(movie.getLastViewed()));
         imageMoviePoster.setImage(new Image(movie.getPictureFileLink()));
+        labelDescription.setText(movie.getMovieDescription());
+        //TODO check if null. if null set "", else run below line
+        labelCast.setText(movie.getTopCast().replaceAll(",", "\n"));
     }
 
     public void handlePlayMovie(ActionEvent actionEvent) {
@@ -177,6 +183,16 @@ public class MovieViewController implements Initializable {
     }
 
 
+    public void deleteMovie(ActionEvent actionEvent) {
+        try {
+            movieModel.deleteMovie(movie);
+            Stage stage = (Stage) btnSetPR.getScene().getWindow();
+            stage.close();
+            //TODO re-load previous stage, so removed movie is gone
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 
 

@@ -58,7 +58,7 @@ public class HomeViewController implements Initializable {
             //If the movie's IMDB Rating is greater than or equal to minRatingPopular variable ...
             if (movie.getImdbRating() >= minRatingPopular) {
                 //... it creates a movieCard for said movie and adds it to the content grid
-                GridPane movieCard = movieCardController.createMovieCard(movie);
+                GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
                 grid.add(movieCard, col, row);
 
                 //makes a space between all movies
@@ -87,7 +87,7 @@ public class HomeViewController implements Initializable {
             Movie movie = movieModel.getMoviesInList().get(i);
 
             //Creates the movieCard and adds it to the content grid
-            GridPane movieCard = movieCardController.createMovieCard(movie);
+            GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
             grid.add(movieCard, col, row);
 
             //makes a space between all movies
@@ -113,7 +113,7 @@ public class HomeViewController implements Initializable {
             Movie movie = movieModel.getMoviesInList().get(i);
 
             //Creates the movieCard and adds it to the content grid
-            GridPane movieCard = movieCardController.createMovieCard(movie); //creates the movie card
+            GridPane movieCard = movieCardController.createMovieCard(movie, movieModel); //creates the movie card
             grid.add(movieCard, col, row); //adds it to the content gridPane
 
             //makes a space between all movies

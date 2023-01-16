@@ -51,7 +51,7 @@ public class MovieListController implements Initializable {
         for (int i = 0; movieModel.getMoviesInList().size() > i; i++) {
             Movie movie = movieModel.getMoviesInList().get(i);
 
-            GridPane movieCard = movieCardController.createMovieCard(movie);//creates the movie card
+            GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);//creates the movie card
             grid.add(movieCard, col, row);//adds it to the content gridPane
 
             //makes a space between all movies
@@ -69,9 +69,4 @@ public class MovieListController implements Initializable {
             }
         }
     }
-
-    public void setMovieModel(MovieModel movieModel) {
-        this.movieModel = movieModel;
-    }
-
 }
