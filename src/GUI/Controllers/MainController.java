@@ -1,8 +1,6 @@
 package GUI.Controllers;
 
 import BE.Category;
-import BE.Movie;
-import BE.Category;
 import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
@@ -29,6 +27,7 @@ import java.util.stream.Collectors;
  * todo write comments for all methods
  */
 public class MainController implements Initializable {
+    public MenuItem menuItmTitleAZ;
     @FXML
     private MenuButton menuBtnCategory, searchMenuBtnCategory;
     @FXML
@@ -45,6 +44,7 @@ public class MainController implements Initializable {
     private Label textSceneTitle, labelMinIMDBRating, labelMaxIMDBRating, labelMinPersonalRating, labelMaxPersonalRating;
     @FXML
     private BorderPane borderPane;
+
     private DecimalFormat df = new DecimalFormat("0.00");
 
     public MovieModel getMovieModel() {
@@ -396,5 +396,27 @@ public class MainController implements Initializable {
         controller.setCategoryModel(categoryModel);
         controller.setMainController(this);
         controller.populateCategories();
+    }
+
+
+    public void handleTitleAZ(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            new Exception("Failed to open 'open all movies'", e);
+        }
+        MovieListController controller = loader.getController();
+        borderPane.setCenter(root);
+        controller.setMovieModel(movieModel);
+        controller.sortTitle();
+
+
+
+
+
+
     }
 }

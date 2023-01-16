@@ -99,7 +99,8 @@ public class Movie {
     }
 
     public String getTitle() {
-        return title;
+        String cap = title.substring(0,1).toUpperCase() + title.substring(1);
+        return cap;
     }
 
     public void setTitle(String title) {

@@ -4,6 +4,8 @@ import BE.Category;
 import BE.Movie;
 import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
@@ -11,10 +13,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.GridPane;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 
@@ -185,6 +186,48 @@ public class MovieListController implements Initializable {
                 }
             }
         }
+    }
+
+    public void sortTitle() {
+        GridPane grid = new GridPane();
+        movieListView.setContent(grid);
+
+        //used for placing
+        int col = 0;
+        int row = 0;
+
+        Comparator<Movie> movieComparator = Comparator.comparing(Movie::getTitle).reversed();
+        ObservableList<Movie> getMoviesInList = movieModel.getMoviesInList();
+        Collections.sort(getMoviesInList, movieComparator);
+        SortedList<Movie> sortedMovie = new SortedList<>(getMoviesInList, movieComparator);
+
+
+        for(Movie movie : sortedMovie) {
+            GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
+            grid.add(movieCard, col, row);
+
+
+
+            //makes a space between all movies
+            col++;
+            grid.add(new Separator(Orientation.HORIZONTAL), col, row);
+
+            //loop for positioning movieCards in grid
+            if(col < 6 ){
+                col++;
+            }else {
+                col = 0;
+                row++;
+                grid.add(new Separator(Orientation.VERTICAL), col, row);
+                row++;
+            }
+
+
+
+        }
+
+
+
     }
 
     public void setMovieModel(MovieModel movieModel) {
