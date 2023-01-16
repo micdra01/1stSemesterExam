@@ -53,6 +53,10 @@ public class CategoryModel {
     }
 
     public Category getCategoryFromName(String categoryName) throws Exception {
+        //If the category (found from IMDB) does not exist in our Category Database, we create it before returning.
+        if (categoryManager.getCategoryFromName(categoryName) == null) {
+            categoryManager.createCategory(new Category(-1, categoryName));
+        }
         return categoryManager.getCategoryFromName(categoryName);
     }
 }

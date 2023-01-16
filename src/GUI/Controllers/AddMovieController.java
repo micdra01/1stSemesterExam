@@ -1,8 +1,10 @@
 package GUI.Controllers;
 
+import BE.Category;
 import BE.ImdbInfo;
 import BE.Movie;
 import DAL.ImdbApi;
+import GUI.Models.CategoryModel;
 import GUI.Models.ImdbInfoModel;
 import GUI.Models.MovieModel;
 import javafx.collections.FXCollections;
@@ -37,6 +39,7 @@ public class AddMovieController implements Initializable {
     public GridPane grid;
 
     private MovieModel movieModel;
+    private CategoryModel categoryModel;
 
     private File movieCover, movieFile;
 
@@ -49,6 +52,11 @@ public class AddMovieController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            categoryModel = new CategoryModel();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         btnSave.setDisable(true);
         textTitle.textProperty().addListener((observable, oldValue, newValue) -> {
             if(textTitle.getText().isEmpty()){
@@ -145,9 +153,17 @@ public class AddMovieController implements Initializable {
             }
             movie.setTopCast(topCast);
         }
-        movieModel.createMovie(movie);
+        movie = movieModel.createMovie(movie); //Create movie in DAO and get the correct ID back
 
+        //Create a list of all movie categories found from IMDB
+        ArrayList<String> movieCategories = imdbInfoModel.getMovieCategoriesFromApi(chosenMovie.getImdbId());
 
+        //Loop through all categories, and add the movie.
+        //If the category does not exist it will be created through the CategoryModel
+        for (int i = 0; i<movieCategories.size(); i++) {
+            Category category = categoryModel.getCategoryFromName(movieCategories.get(i));
+            categoryModel.addMovieToCategory(category, movie);
+        }
 
         Label savedText = new Label("you did it, you saved the movie in your database ");
         grid.add(savedText,1,8);
@@ -155,9 +171,6 @@ public class AddMovieController implements Initializable {
         textMovieFile.clear();
         textImageFile.clear();
         textTitle.clear();
-
-        //todo should set the categories to the movie in database
-        //todo should have an get category by name crud method
     }
 
     public void setMovieModel(MovieModel movieModel) {
