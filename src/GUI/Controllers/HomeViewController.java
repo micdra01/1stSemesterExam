@@ -27,10 +27,14 @@ public class HomeViewController implements Initializable {
         movieCardController = new MovieCardController();
         //sets the models
         try {
-            movieModel = new MovieModel();
+            //movieModel = new MovieModel();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    public void setContent(){
         //createTrendingList();
         createPopularList();
         createAllMoviesList();

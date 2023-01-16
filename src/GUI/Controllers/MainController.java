@@ -137,6 +137,7 @@ public class MainController implements Initializable {
         HomeViewController controller = loader.getController();
         controller.setMovieModel(movieModel);
         borderPane.setCenter(root);
+        controller.setContent();
 
         textSceneTitle.setText("Home");
     }

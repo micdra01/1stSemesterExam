@@ -22,6 +22,10 @@ public class MovieModel {
         moviesInList.addAll(movieManager.getAllMovies());
     }
 
+    public void addMovieToList(Movie movie){
+        moviesInList.add(movie);
+    }
+
     public ObservableList<Movie> getMoviesInList() {
         return moviesInList;
     }

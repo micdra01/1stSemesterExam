@@ -136,8 +136,9 @@ public class AddMovieController implements Initializable {
         }
 
         double personalRating = -1;
-        double imdbRating = imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId())  != null ?  Double.parseDouble(imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId())) : 0.00;
+        double imdbRating = chosenMovie != null ?  Double.parseDouble(imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId())) : 0.00;
         String movieLink = movieFile != null ? movieFile.getAbsolutePath() : "";
+
         String coverPath = chosenMovie != null ? chosenMovie.getPictureLink() : movieCover.getAbsolutePath();
         Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
         int yearOfRelease = chosenMovie != null ? Integer.parseInt(chosenMovie.getYearOfRelease()) : 0;
@@ -153,16 +154,21 @@ public class AddMovieController implements Initializable {
             }
             movie.setTopCast(topCast);
         }
+
+        movieModel.addMovieToList(movie);
         movie = movieModel.createMovie(movie); //Create movie in DAO and get the correct ID back
 
-        //Create a list of all movie categories found from IMDB
-        ArrayList<String> movieCategories = imdbInfoModel.getMovieCategoriesFromApi(chosenMovie.getImdbId());
 
-        //Loop through all categories, and add the movie.
-        //If the category does not exist it will be created through the CategoryModel
-        for (int i = 0; i<movieCategories.size(); i++) {
-            Category category = categoryModel.createCategoryIfNotExist(movieCategories.get(i));
-            categoryModel.addMovieToCategory(category, movie);
+        if(chosenMovie != null) {
+            //Create a list of all movie categories found from IMDB
+            ArrayList<String> movieCategories = imdbInfoModel.getMovieCategoriesFromApi(chosenMovie.getImdbId());
+
+            //Loop through all categories, and add the movie.
+            //If the category does not exist it will be created through the CategoryModel
+            for (int i = 0; i < movieCategories.size(); i++) {
+                Category category = categoryModel.createCategoryIfNotExist(movieCategories.get(i));
+                categoryModel.addMovieToCategory(category, movie);
+            }
         }
 
         Label savedText = new Label("you did it, you saved the movie in your database ");

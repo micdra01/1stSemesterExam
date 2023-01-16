@@ -20,6 +20,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class MovieCardController {
     private MainController mainController;
@@ -44,6 +45,7 @@ public class MovieCardController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
 
         Image img = new Image(movie.getPictureFileLink());
         ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it

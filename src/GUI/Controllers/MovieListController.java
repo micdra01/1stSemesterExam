@@ -34,6 +34,7 @@ public class MovieListController implements Initializable {
         //sets the models
         try {
             categoryModel = new CategoryModel();
+            //movieModel = new MovieModel();
         } catch (Exception e) {
             new Exception(e);
         }
