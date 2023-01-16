@@ -136,7 +136,7 @@ public class AddMovieController implements Initializable {
         }
 
         double personalRating = -1;
-        double imdbRating =  chosenMovie != null ?  Double.parseDouble(imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId())) : 0;
+        double imdbRating = imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId())  != null ?  Double.parseDouble(imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId())) : 0.00;
         String movieLink = movieFile != null ? movieFile.getAbsolutePath() : "";
         String coverPath = chosenMovie != null ? chosenMovie.getPictureLink() : movieCover.getAbsolutePath();
         Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
@@ -161,7 +161,7 @@ public class AddMovieController implements Initializable {
         //Loop through all categories, and add the movie.
         //If the category does not exist it will be created through the CategoryModel
         for (int i = 0; i<movieCategories.size(); i++) {
-            Category category = categoryModel.getCategoryFromName(movieCategories.get(i));
+            Category category = categoryModel.createCategoryIfNotExist(movieCategories.get(i));
             categoryModel.addMovieToCategory(category, movie);
         }
 

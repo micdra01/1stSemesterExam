@@ -52,11 +52,13 @@ public class CategoryModel {
         return categoryManager.readAllMoviesInCategory(category);
     }
 
-    public Category getCategoryFromName(String categoryName) throws Exception {
-        //If the category (found from IMDB) does not exist in our Category Database, we create it before returning.
+    public Category createCategoryIfNotExist(String categoryName) throws Exception {
         if (categoryManager.getCategoryFromName(categoryName) == null) {
             categoryManager.createCategory(new Category(-1, categoryName));
         }
+        return categoryManager.getCategoryFromName(categoryName);
+    }
+    public Category getCategoryFromName(String categoryName) throws Exception {
         return categoryManager.getCategoryFromName(categoryName);
     }
 }

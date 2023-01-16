@@ -66,9 +66,8 @@ public class CategoryController {
         int id = -1;
         String title = textAddCategory.getText();
 
-        Category category = new Category(id, title);
+        categoryModel.createCategoryIfNotExist(title);
 
-        categoryModel.createCategory(category);
         listCategories.getItems().clear();
         populateCategories();
         mainController.initializeCategoryMenu();
