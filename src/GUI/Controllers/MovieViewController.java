@@ -31,6 +31,8 @@ public class MovieViewController implements Initializable {
 
 
     public Slider sliderSetPR;
+    public Label labelDescription;
+    public Label labelCast;
     @FXML
     private VBox vBoxCategories;
     @FXML
@@ -147,6 +149,8 @@ public class MovieViewController implements Initializable {
         labelPersonalRating.setText(String.valueOf(movie.getPersonalRating()));
         labelLastViewed.setText(String.valueOf(movie.getLastViewed()));
         imageMoviePoster.setImage(new Image(movie.getPictureFileLink()));
+        labelDescription.setText(movie.getMovieDescription());
+        labelCast.setText(movie.getTopCast().replaceAll(",", "\n"));
     }
 
     public void handlePlayMovie(ActionEvent actionEvent) {

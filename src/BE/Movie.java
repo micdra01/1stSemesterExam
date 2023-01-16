@@ -4,6 +4,15 @@ import java.sql.Timestamp;
 
 public class Movie {
 
+    public String getImdbId() {
+        return imdbId;
+    }
+
+    public void setImdbId(String imdbId) {
+        this.imdbId = imdbId;
+    }
+
+    private String imdbId;
     private int id;
 
     private double personalRating, imdbRating;
@@ -13,6 +22,16 @@ public class Movie {
     private int yearOfRelease;
 
     private String movieDescription;
+
+    public String getTopCast() {
+        return TopCast;
+    }
+
+    public void setTopCast(String topCast) {
+        TopCast = topCast;
+    }
+
+    public String TopCast;
 
 
     /**
@@ -59,6 +78,18 @@ public class Movie {
         this.movieDescription = movieDescription;
     }
 
+    public Movie(String title, double personalRating, double imdbRating, String movieFileLink, String pictureFileLink, Timestamp lastViewed, int yearOfRelease, String movieDescription, String topCast) {
+        this.title = title;
+        this.personalRating = personalRating;
+        this.imdbRating = imdbRating;
+        this.movieFileLink = movieFileLink;
+        this.pictureFileLink = pictureFileLink;
+        this.lastViewed = lastViewed;
+        this.yearOfRelease = yearOfRelease;
+        this.movieDescription = movieDescription;
+        this.TopCast = topCast;
+    }
+
     public int getId() {
         return id;
     }
@@ -100,9 +131,9 @@ public class Movie {
     }
 
     public String getPictureFileLink() {
-        pictureFileLink = pictureFileLink.replaceAll("resources//", "");
-        pictureFileLink = pictureFileLink.replaceAll("resources\\\\", "");
-        return pictureFileLink;
+       // pictureFileLink = pictureFileLink.replaceAll("resources//", "");
+
+        return pictureFileLink.replaceAll("resources\\\\", "");
     }
 
     public void setPictureFileLink(String pictureFileLink) {

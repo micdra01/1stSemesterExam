@@ -33,6 +33,4 @@ public class ImdbInfoModel {
     public String getImdbRatingFromApi(String imdbId) throws IOException, InterruptedException {
         return imdbManager.getImdbRatingFromApi(imdbId);
     }
-
-
 }
