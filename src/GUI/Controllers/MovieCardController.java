@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -26,11 +27,6 @@ public class MovieCardController {
     private MovieModel movieModel;
 
     public MovieCardController(){
-        try {
-            // = new MovieModel();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /**
@@ -39,8 +35,9 @@ public class MovieCardController {
      * @param movie, the specific movie in the list
      * @return
      */
-    public GridPane createMovieCard(Movie movie) {
+    public GridPane createMovieCard(Movie movie, MovieModel movieModel) {
         GridPane movieCard = null;
+        this.movieModel = movieModel;
         //loads the movieCard fxml
         try {
             movieCard = FXMLLoader.load(getClass().getResource("/GUI/Views/MovieCard.fxml"));
@@ -48,47 +45,45 @@ public class MovieCardController {
             throw new RuntimeException(e);
         }
 
-
         Image img = new Image(movie.getPictureFileLink());
         ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it
         imgView.setPreserveRatio(true);
-        imgView.setFitWidth(200);
+        imgView.setFitWidth(130);
         imgView.setFitHeight(200);
 
         //creates a label with the title of the movieCard
         Label lblTitle = new Label(movie.getTitle());
 
         // creates a label with the rating info on
-        String rating = "⭐" + movie.getImdbRating();
-        String pRating = "❤" + movie.getPersonalRating();
+        String rating = "⭐" + movie.getImdbRating() + "  ❤" + movie.getPersonalRating();
+
         Label lblRating = new Label(rating);
-        Label lblPRating = new Label(pRating);
 
         //sets the movieCard information labels on the movieCard gridPane
         movieCard.add(imgView, 0, 0);
         movieCard.add(lblTitle, 0, 1);
-        movieCard.add(lblRating, 2, 1);
-        movieCard.add(lblPRating, 1,1);
+        movieCard.add(lblRating, 1, 1);
 
         Label lblTitleCard = new Label("");
         lblTitleCard.setFont(Font.font(20));
         lblTitleCard.setWrapText(true);
 
         Label lblDescriptionCard = new Label("");
-        lblDescriptionCard.setMinSize(130,130);
+        lblDescriptionCard.setMinSize(130,140);
         lblDescriptionCard.setWrapText(true);
-
-        VBox vBox1 = new VBox(lblTitleCard, lblDescriptionCard);
-        movieCard.add(vBox1, 0,0);
 
         Button btnPlay = new Button();
         Button btnInfo = new Button();
 
-        VBox vBox = new VBox(btnPlay, btnInfo);
+        HBox hBox = new HBox(btnPlay, btnInfo);
         btnPlay.setText("play");
         btnInfo.setText("se info");
-        vBox.setAlignment(Pos.CENTER);
-        movieCard.add(vBox, 2,0);
+        hBox.setAlignment(Pos.CENTER);
+
+        VBox vBox1 = new VBox(lblTitleCard, lblDescriptionCard, hBox);
+        movieCard.add(vBox1, 0,0);
+
+
 
         btnPlay.setOpacity(0);
         btnInfo.setOpacity(0);
@@ -109,7 +104,7 @@ public class MovieCardController {
                 btnInfo.setOpacity(1);
 
                 lblTitleCard.setText(movie.getTitle());
-                lblDescriptionCard.setText("forklaring og info om filmen bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla");
+                lblDescriptionCard.setText(movie.getMovieDescription());
             }
         });
         movieCard.setOnMouseExited(new EventHandler<MouseEvent>() {
@@ -142,6 +137,7 @@ public class MovieCardController {
         }
 
         Stage stage = new Stage();
+        //stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("Movie info: " + movie.getTitle());
         stage.setScene(new Scene(root));
         stage.show();

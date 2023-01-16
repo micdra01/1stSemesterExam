@@ -5,6 +5,7 @@ import BE.Movie;
 import DAL.Interfaces.ICategoryDAO;
 import DAL.Interfaces.IMovieDAO;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class CategoryDAO implements ICategoryDAO {
     private DatabaseConnector databaseConnector;
     private IMovieDAO movieDAO;
 
-    public CategoryDAO() {
+    public CategoryDAO() throws IOException {
         databaseConnector = new DatabaseConnector();
         movieDAO = new MovieDAO();
     }

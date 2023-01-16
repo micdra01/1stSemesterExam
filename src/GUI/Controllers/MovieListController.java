@@ -11,6 +11,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.GridPane;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,6 +31,7 @@ public class MovieListController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         movieCardController = new MovieCardController();
+        //sets the models
         try {
             categoryModel = new CategoryModel();
         } catch (Exception e) {
@@ -51,7 +55,7 @@ public class MovieListController implements Initializable {
         for (int i = 0; movieModel.getMoviesInList().size() > i; i++) {
             Movie movie = movieModel.getMoviesInList().get(i);
 
-            GridPane movieCard = movieCardController.createMovieCard(movie);//creates the movie card
+            GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);//creates the movie card
             grid.add(movieCard, col, row);//adds it to the content gridPane
 
             //makes a space between all movies

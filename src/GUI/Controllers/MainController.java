@@ -195,7 +195,7 @@ public class MainController implements Initializable {
         textSceneTitle.setText("Favorite movies");
     }
 
-    public void handleAllMovies(ActionEvent actionEvent) {
+    public void handleAllMovies() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
         Parent root = null;
 
@@ -233,6 +233,7 @@ public class MainController implements Initializable {
 
 
     public void handleSearch() {
+        handleAllMovies();
         try {
             if(isSimpleSearch) {
                 if (btnSearch.getText().equals("🔍")) {

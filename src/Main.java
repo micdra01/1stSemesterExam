@@ -2,7 +2,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -20,11 +19,14 @@ public class Main extends Application {
         primaryStage.show();
 
         //Shows alert box when loading main window
+        /*
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Alert");
         alert.setContentText("Hover movie to delete");
         alert.setHeaderText("Following movies has not been watched for two or more years" + "\n" + "or has a personal rating of 6 or lower");
         alert.show();
+        */
+
     }
 }
 

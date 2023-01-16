@@ -5,6 +5,9 @@ import DAL.Interfaces.IMovieDAO;
 import DAL.Util.FileType;
 import DAL.Util.LocalFileHandler;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ public class MovieDAO implements IMovieDAO {
 
     private DatabaseConnector databaseConnector;
 
-    public MovieDAO() {
+    public MovieDAO() throws IOException {
         databaseConnector = new DatabaseConnector();
     }
 
@@ -27,12 +30,20 @@ public class MovieDAO implements IMovieDAO {
     @Override
     public Movie createMovie(Movie movie) throws Exception {
         //sql string for creating a movie in Movies table
-        String sql = "INSERT INTO Movies (Title, PersonalRating, ImdbRating, MovieFileLink, PictureFileLink, LastView, YearOfRelease, MovieDescription) VALUES (?,?,?,?,?,?,?,?,?) ;";
+        String sql = "INSERT INTO Movies (Title, PersonalRating, ImdbRating, MovieFileLink, PictureFileLink, LastView, YearOfRelease, MovieDescription, TopCast) VALUES (?,?,?,?,?,?,?,?,?) ;";
         //get connection with database
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            Path relativeCoverPath = !movie.getPictureFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getPictureFileLink(), FileType.IMAGE) : null;
+            Path relativeCoverPath;
+
+            if(movie.getPictureFileLink().startsWith("https:")){
+                relativeCoverPath = !movie.getPictureFileLink().isEmpty() ? LocalFileHandler.saveFileFromApi(movie.getPictureFileLink(), movie.getImdbId()) : null;
+                System.out.println("it works");
+            }else {
+                relativeCoverPath = !movie.getPictureFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getPictureFileLink(), FileType.IMAGE) : null;
+            }
+
             Path relativeMoviePath = !movie.getMovieFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getMovieFileLink(), FileType.MOVIE) : null;
 
 
@@ -45,6 +56,7 @@ public class MovieDAO implements IMovieDAO {
             Timestamp tS = movie.getLastViewed();
             int yearOfRelease = movie.getYearOfRelease();
             String movieDescription = movie.getMovieDescription();
+            String topCast = movie.getTopCast();
 
             //binds all movie variables to statement
             statement.setString(1, title);
@@ -55,6 +67,7 @@ public class MovieDAO implements IMovieDAO {
             statement.setTimestamp(6, tS);
             statement.setInt(7, yearOfRelease);
             statement.setString(8, movieDescription);
+            statement.setString(9, topCast);
 
             statement.executeUpdate();//execute statement
 
@@ -122,13 +135,19 @@ public class MovieDAO implements IMovieDAO {
                 double personalRating = rs.getDouble("PersonalRating");
                 double imdbRating = rs.getDouble("ImdbRating");
                 String movieFileLink = rs.getString("MovieFileLink");
+
                 String pictureFileLink = rs.getString("PictureFileLink");
+                if(!Files.exists(Path.of(pictureFileLink)) && !Files.exists(Path.of("resources\\" + pictureFileLink))){
+                    pictureFileLink = "images/ImageNotFound.jpg";
+                }
+
                 Timestamp lastView = rs.getTimestamp("LastView");
                 int yearOfRelease = rs.getInt("yearOfRelease");
                 String movieDescription = rs.getString("MovieDescription");
-
+                String topCast = rs.getString("TopCast");
                 //creates the movie and add it to the list allMovies
                 Movie movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink, lastView, yearOfRelease, movieDescription);
+                movie.setTopCast(topCast);
                 allMovies.add(movie);
             }
         }catch (Exception e){
@@ -158,10 +177,10 @@ public class MovieDAO implements IMovieDAO {
             statement.setDouble(3, movie.getImdbRating());
             statement.setString(4, movie.getMovieFileLink());
             statement.setString(5, movie.getPictureFileLink());
-            statement.setTimestamp(7, movie.getLastViewed());
-            statement.setInt(8, movie.getYearOfRelease());
-            statement.setString(9, movie.getMovieDescription());
-            statement.setInt(10,movie.getId());
+            statement.setTimestamp(6, movie.getLastViewed());
+            statement.setInt(7, movie.getYearOfRelease());
+            statement.setString(8, movie.getMovieDescription());
+            statement.setInt(9,movie.getId());
             //execute statement
             statement.executeUpdate();
         } catch (SQLException e) {

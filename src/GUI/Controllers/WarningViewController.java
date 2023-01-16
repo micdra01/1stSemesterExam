@@ -49,7 +49,7 @@ public class WarningViewController implements Initializable {
             //If the movie's last view is > 2 years ago ...
             if (movie.getLastViewed().before(Date.valueOf(LocalDate.now().minusYears(2)))){
                 //... it creates a movieCard for said movie and adds it to the content grid
-                GridPane movieCard = movieCardController.createMovieCard(movie);
+                GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
                 grid.add(movieCard, col, row);
 
                 //makes a space between all movies
@@ -73,9 +73,8 @@ public class WarningViewController implements Initializable {
         for (Movie movie : movieModel.getMoviesInList()){
             //If the movie is both low rated & last view is > 2 years ago ...
             if(movie.getPersonalRating() <= lowRating && movie.getLastViewed().before(Date.valueOf(LocalDate.now().minusYears(2)))) {
-
                 //... it creates a movieCard for said movie and adds it to the content grid
-                GridPane movieCard = movieCardController.createMovieCard(movie);
+                GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
 
                 //makes a space between all movies
                 grid.add(movieCard, col, row);
@@ -99,7 +98,7 @@ public class WarningViewController implements Initializable {
             //If the movie is low rated ...
             if(movie.getPersonalRating() <= lowRating){
                 //... it creates a movieCard for said movie and adds it to the content grid
-                GridPane movieCard = movieCardController.createMovieCard(movie); //creates the movie card
+                GridPane movieCard = movieCardController.createMovieCard(movie, movieModel); //creates the movie card
                 grid.add(movieCard, col, row); //adds it to the content gridPane
 
                 //makes a space between all movies
