@@ -6,6 +6,7 @@ import BLL.Util.MovieSearcher;
 import DAL.Interfaces.IMovieDAO;
 import DAL.MovieDAO;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MovieManager implements IMovieManager {
@@ -13,7 +14,7 @@ public class MovieManager implements IMovieManager {
     private IMovieDAO databaseAccess;
     private MovieSearcher movieSearcher;
 
-    public MovieManager() {
+    public MovieManager() throws IOException {
         databaseAccess = new MovieDAO();
         movieSearcher = new MovieSearcher();
     }

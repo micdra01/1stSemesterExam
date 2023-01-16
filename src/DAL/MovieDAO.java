@@ -5,6 +5,7 @@ import DAL.Interfaces.IMovieDAO;
 import DAL.Util.FileType;
 import DAL.Util.LocalFileHandler;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class MovieDAO implements IMovieDAO {
 
     private DatabaseConnector databaseConnector;
 
-    public MovieDAO() {
+    public MovieDAO() throws IOException {
         databaseConnector = new DatabaseConnector();
     }
 

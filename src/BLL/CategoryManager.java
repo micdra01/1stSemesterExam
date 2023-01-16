@@ -6,6 +6,7 @@ import BLL.Interfaces.ICategoryManager;
 import DAL.CategoryDAO;
 import DAL.Interfaces.ICategoryDAO;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class CategoryManager implements ICategoryManager {
 
     private ICategoryDAO databaseAccess;
 
-    public CategoryManager() {
+    public CategoryManager() throws IOException {
         databaseAccess = new CategoryDAO();
     }
 
