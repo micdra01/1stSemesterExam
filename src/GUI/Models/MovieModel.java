@@ -25,7 +25,7 @@ public class MovieModel {
         moviesInList.add(movie);
     }
 
-    public ObservableList<Movie> getMoviesInList() {
+    public ObservableList<Movie> getMoviesInList() throws Exception{
         return moviesInList;
     }
 

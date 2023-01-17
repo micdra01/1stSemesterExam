@@ -2,6 +2,7 @@ package GUI.Controllers;
 
 import BE.Movie;
 import GUI.Models.MovieModel;
+import GUI.Util.ErrorDisplayer;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +20,7 @@ public class HomeViewController implements Initializable {
 
     @FXML
     private ScrollPane listAllMovies, listPopular, listLastAdded;
+    private ObservableList<Movie> allMovies;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -26,6 +28,11 @@ public class HomeViewController implements Initializable {
     }
 
     public void setContent(){
+        try {
+            allMovies = movieModel.getMoviesInList();
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception(e));
+        }
         createPopularList();
         createAllMoviesList();
         createLastAddedList();
@@ -45,7 +52,7 @@ public class HomeViewController implements Initializable {
         int row = 0;
 
         //loop for creating each movieCard and setting movie info
-        for (Movie movie : movieModel.getMoviesInList()) {
+        for (Movie movie : allMovies) {
             //If the movie's IMDB Rating is greater than or equal to minRatingPopular variable ...
             double minRatingPopular = 7.5;
             if (movie.getImdbRating() >= minRatingPopular) {
@@ -75,9 +82,7 @@ public class HomeViewController implements Initializable {
         int row = 0;
 
         //loop for creating each movieCard and setting movie info
-        for (int i = 0; movieModel.getMoviesInList().size() > i; i++) {
-            Movie movie = movieModel.getMoviesInList().get(i);
-
+        for(Movie movie : allMovies) {
             //Creates the movieCard and adds it to the content grid
             GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
             grid.add(movieCard, col, row);
@@ -98,11 +103,9 @@ public class HomeViewController implements Initializable {
         int col = 0;
         int row = 0;
 
-        ObservableList<Movie> allMovies = movieModel.getMoviesInList();
-
         //loop for getting the last six added movies
         for (int i = allMovies.size() -1; i > allMovies.size() -7; i--) {
-            Movie movie = movieModel.getMoviesInList().get(i);
+            Movie movie = allMovies.get(i);
 
             //Creates the movieCard and adds it to the content grid
             GridPane movieCard = movieCardController.createMovieCard(movie, movieModel); //creates the movie card

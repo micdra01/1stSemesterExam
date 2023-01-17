@@ -4,6 +4,8 @@ import BE.Category;
 import BE.Movie;
 import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
+import GUI.Util.ErrorDisplayer;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
@@ -20,6 +22,7 @@ public class MovieListController implements Initializable {
     private MovieModel movieModel;
     private CategoryModel categoryModel;
     private MovieCardController movieCardController;
+    private ObservableList<Movie> allMovies;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -27,9 +30,8 @@ public class MovieListController implements Initializable {
         //sets the models
         try {
             categoryModel = new CategoryModel();
-            //movieModel = new MovieModel();
         } catch (Exception e) {
-            new Exception(e);
+            ErrorDisplayer.displayError(new Exception(e));
         }
     }
 
@@ -46,8 +48,7 @@ public class MovieListController implements Initializable {
         int col = 0;
         int row = 0;
         //loop for creating each movieCard and setting movie info
-        for (int i = 0; movieModel.getMoviesInList().size() > i; i++) {
-            Movie movie = movieModel.getMoviesInList().get(i);
+        for (Movie movie : allMovies) {
 
             GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);//creates the movie card
             grid.add(movieCard, col, row);//adds it to the content gridPane
@@ -82,7 +83,7 @@ public class MovieListController implements Initializable {
         int row = 0;
 
         //loop for creating each movieCard and setting movie info
-        for (Movie movie : movieModel.getMoviesInList()) {
+        for (Movie movie : allMovies) {
             //If the movie's IMDB Rating is greater than or equal to minRatingPopular variable ...
             double minRatingPopular = 7.5;
             if (movie.getImdbRating() >= minRatingPopular) {
@@ -121,7 +122,7 @@ public class MovieListController implements Initializable {
         int row = 0;
 
         //loop for creating each movieCard and setting movie info
-        for (Movie movie : movieModel.getMoviesInList()) {
+        for (Movie movie : allMovies) {
             //If the movie's IMDB Rating is greater than or equal to minRatingPopular variable ...
             double minRatingFavorite = 7.5;
             if (movie.getPersonalRating() >= minRatingFavorite) {
@@ -185,6 +186,11 @@ public class MovieListController implements Initializable {
 
     public void setMovieModel(MovieModel movieModel) {
         this.movieModel = movieModel;
+        try {
+            allMovies = movieModel.getMoviesInList();
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception(e));
+        }
     }
 
 }

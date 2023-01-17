@@ -2,6 +2,7 @@ package GUI.Controllers;
 
 import BE.Movie;
 import GUI.Models.MovieModel;
+import GUI.Util.ErrorDisplayer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -41,7 +42,7 @@ public class MovieCardController {
         try {
             movieCard = FXMLLoader.load(getClass().getResource("/GUI/Views/MovieCard.fxml"));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(new Exception("Failed to create Movie Card", e));
         }
 
 
@@ -120,7 +121,7 @@ public class MovieCardController {
             //System.out.println(root);
 
         } catch (IOException e) {
-            new Exception("Failed to show 'movie info'", e);
+            ErrorDisplayer.displayError(new Exception("Failed to show 'movie info'", e));
         }
 
         Stage stage = new Stage();

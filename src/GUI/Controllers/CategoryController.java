@@ -3,6 +3,7 @@ package GUI.Controllers;
 import BE.Category;
 import GUI.Models.CategoryModel;
 import GUI.Util.ConfirmDelete;
+import GUI.Util.ErrorDisplayer;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
@@ -26,7 +27,7 @@ public class CategoryController {
         try {
             categoryModel = new CategoryModel();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(new Exception(e));
         }
     }
 
@@ -74,7 +75,7 @@ public class CategoryController {
                 mainController.initializeCategorySearchMenu();
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(new Exception(e));
         }
     }
 
@@ -85,7 +86,7 @@ public class CategoryController {
         try {
                 listCategories.getItems().addAll(categoryModel.getAllCategories());
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(new Exception(e));
         }
     }
 

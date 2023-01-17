@@ -3,6 +3,7 @@ package GUI.Controllers;
 import BE.Category;
 import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
+import GUI.Util.ErrorDisplayer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -53,7 +54,7 @@ public class MainController implements Initializable {
             movieModel = new MovieModel();//sets the movieModel
             categoryModel = new CategoryModel();//sets categoryModel
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(new Exception(e));
         }
     }
 
@@ -63,56 +64,59 @@ public class MainController implements Initializable {
         addSearchListener();
 
         //Loads all current categories in the category dropdown (both in sidebar & in search bar).
-        //Perhaps this should only happen when each of them is clicked to improve load time?
-        try {
-            handleWarning();
-            initializeCategoryMenu();
-            initializeCategorySearchMenu();
-        } catch (Exception e) {
-            new Exception("Failed to load categories", e);
-        }
+        handleWarning();
+        initializeCategoryMenu();
+        initializeCategorySearchMenu();
     }
 
 
-    public void initializeCategoryMenu() throws Exception {
+    public void initializeCategoryMenu() {
         menuBtnCategory.getItems().clear();
-        for (Category category : categoryModel.getAllCategories()) {
-            MenuItem menuItem = new MenuItem(category.getTitle());
-            menuBtnCategory.getItems().add(menuItem);
+        try {
+            for (Category category : categoryModel.getAllCategories()) {
+                MenuItem menuItem = new MenuItem(category.getTitle());
+                menuBtnCategory.getItems().add(menuItem);
 
-            //Adds a listener to open all movies in selected categories
-            menuItem.setOnAction(new EventHandler<>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
-                    Parent root = null;
+                //Adds a listener to open all movies in selected categories
+                menuItem.setOnAction(new EventHandler<>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
+                        Parent root = null;
 
-                    try {
-                        root = loader.load();
-                    } catch (IOException e) {
-                        new Exception("Failed to open movies in category: " + category, e);
+                        try {
+                            root = loader.load();
+                        } catch (IOException e) {
+                            ErrorDisplayer.displayError(new Exception("Failed to open category view", e));
+                        }
+
+                        movieListController = loader.getController();
+                        movieListController.setMovieModel(movieModel);
+                        try {
+                            movieListController.showMoviesInCategory(category);
+                        } catch (Exception e) {
+                            ErrorDisplayer.displayError(new Exception("Failed to show movies in category" + category + e));
+                        }
+                        borderPane.setCenter(root);
+
+                        textSceneTitle.setText(category + " Movies");
                     }
-
-                    movieListController = loader.getController();
-                    movieListController.setMovieModel(movieModel);
-                    try {
-                        movieListController.showMoviesInCategory(category);
-                    } catch (Exception e) {
-                        throw new RuntimeException("Failed to show movies in category" + category + e);
-                    }
-                    borderPane.setCenter(root);
-
-                    textSceneTitle.setText(category + " Movies");
-                }
-            });
+                });
+            }
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception(e));
         }
     }
 
-    public void initializeCategorySearchMenu() throws Exception {
+    public void initializeCategorySearchMenu() {
         searchMenuBtnCategory.getItems().clear();
-        for (Category category : categoryModel.getAllCategories()) {
-            CheckMenuItem checkMenuItem = new CheckMenuItem(category.getTitle());
-            searchMenuBtnCategory.getItems().add(checkMenuItem);
+        try {
+            for (Category category : categoryModel.getAllCategories()) {
+                CheckMenuItem checkMenuItem = new CheckMenuItem(category.getTitle());
+                searchMenuBtnCategory.getItems().add(checkMenuItem);
+            }
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception(e));
         }
     }
 
@@ -122,14 +126,14 @@ public class MainController implements Initializable {
 
         try {
             root = loader.load();
-        } catch (IOException e) {
-            new Exception("Failed to open 'Home'", e);
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception("Failed to open 'Home'", e));
         }
 
         HomeViewController controller = loader.getController();
         controller.setMovieModel(movieModel);
-        borderPane.setCenter(root);
         controller.setContent();
+        borderPane.setCenter(root);
 
         textSceneTitle.setText("Home");
     }
@@ -140,12 +144,13 @@ public class MainController implements Initializable {
 
         try {
             root = loader.load();
-        } catch (IOException e) {
-            new Exception("Failed to open 'Warning'", e);
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception("Failed to open 'Warning'", e));
         }
 
         WarningViewController controller = loader.getController();
         controller.setMovieModel(movieModel);
+        controller.setContent();
         borderPane.setCenter(root);
 
         textSceneTitle.setText("Warning");
@@ -158,8 +163,8 @@ public class MainController implements Initializable {
 
         try {
             root = loader.load();
-        } catch (IOException e) {
-            new Exception("Failed to open 'Popular movies'", e);
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception("Failed to open 'Popular movies'", e));
         }
 
         movieListController = loader.getController();
@@ -176,8 +181,8 @@ public class MainController implements Initializable {
 
         try {
             root = loader.load();
-        } catch (IOException e) {
-            new Exception("Failed to open 'Favorite movies'", e);
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception("Failed to open 'Favorite movies'", e));
         }
 
         movieListController = loader.getController();
@@ -194,8 +199,8 @@ public class MainController implements Initializable {
 
         try {
             root = loader.load();
-        } catch (IOException e) {
-            new Exception("Failed to open 'open all movies'", e);
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception("Failed to open 'All movies'", e));
         }
 
         movieListController = loader.getController();
@@ -212,8 +217,8 @@ public class MainController implements Initializable {
 
         try {
             root = loader.load();
-        } catch (IOException e) {
-            new Exception("Failed to open 'Add movie'", e);
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception("Failed to open 'Add movie'", e));
         }
 
         AddMovieController controller = loader.getController();
@@ -253,7 +258,7 @@ public class MainController implements Initializable {
             }
             movieListController.showAllMovies();
         } catch (Exception e) {
-            new Exception("Failed to search", e);
+            ErrorDisplayer.displayError(new Exception("Failed to search", e));
         }
     }
 
@@ -323,7 +328,7 @@ public class MainController implements Initializable {
             try {
                 initializeCategorySearchMenu();
             } catch (Exception e) {
-                new Exception("Failed to reset categories", e);
+                ErrorDisplayer.displayError(new Exception(e));
             }
         }
     }
