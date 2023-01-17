@@ -206,8 +206,6 @@ public class MovieListController implements Initializable {
             GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
             grid.add(movieCard, col, row);
 
-
-
             //makes a space between all movies
             col++;
             grid.add(new Separator(Orientation.HORIZONTAL), col, row);
@@ -221,8 +219,6 @@ public class MovieListController implements Initializable {
                 grid.add(new Separator(Orientation.VERTICAL), col, row);
                 row++;
             }
-
-
 
         }
 

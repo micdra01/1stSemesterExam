@@ -29,9 +29,9 @@ import java.util.stream.Collectors;
  * todo write comments for all methods
  */
 public class MainController implements Initializable {
-    public MenuItem menuItmTitleAZ;
+    public MenuItem menuItmTitleAZ, menuItmTitleZA, menuItmCategoryAZ, menuItmCategoryZA, menuItmIMDBMinMax, menuItmIMDBMaxMin, menuItmPRMaxMin, menuItmPRMinMax ;
     public MenuButton menuBtnSortBy;
-    public MenuItem menuItmTitleZA;
+
     @FXML
     private MenuButton menuBtnCategory, searchMenuBtnCategory;
     @FXML
@@ -123,15 +123,7 @@ public class MainController implements Initializable {
         setSortByContent();
     }
 
-    /**
-     * sets the listeners for menuItems with comparator.
-     * hust at sætte variabler inde i sceneBuilder
-     */
-    private void setSortByContent() {
-        menuItmTitleAZ.setOnAction(e -> handleSort(Comparator.comparing(Movie::getTitle)));
 
-        menuItmTitleZA.setOnAction(e -> handleSort(Comparator.comparing(Movie::getTitle).reversed()));
-    }
 
     public void initializeCategorySearchMenu() throws Exception {
         searchMenuBtnCategory.getItems().clear();
@@ -416,6 +408,10 @@ public class MainController implements Initializable {
     }
 
 
+    /**
+     * Loads FXML, sets MovieListController + MovieModel and calls SortTitle method from MoveListController.
+     * @param com
+     */
     private void handleSort(Comparator<Movie> com) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
         Parent root = null;
@@ -429,7 +425,23 @@ public class MainController implements Initializable {
         borderPane.setCenter(root);
         controller.setMovieModel(movieModel);
         controller.sortTitle(com);
+    }
 
+    /**
+     * sets the listeners for menuItems with comparator.
+     */
+    private void setSortByContent() {
+        menuItmTitleAZ.setOnAction(e -> handleSort(Comparator.comparing(Movie::getTitle)));
+        menuItmTitleZA.setOnAction(e -> handleSort(Comparator.comparing(Movie::getTitle).reversed()));
+
+        //menuItmCategoryAZ.setOnAction(e -> handleSort(Comparator.comparing(Movie::getCategory)));
+        //menuItmCategoryZA.setOnAction(e -> handleSort(Comparator.comparing(Movie::getCategory).reversed()));
+
+        menuItmIMDBMinMax.setOnAction(e -> handleSort(Comparator.comparing(Movie::getImdbRating)));
+        menuItmIMDBMaxMin.setOnAction(e -> handleSort(Comparator.comparing(Movie::getImdbRating).reversed()));
+
+        menuItmPRMaxMin.setOnAction(e -> handleSort(Comparator.comparing(Movie::getPersonalRating)));
+        menuItmPRMaxMin.setOnAction(e -> handleSort(Comparator.comparing(Movie::getPersonalRating).reversed()));
     }
 
 }
