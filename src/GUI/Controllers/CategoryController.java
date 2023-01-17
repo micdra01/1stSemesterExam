@@ -60,7 +60,7 @@ public class CategoryController {
      */
     public void handleDeleteCategory() {
         try {
-            Category selectedCategory = (Category) listCategories.getSelectionModel().getSelectedItem();
+            Category selectedCategory = listCategories.getSelectionModel().getSelectedItem();
 
             String header = "Are you sure you want to delete this category?";
             String content = selectedCategory.toString() + " with " + categoryModel.readAllMoviesInCategory(selectedCategory).size() + " movie(s)";
