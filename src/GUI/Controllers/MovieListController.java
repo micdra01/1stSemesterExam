@@ -52,17 +52,11 @@ public class MovieListController implements Initializable {
             GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);//creates the movie card
             grid.add(movieCard, col, row);//adds it to the content gridPane
 
-            //makes a space between all movies
-            col++;
-            grid.add(new Separator(Orientation.HORIZONTAL), col, row);
-
             //loop for positioning movieCards in grid
-            if(col < 6 ){
+            if(col < 3 ){
                 col++;
             }else {
                 col = 0;
-                row++;
-                grid.add(new Separator(Orientation.VERTICAL), col, row);
                 row++;
             }
         }
@@ -90,17 +84,11 @@ public class MovieListController implements Initializable {
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
                 grid.add(movieCard, col, row);
 
-                //makes a space between all movies
-                col++;
-                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
-
                 //loop for positioning movieCards in grid
-                if(col < 6 ){
+                if(col < 3 ){
                     col++;
                 }else {
                     col = 0;
-                    row++;
-                    grid.add(new Separator(Orientation.VERTICAL), col, row);
                     row++;
                 }
             }
@@ -129,17 +117,11 @@ public class MovieListController implements Initializable {
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
                 grid.add(movieCard, col, row);
 
-                //makes a space between all movies
-                col++;
-                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
-
                 //loop for positioning movieCards in grid
-                if(col < 6 ){
+                if(col < 3 ){
                     col++;
                 }else {
                     col = 0;
-                    row++;
-                    grid.add(new Separator(Orientation.VERTICAL), col, row);
                     row++;
                 }
             }
@@ -166,17 +148,11 @@ public class MovieListController implements Initializable {
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
                 grid.add(movieCard, col, row);
 
-                //makes a space between all movies
-                col++;
-                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
-
                 //loop for positioning movieCards in grid
-                if(col < 6 ){
+                if(col < 3 ){
                     col++;
                 }else {
                     col = 0;
-                    row++;
-                    grid.add(new Separator(Orientation.VERTICAL), col, row);
                     row++;
                 }
             }

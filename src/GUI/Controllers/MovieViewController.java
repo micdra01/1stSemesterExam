@@ -15,6 +15,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -34,7 +35,7 @@ public class MovieViewController implements Initializable {
     private Slider sliderSetPR;
 
     @FXML
-    private VBox vBoxCategories;
+    private FlowPane flowPaneCategories;
 
     @FXML
     private MenuButton menuBtnAddCategory, btnSetPR;
@@ -73,14 +74,15 @@ public class MovieViewController implements Initializable {
 
         //Creates a container for the label & button and adds this to the correct container in the view
         HBox container = new HBox(categoryName, btnRemove);
-        vBoxCategories.getChildren().add(container);
+        HBox.setMargin(container, new Insets(0, 5, 5, 0));
+        flowPaneCategories.getChildren().add(container);
 
         //Adds listener to the remove button to be able to remove category from movie
         btnRemove.setOnAction(event -> {
             try {
                 //Removes category from movie, then removes label
                 categoryModel.removeCategoryFromMovie(category, movie);
-                vBoxCategories.getChildren().remove(container);
+                flowPaneCategories.getChildren().remove(container);
             } catch (Exception e) {
                 new Exception("Failed to remove category from movie", e);
             }

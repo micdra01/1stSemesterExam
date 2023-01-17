@@ -51,14 +51,9 @@ public class WarningViewController implements Initializable {
                 //... it creates a movieCard for said movie and adds it to the content grid
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
                 grid.add(movieCard, col, row);
-
-                //makes a space between all movies
-                col++;
-                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
                 col++;
             }
         }
-
     }
     private void createLowAndLastList() {
         //Create a grid in the ScrollPane to hold all movies
@@ -75,11 +70,7 @@ public class WarningViewController implements Initializable {
             if(movie.getPersonalRating() <= lowRating && movie.getLastViewed().before(Date.valueOf(LocalDate.now().minusYears(2)))) {
                 //... it creates a movieCard for said movie and adds it to the content grid
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
-
-                //makes a space between all movies
                 grid.add(movieCard, col, row);
-                col++;
-                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
                 col++;
             }
         }
@@ -100,10 +91,6 @@ public class WarningViewController implements Initializable {
                 //... it creates a movieCard for said movie and adds it to the content grid
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel); //creates the movie card
                 grid.add(movieCard, col, row); //adds it to the content gridPane
-
-                //makes a space between all movies
-                col++;
-                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
                 col++;
             }
         }

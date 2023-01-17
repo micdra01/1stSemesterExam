@@ -53,10 +53,6 @@ public class HomeViewController implements Initializable {
                 //... it creates a movieCard for said movie and adds it to the content grid
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
                 grid.add(movieCard, col, row);
-
-                //makes a space between all movies
-                col++;
-                grid.add(new Separator(Orientation.HORIZONTAL), col, row);
                 col++;
             }
         }
@@ -82,10 +78,6 @@ public class HomeViewController implements Initializable {
             //Creates the movieCard and adds it to the content grid
             GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
             grid.add(movieCard, col, row);
-
-            //makes a space between all movies
-            col++;
-            grid.add(new Separator(Orientation.HORIZONTAL), col, row);
             col++;
         }
     }
@@ -108,10 +100,6 @@ public class HomeViewController implements Initializable {
             //Creates the movieCard and adds it to the content grid
             GridPane movieCard = movieCardController.createMovieCard(movie, movieModel); //creates the movie card
             grid.add(movieCard, col, row); //adds it to the content gridPane
-
-            //makes a space between all movies
-            col++;
-            grid.add(new Separator(Orientation.HORIZONTAL), col, row);
             col++;
         }
     }

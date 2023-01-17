@@ -2,9 +2,8 @@ package GUI.Controllers;
 
 import BE.Movie;
 import GUI.Models.MovieModel;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -20,7 +18,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class MovieCardController {
 
@@ -63,6 +60,8 @@ public class MovieCardController {
         movieCard.add(imgView, 0, 0);
         movieCard.add(lblTitle, 0, 1);
         movieCard.add(lblRating, 1, 1);
+
+        GridPane.setMargin(movieCard, new Insets(0, 10, 0, 10));
 
         Label lblTitleCard = new Label("");
         lblTitleCard.setFont(Font.font(20));
