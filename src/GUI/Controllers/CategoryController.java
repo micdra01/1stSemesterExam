@@ -3,6 +3,7 @@ package GUI.Controllers;
 import BE.Category;
 import BE.Movie;
 import GUI.Models.CategoryModel;
+import GUI.Util.ConfirmDelete;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -83,11 +84,18 @@ public class CategoryController {
     public void handleDeleteCategory(ActionEvent event) {
         try {
             selectedCategory = (Category) listCategories.getSelectionModel().getSelectedItem();
-            categoryModel.deleteCategory(selectedCategory);
-            listCategories.getItems().clear();
-            populateCategories();
-            mainController.initializeCategoryMenu();
-            mainController.initializeCategorySearchMenu();
+
+            String header = "Are you sure you want to delete this category?";
+            String content = selectedCategory.toString() + " with " + categoryModel.readAllMoviesInCategory(selectedCategory).size() + " movie(s)";
+            boolean deleteCategory = ConfirmDelete.confirm(header, content);
+
+            if(deleteCategory) {
+                categoryModel.deleteCategory(selectedCategory);
+                listCategories.getItems().clear();
+                populateCategories();
+                mainController.initializeCategoryMenu();
+                mainController.initializeCategorySearchMenu();
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

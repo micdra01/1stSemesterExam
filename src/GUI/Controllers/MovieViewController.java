@@ -4,6 +4,7 @@ import BE.Category;
 import BE.Movie;
 import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
+import GUI.Util.ConfirmDelete;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -185,10 +186,17 @@ public class MovieViewController implements Initializable {
 
     public void deleteMovie(ActionEvent actionEvent) {
         try {
-            movieModel.deleteMovie(movie);
-            Stage stage = (Stage) btnSetPR.getScene().getWindow();
-            stage.close();
-            //TODO re-load previous stage, so removed movie is gone
+            //Check to make sure user meant to delete
+            String header = "Are you sure you want to delete this movie?";
+            String content = movie.getTitle();
+            boolean deleteMovie = ConfirmDelete.confirm(header, content);
+
+            if(deleteMovie) {
+                movieModel.deleteMovie(movie);
+                Stage stage = (Stage) btnSetPR.getScene().getWindow();
+                stage.close();
+                //TODO re-load previous stage, so removed movie is gone
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
