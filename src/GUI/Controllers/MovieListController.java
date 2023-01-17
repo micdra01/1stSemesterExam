@@ -44,6 +44,7 @@ public class MovieListController implements Initializable {
      * fills it with all movies
      */
     public void showAllMovies() {
+        pane.getChildren().clear();
         //loop for creating each movieCard and setting movie info
         for (Movie movie : movieModel.getMoviesInList()) {
             //... it creates a movieCard for said movie and adds it to the Flow Pane
