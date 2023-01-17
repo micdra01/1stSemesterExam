@@ -367,7 +367,7 @@ public class MainController implements Initializable {
         try {
             root = loader.load();
         } catch (IOException e) {
-            new Exception("Failed to open 'Add category'", e);
+            ErrorDisplayer.displayError(new Exception("Failed to open 'Add category'", e));
         }
 
         CategoryController controller = loader.getController();
