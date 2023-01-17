@@ -16,6 +16,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.setMinWidth(350);
         primaryStage.setMinHeight(350);
+        primaryStage.getScene().getStylesheets().add(getClass().getResource("/GUI/CSS/Theme.css").toExternalForm());
         primaryStage.show();
 
         //Shows alert box when loading main window

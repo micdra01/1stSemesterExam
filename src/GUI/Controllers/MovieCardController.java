@@ -127,6 +127,7 @@ public class MovieCardController {
         //stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("Movie info: " + movie.getTitle());
         stage.setScene(new Scene(root));
+        stage.getScene().getStylesheets().add(getClass().getResource("/GUI/CSS/Theme.css").toExternalForm());
         stage.show();
         MovieViewController controller = loader.getController();
         controller.setMovieModel(movieModel);

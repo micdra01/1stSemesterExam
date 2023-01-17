@@ -1,0 +1,39 @@
+*{
+    /*<variable>: <color>; <Main purpose> */
+    -fx-color1: #000000; /* Background */
+    -fx-color2: #EEEEEE; /* Text */
+    -fx-color3: #FF0000; /* Buttons */
+    -fx-color4: #303841; /* Color Gradient effect */
+}
+
+.root {
+    -fx-background-color: -fx-color1;
+    -fx-border-color: -fx-color4;
+    -fx-border-radius: 10;
+}
+
+.scroll-pane, GridPane, HBox {
+    -fx-background-color: #000000;
+}
+
+#movieCard, VBox {
+    -fx-background-color: transparent;
+}
+
+.button {
+    -fx-background-color: #FF0000;
+    -fx-text-fill: -fx-color2;
+}
+
+.menu-button, .menu-item {
+    -fx-background-color: #FF0000;
+    -fx-text-fill: -fx-color2;
+}
+
+.menu-item:hover {
+    -fx-background-color: #303841;
+}
+
+.label {
+    -fx-text-fill: -fx-color2;
+}
