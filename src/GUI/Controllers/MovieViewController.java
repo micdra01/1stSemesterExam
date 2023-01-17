@@ -54,7 +54,7 @@ public class MovieViewController implements Initializable {
             categoryModel = new CategoryModel();
             movieModel = new MovieModel();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(e);
         }
     }
 
@@ -84,7 +84,7 @@ public class MovieViewController implements Initializable {
                 categoryModel.removeCategoryFromMovie(category, movie);
                 vBoxCategories.getChildren().remove(container);
             } catch (Exception e) {
-                new Exception("Failed to remove category from movie", e);
+                ErrorDisplayer.displayError(e);
             }
         });
     }
@@ -96,11 +96,11 @@ public class MovieViewController implements Initializable {
         ArrayList<Category> movieCategories;
         try {
             movieCategories = categoryModel.readAllCategoriesFromMovie(movie);
+            for (Category category : movieCategories) {
+                createCategoryTag(category);
+            }
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        for (Category category : movieCategories) {
-            createCategoryTag(category);
+            ErrorDisplayer.displayError(e);
         }
     }
 
@@ -130,7 +130,7 @@ public class MovieViewController implements Initializable {
                 });
             }
         } catch (Exception e) {
-            new Exception("Failed to get all categories", e);
+            ErrorDisplayer.displayError(e);
         }
     }
 
@@ -153,18 +153,21 @@ public class MovieViewController implements Initializable {
     }
 
     public void handlePlayMovie() {
+        String moviePath = new File(movie.getMovieFileLink()).getAbsolutePath();
         try {
-            String moviePath = new File(movie.getMovieFileLink()).getAbsolutePath();
             Desktop.getDesktop().open(new File(moviePath));
-
-            movie.setLastViewed(new Timestamp(System.currentTimeMillis()));
-            movieModel.updateMovie(movie);
-            labelLastViewed.setText(String.valueOf(movie.getLastViewed()));
-        } catch (IOException e) {
-            new Exception("Failed to play movie"+e);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(new Exception("Failed to play movie"));
         }
+
+        movie.setLastViewed(new Timestamp(System.currentTimeMillis()));
+        try {
+            movieModel.updateMovie(movie);
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(e);
+        }
+        labelLastViewed.setText(String.valueOf(movie.getLastViewed()));
+
     }
 
     public void handleSetPR() throws Exception {
@@ -198,7 +201,7 @@ public class MovieViewController implements Initializable {
                 //Possibly save info on which view was clicked last in main, to reload that same view?
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(e);
         }
     }
 }

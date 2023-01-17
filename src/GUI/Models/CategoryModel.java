@@ -12,7 +12,7 @@ public class CategoryModel {
 
     private ICategoryManager categoryManager;
 
-    public CategoryModel() throws  Exception {
+    public CategoryModel() throws Exception {
         categoryManager = new CategoryManager();
     }
 

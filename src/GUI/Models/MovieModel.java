@@ -29,7 +29,7 @@ public class MovieModel {
         return moviesInList;
     }
 
-    public void removeMovieFromList(Movie movie) throws Exception {
+    public void removeMovieFromList(Movie movie) {
         moviesInList.remove(movie);
     }
 
