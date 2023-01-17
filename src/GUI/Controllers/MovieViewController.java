@@ -109,12 +109,11 @@ public class MovieViewController implements Initializable {
     private void initializeCategoryDropdown() {
         try {
             //Loads all available categories in as menuitems in the dropdown
-            for (int i = 0; i < categoryModel.getAllCategories().size() ; i++) {
-                MenuItem menuItem = new MenuItem(categoryModel.getAllCategories().get(i).toString());
+            for (Category category: categoryModel.getAllCategories()) {
+                MenuItem menuItem = new MenuItem(category.getTitle());
                 menuBtnAddCategory.getItems().add(menuItem);
 
                 //Adds listener to check if category is selected
-                Category category = categoryModel.getAllCategories().get(i);
                 menuItem.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
