@@ -85,6 +85,8 @@ public class HomeViewController implements Initializable {
     private void createLastAddedList() {
         //Create a grid in the ScrollPane to hold all movies
         GridPane grid = new GridPane();
+        grid.prefWidthProperty().bind(listLastAdded.widthProperty());
+        grid.prefHeightProperty().bind(listLastAdded.heightProperty());
         listLastAdded.setContent(grid);
 
         //used for placing

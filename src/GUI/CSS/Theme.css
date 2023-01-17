@@ -12,7 +12,7 @@
     -fx-border-radius: 10;
 }
 
-.scroll-pane, GridPane, HBox {
+.scroll-pane, GridPane, HBox, FlowPane {
     -fx-background-color: #000000;
 }
 
