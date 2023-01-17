@@ -20,7 +20,6 @@ public class CategoryDAO implements ICategoryDAO {
         movieDAO = new MovieDAO();
     }
 
-
     /**
      * Return a list of Category objects.
      *
@@ -64,9 +63,7 @@ public class CategoryDAO implements ICategoryDAO {
 
             //gets all variables from category and saves
             String title = category.getTitle();
-
             statement.setString(1, title);
-
             statement.executeUpdate();
 
             int id = 0;
@@ -82,8 +79,6 @@ public class CategoryDAO implements ICategoryDAO {
             e.printStackTrace();
             throw new Exception("Failed to create category", e);
         }
-
-
     }
 
 
@@ -96,7 +91,6 @@ public class CategoryDAO implements ICategoryDAO {
             stmt.setInt(1, movie.getId());
             stmt.setInt(2, category.getId());
             stmt.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
             throw new Exception("Failed to add movie to category", e);
@@ -112,7 +106,6 @@ public class CategoryDAO implements ICategoryDAO {
             // Bind parameters
             statement.setInt(1, movie.getId());
             statement.setInt(2, category.getId());
-
             // Run the specified SQL Statement
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -127,10 +120,8 @@ public class CategoryDAO implements ICategoryDAO {
 
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-
             // Bind parameters
             statement.setInt(1, category.getId());
-
             // Run the specified SQL Statement
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -138,7 +129,6 @@ public class CategoryDAO implements ICategoryDAO {
             throw new Exception("Failed to delete category", e);
         }
     }
-
 
     @Override
     public List<Movie> readAllMoviesInCategory(Category category) throws Exception {
@@ -150,13 +140,10 @@ public class CategoryDAO implements ICategoryDAO {
             //creates and executes the first sql string
             statement.setInt(1, category.getId());
             ResultSet rs = statement.executeQuery();
-
-
             //loop that takes all information from CatMovie table in database and finds category info from it
             while (rs.next()) {
                 int movieId = rs.getInt("MovieId");
                 Movie movie = movieDAO.getMovieFromId(movieId);
-
                 allMoviesInCategory.add(movie);
             }
         } catch (Exception e) {
@@ -165,7 +152,6 @@ public class CategoryDAO implements ICategoryDAO {
         }
         return allMoviesInCategory;
     }
-
 
     @Override
     public ArrayList<Category> readAllCategoriesFromMovie(Movie movie) throws Exception {
@@ -196,7 +182,6 @@ public class CategoryDAO implements ICategoryDAO {
 
     /**
      * gets a category from the id
-     *
      * @param categoryId, the category id
      * @return the found category object from id.
      * @throws Exception
@@ -219,7 +204,6 @@ public class CategoryDAO implements ICategoryDAO {
                 //get all variables from result set
                 int id = rs.getInt("Id");
                 String name = rs.getString("CategoryName");
-
                 //creates the category object
                 category = new Category(id, name);
             }
@@ -231,8 +215,7 @@ public class CategoryDAO implements ICategoryDAO {
     }
 
     /**
-     * gets a category from the id
-     *
+     * search through category table for item by name
      * @param categoryName, the category name
      * @return the found category object from id.
      * @throws Exception
@@ -243,7 +226,6 @@ public class CategoryDAO implements ICategoryDAO {
         String sql = " SELECT * FROM Category WHERE CategoryName=?;";
 
         Category category = null; //category that is returned from db
-
         //get connection with database
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -255,7 +237,6 @@ public class CategoryDAO implements ICategoryDAO {
                 //get all variables from result set
                 int id = rs.getInt("Id");
                 String name = rs.getString("CategoryName");
-
                 //creates the category object
                 category = new Category(id, name);
             }

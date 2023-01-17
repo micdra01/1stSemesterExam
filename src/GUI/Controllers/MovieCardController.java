@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.net.URL;
 
 public class MovieCardController {
-    private MainController mainController;
 
     private MovieModel movieModel;
 
@@ -34,7 +33,6 @@ public class MovieCardController {
      * create the movieCard gridPane and fills it with info from chosen movie
      * picture, title and rating
      * @param movie, the specific movie in the list
-     * @return
      */
     public GridPane createMovieCard(Movie movie, MovieModel movieModel) {
         GridPane movieCard = null;
@@ -85,46 +83,33 @@ public class MovieCardController {
         VBox vBox1 = new VBox(lblTitleCard, lblDescriptionCard, hBox);
         movieCard.add(vBox1, 0,0);
 
-
-
         btnPlay.setOpacity(0);
         btnInfo.setOpacity(0);
 
-        btnInfo.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        btnInfo.setOnAction(event -> openMovieInfo(movie));
 
-                openMovieInfo(movie);
-            }
+        movieCard.setOnMouseEntered(event -> {
+
+            imgView.setOpacity(0.3);
+            btnPlay.setOpacity(1);
+            btnInfo.setOpacity(1);
+
+            lblTitleCard.setText(movie.getTitle());
+            lblDescriptionCard.setText(movie.getMovieDescription());
         });
-        movieCard.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
 
-                imgView.setOpacity(0.3);
-                btnPlay.setOpacity(1);
-                btnInfo.setOpacity(1);
-
-                lblTitleCard.setText(movie.getTitle());
-                lblDescriptionCard.setText(movie.getMovieDescription());
-            }
-        });
-        movieCard.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imgView.setOpacity(1);
-                btnPlay.setOpacity(0);
-                btnInfo.setOpacity(0);
-                lblTitleCard.setText("");
-                lblDescriptionCard.setText("");
-            }
+        movieCard.setOnMouseExited(event -> {
+            imgView.setOpacity(1);
+            btnPlay.setOpacity(0);
+            btnInfo.setOpacity(0);
+            lblTitleCard.setText("");
+            lblDescriptionCard.setText("");
         });
         return movieCard; // the finished movieCard with information
     }
 
     /**
-     * Loads MovieView FXML with a Movie object if button is cliked.
-     * @param movie
+     * Loads MovieView FXML with a Movie object if button is clicked.
      */
     public void openMovieInfo(Movie movie){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieView.fxml"));

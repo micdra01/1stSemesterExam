@@ -12,27 +12,13 @@ public class Movie {
         this.imdbId = imdbId;
     }
 
-    private String imdbId;
-    private int id;
+    private int id, yearOfRelease;
 
     private double personalRating, imdbRating;
-    private String title, movieFileLink, pictureFileLink, category;
+
+    private String imdbId, title, movieFileLink, pictureFileLink, category, TopCast, movieDescription;
+
     private Timestamp lastViewed;
-
-    private int yearOfRelease;
-
-    private String movieDescription;
-
-    public String getTopCast() {
-        return TopCast;
-    }
-
-    public void setTopCast(String topCast) {
-        TopCast = topCast;
-    }
-
-    public String TopCast;
-
 
     /**
      * constructor with id, should be used a standard
@@ -78,32 +64,29 @@ public class Movie {
         this.movieDescription = movieDescription;
     }
 
-    public Movie(String title, double personalRating, double imdbRating, String movieFileLink, String pictureFileLink, Timestamp lastViewed, int yearOfRelease, String movieDescription, String topCast) {
-        this.title = title;
-        this.personalRating = personalRating;
-        this.imdbRating = imdbRating;
-        this.movieFileLink = movieFileLink;
-        this.pictureFileLink = pictureFileLink;
-        this.lastViewed = lastViewed;
-        this.yearOfRelease = yearOfRelease;
-        this.movieDescription = movieDescription;
-        this.TopCast = topCast;
+
+    public void setTopCast(String topCast) {
+        TopCast = topCast;
     }
 
-    public int getId() {
-        return id;
+    public String getTopCast() {
+        return TopCast;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public int getId() {
+        return id;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public double getPersonalRating() {
@@ -118,27 +101,11 @@ public class Movie {
         return imdbRating;
     }
 
-    public void setImdbRating(double imdbRating) {
-        this.imdbRating = imdbRating;
-    }
-
     public String getMovieFileLink() {
         return movieFileLink;
     }
 
-    public void setMovieFileLink(String movieFileLink) {
-        this.movieFileLink = movieFileLink;
-    }
-
-    public String getPictureFileLink() {
-       // pictureFileLink = pictureFileLink.replaceAll("resources//", "");
-
-        return pictureFileLink.replaceAll("resources\\\\", "");
-    }
-
-    public void setPictureFileLink(String pictureFileLink) {
-        this.pictureFileLink = pictureFileLink;
-    }
+    public String getPictureFileLink() {return pictureFileLink.replaceAll("resources\\\\", "");}
 
     public String getCategory() {
         return category;
@@ -148,27 +115,19 @@ public class Movie {
         this.category = category;
     }
 
-    public Timestamp getLastViewed() {
-        return lastViewed;
-    }
-
     public void setLastViewed(Timestamp lastViewed) {
         this.lastViewed = lastViewed;
+    }
+
+    public Timestamp getLastViewed() {
+        return lastViewed;
     }
 
     public int getYearOfRelease() {
         return yearOfRelease;
     }
 
-    public void setYearOfRelease(int yearOfRelease) {
-        this.yearOfRelease = yearOfRelease;
-    }
-
     public String getMovieDescription() {
         return movieDescription;
-    }
-
-    public void setMovieDescription(String movieDescription) {
-        this.movieDescription = movieDescription;
     }
 }
