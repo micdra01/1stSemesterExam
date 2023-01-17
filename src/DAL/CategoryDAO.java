@@ -92,8 +92,9 @@ public class CategoryDAO implements ICategoryDAO {
             stmt.setInt(2, category.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Exception("Failed to add movie to category", e);
+            //TODO er printStackTrace nødvendigt? Burde jo logges eller fjernes
+            //e.printStackTrace();
+            throw new Exception("Failed to add movie to category");
         }
     }
 

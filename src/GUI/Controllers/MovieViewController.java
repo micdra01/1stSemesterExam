@@ -5,6 +5,7 @@ import BE.Movie;
 import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
 import GUI.Util.ConfirmDelete;
+import GUI.Util.ErrorDisplayer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -123,7 +124,7 @@ public class MovieViewController implements Initializable {
                             categoryModel.addMovieToCategory(category, movie);
                             createCategoryTag(category);
                         } catch (Exception e) {
-                            new Exception("Failed to add movie to category", e);
+                            ErrorDisplayer.displayError(e);
                         }
                     }
                 });
