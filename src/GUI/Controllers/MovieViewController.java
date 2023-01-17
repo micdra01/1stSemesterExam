@@ -192,10 +192,14 @@ public class MovieViewController implements Initializable {
             boolean deleteMovie = ConfirmDelete.confirm(header, content);
 
             if(deleteMovie) {
+                movieModel.removeMovieFromList(movie);
                 movieModel.deleteMovie(movie);
                 Stage stage = (Stage) btnSetPR.getScene().getWindow();
                 stage.close();
                 //TODO re-load previous stage, so removed movie is gone
+                //This only updates after a sidebar button has been clicked (to reload Home/All/Popular/Favorites)
+                //We need access to mainController from here to reload it.
+                //Possibly save info on which view was clicked last in main, to reload that same view?
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

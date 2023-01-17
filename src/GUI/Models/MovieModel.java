@@ -30,6 +30,10 @@ public class MovieModel {
         return moviesInList;
     }
 
+    public void removeMovieFromList(Movie movie) throws Exception {
+        moviesInList.remove(movie);
+    }
+
     public void deleteMovie(Movie movie) throws Exception {
         movieManager.deleteMovie(movie);
     }

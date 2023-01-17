@@ -35,7 +35,6 @@ public class HomeViewController implements Initializable {
     }
 
     public void setContent(){
-        //createTrendingList();
         createPopularList();
         createAllMoviesList();
         createLastAddedList();
