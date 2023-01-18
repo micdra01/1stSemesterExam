@@ -72,7 +72,7 @@
             <Separator maxHeight="-Infinity" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="50.0" prefWidth="50.0" visible="false" HBox.hgrow="ALWAYS" />
             <HBox fx:id="boxAdvancedSearch" alignment="TOP_CENTER" opacity="0.0">
                <children>
-                  <MenuButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Rating" HBox.hgrow="ALWAYS">
+                  <MenuButton fx:id="menuButtonRating" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Rating" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
