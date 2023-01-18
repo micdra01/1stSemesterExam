@@ -194,7 +194,7 @@ public class AddMovieController implements Initializable {
             wordsList.add(info.getTitle() + "   " + info.getYearOfRelease());
         }
         searchResultListView = new ListView<>(wordsList);
-        searchResultListView.setMaxSize(300, 350);
+        searchResultListView.setMaxSize(275, 350);
         grid.add(searchResultListView, 1,2);
 
         //listener for when a result is selected on the listVIew
@@ -233,6 +233,7 @@ public class AddMovieController implements Initializable {
         categories.addAll(categoryResult);
 
         ListView<String> categoryList = new ListView<>(categories);
+        categoryList.setPrefWidth(275);
         grid.add(categoryList, 1, 5);
     }
 

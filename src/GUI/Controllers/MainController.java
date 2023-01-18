@@ -390,6 +390,8 @@ public class MainController implements Initializable {
         controller.setCategoryModel(categoryModel);
         controller.setMainController(this);
         controller.populateCategories();
+
+        textSceneTitle.setText("Add/Remove Category");
     }
 
 
