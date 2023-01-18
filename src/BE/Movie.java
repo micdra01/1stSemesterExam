@@ -81,12 +81,13 @@ public class Movie {
         return id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getTitle() {
+        String cap = title.substring(0,1).toUpperCase() + title.substring(1);
+        return cap;
     }
 
-    public String getTitle() {
-        return title;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public double getPersonalRating() {

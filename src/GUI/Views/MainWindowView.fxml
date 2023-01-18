@@ -13,13 +13,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<BorderPane fx:id="borderPane" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MainController">
+<BorderPane fx:id="borderPane" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MainController">
    <left>
       <VBox minHeight="100.0" prefHeight="450.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
@@ -182,6 +177,21 @@
                         <Insets right="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
+                  <MenuButton fx:id="menuBtnSortBy" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Sort by">
+                    <items>
+                      <MenuItem fx:id="menuItmTitleAZ" mnemonicParsing="false" text="Title A-Z" />
+                      <MenuItem fx:id="menuItmTitleZA" mnemonicParsing="false" text="Title Z-A" />
+                        <MenuItem fx:id="menuItmCategoryAZ" mnemonicParsing="false" text="Category A-Z" />
+                        <MenuItem fx:id="menuItmCategoryZA" mnemonicParsing="false" text="Category Z-A" />
+                        <MenuItem fx:id="menuItmIMDBMaxMin" mnemonicParsing="false" text="IMDB max-min" />
+                        <MenuItem fx:id="menuItmIMDBMinMax" mnemonicParsing="false" text="IMDB min-max" />
+                        <MenuItem fx:id="menuItmPRMinMax" mnemonicParsing="false" text="PR Rating min-max" />
+                        <MenuItem fx:id="menuItmPRMaxMin" mnemonicParsing="false" text="PR Rating max-min" />
+                    </items>
+                     <HBox.margin>
+                        <Insets right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </MenuButton>
                </children>
             </HBox>
          </children>
