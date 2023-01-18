@@ -110,7 +110,7 @@ public class MovieCardController {
         });
 
 
-        btnPlay.setOnAction((EventHandler<ActionEvent>) event -> {
+        btnPlay.setOnAction(event -> {
             try {
                 Desktop.getDesktop().open(new File(new File(movie.getMovieFileLink()).getAbsolutePath()));
             } catch (Exception e) {
