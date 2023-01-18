@@ -87,25 +87,7 @@ public class MainController implements Initializable {
                 menuItem.setOnAction(new EventHandler<>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
-                        Parent root = null;
-
-                        try {
-                            root = loader.load();
-                        } catch (IOException e) {
-                            ErrorDisplayer.displayError(new Exception("Failed to open category view", e));
-                        }
-
-                        movieListController = loader.getController();
-                        movieListController.setMovieModel(movieModel);
-                        try {
-                            movieListController.showMoviesInCategory(category);
-                        } catch (Exception e) {
-                            ErrorDisplayer.displayError(new Exception("Failed to show movies in category" + category + e));
-                        }
-                        borderPane.setCenter(root);
-
-                        textSceneTitle.setText(category + " Movies");
+                        handleCategory(category);
                     }
                 });
             }
@@ -140,6 +122,7 @@ public class MainController implements Initializable {
 
         HomeViewController controller = loader.getController();
         controller.setMovieModel(movieModel);
+        controller.setMainController(this);
         controller.setContent();
         borderPane.setCenter(root);
 
@@ -158,6 +141,7 @@ public class MainController implements Initializable {
 
         WarningViewController controller = loader.getController();
         controller.setMovieModel(movieModel);
+        controller.setMainController(this);
         controller.setContent();
         borderPane.setCenter(root);
 
@@ -177,6 +161,7 @@ public class MainController implements Initializable {
 
         movieListController = loader.getController();
         movieListController.setMovieModel(movieModel);
+        movieListController.setMainController(this);
         movieListController.showPopularMovies();
         borderPane.setCenter(root);
 
@@ -195,6 +180,7 @@ public class MainController implements Initializable {
 
         movieListController = loader.getController();
         movieListController.setMovieModel(movieModel);
+        movieListController.setMainController(this);
         movieListController.showFavoriteMovies();
         borderPane.setCenter(root);
 
@@ -213,10 +199,34 @@ public class MainController implements Initializable {
 
         movieListController = loader.getController();
         movieListController.setMovieModel(movieModel);
+        movieListController.setMainController(this);
         movieListController.showAllMovies();
         borderPane.setCenter(root);
 
-        textSceneTitle.setText("all movies");
+        textSceneTitle.setText("All movies");
+    }
+
+    public void handleCategory(Category category) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            ErrorDisplayer.displayError(new Exception("Failed to open category view", e));
+        }
+
+        movieListController = loader.getController();
+        movieListController.setMovieModel(movieModel);
+        movieListController.setMainController(this);
+        try {
+            movieListController.showMoviesInCategory(category);
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception("Failed to show movies in category" + category + e));
+        }
+        borderPane.setCenter(root);
+
+        textSceneTitle.setText(category + " Movies");
     }
 
     public void handleAddMovie() {
@@ -417,6 +427,41 @@ public class MainController implements Initializable {
 
         menuItmPRMaxMin.setOnAction(e -> handleSort(Comparator.comparing(Movie::getPersonalRating)));
         menuItmPRMaxMin.setOnAction(e -> handleSort(Comparator.comparing(Movie::getPersonalRating).reversed()));
+    }
+
+    /**
+     * Refresh the current view after a movie is deleted
+     */
+    public void reloadCurrentView() {
+        String sceneTitle = textSceneTitle.getText();
+        if (sceneTitle.contains(" ")) {
+            sceneTitle = sceneTitle.substring(0, sceneTitle.indexOf(" "));
+        }
+
+        switch (sceneTitle) {
+            case "Warning":
+                handleWarning();
+                break;
+            case "Home":
+                handleHome();
+                break;
+            case "All":
+                handleAllMovies();
+                break;
+            case "Popular":
+                handlePopular();
+                break;
+            case "Favorite":
+                handleFavorites();
+                break;
+            default:
+                try {
+                    Category category = categoryModel.getCategoryFromName(sceneTitle);
+                    handleCategory(category);
+                } catch (Exception e) {
+                    ErrorDisplayer.displayError(new Exception(e));
+                }
+        }
     }
 
 }

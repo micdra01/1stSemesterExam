@@ -24,6 +24,7 @@ public class MovieListController implements Initializable {
     @FXML
     private ScrollPane movieListView;
     private MovieModel movieModel;
+    private MainController mainController;
     private CategoryModel categoryModel;
     private MovieCardController movieCardController;
     private FlowPane pane = new FlowPane();
@@ -55,6 +56,7 @@ public class MovieListController implements Initializable {
         for (Movie movie : allMovies) {
             //... it creates a movieCard for said movie and adds it to the Flow Pane
             GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
+            movieCardController.setMainController(mainController);
             pane.getChildren().add(movieCard);
         }
     }
@@ -71,6 +73,7 @@ public class MovieListController implements Initializable {
             if (movie.getImdbRating() >= minRatingPopular) {
                 //... it creates a movieCard for said movie and adds it to the Flow Pane
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
+                movieCardController.setMainController(mainController);
                 pane.getChildren().add(movieCard);
             }
         }
@@ -88,6 +91,7 @@ public class MovieListController implements Initializable {
             if (movie.getPersonalRating() >= minRatingFavorite) {
                 //... it creates a movieCard for said movie and adds it to the Flow Pane
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
+                movieCardController.setMainController(mainController);
                 pane.getChildren().add(movieCard);
             }
         }
@@ -103,6 +107,7 @@ public class MovieListController implements Initializable {
             for (Movie movie : categoryModel.readAllMoviesInCategory(category)) {
                 //... it creates a movieCard for said movie and adds it to the Flow Pane
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
+                movieCardController.setMainController(mainController);
                 pane.getChildren().add(movieCard);
             }
         }
@@ -119,6 +124,7 @@ public class MovieListController implements Initializable {
 
         for(Movie movie : sortedMovie) {
             GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
+            movieCardController.setMainController(mainController);
             pane.getChildren().add(movieCard);
         }
     }
@@ -130,5 +136,9 @@ public class MovieListController implements Initializable {
         } catch (Exception e) {
             ErrorDisplayer.displayError(new Exception(e));
         }
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 }

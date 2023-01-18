@@ -28,6 +28,7 @@ import java.sql.Timestamp;
 public class MovieCardController {
 
     private MovieModel movieModel;
+    private MainController mainController;
 
     public MovieCardController(){
     }
@@ -154,7 +155,11 @@ public class MovieCardController {
         stage.show();
         MovieViewController controller = loader.getController();
         controller.setMovieModel(movieModel);
+        controller.setMainController(mainController);
         controller.setMovieContent(movie);
     }
 
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
 }

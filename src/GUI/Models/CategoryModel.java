@@ -57,6 +57,10 @@ public class CategoryModel {
         }
         return categoryManager.getCategoryFromName(categoryName);
     }
+
+    public Category getCategoryFromName(String categoryName) throws Exception {
+        return categoryManager.getCategoryFromName(categoryName);
+    }
 }
 
 

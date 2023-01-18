@@ -48,6 +48,7 @@ public class MovieViewController implements Initializable {
     private ImageView imageMoviePoster;
     private CategoryModel categoryModel;
     private MovieModel movieModel;
+    private MainController mainController;
     private Movie movie;
 
     public MovieViewController() {
@@ -140,6 +141,10 @@ public class MovieViewController implements Initializable {
         this.movieModel = movieModel;
     }
 
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
     public void setMovieContent(Movie movie) {
         this.movie = movie;
         showCategories();
@@ -201,6 +206,7 @@ public class MovieViewController implements Initializable {
                 //This only updates after a sidebar button has been clicked (to reload Home/All/Popular/Favorites)
                 //We need access to mainController from here to reload it.
                 //Possibly save info on which view was clicked last in main, to reload that same view?
+                mainController.reloadCurrentView();
             }
         } catch (Exception e) {
             ErrorDisplayer.displayError(e);

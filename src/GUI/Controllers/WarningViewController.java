@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 
 public class WarningViewController implements Initializable {
     private MovieModel movieModel;
+    private MainController mainController;
     private MovieCardController movieCardController;
     @FXML
     private ScrollPane listLowRating, listLowAndLast, listLastViewed;
@@ -55,6 +56,7 @@ public class WarningViewController implements Initializable {
             if (movie.getLastViewed().before(Date.valueOf(LocalDate.now().minusYears(2)))){
                 //... it creates a movieCard for said movie and adds it to the content grid
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
+                movieCardController.setMainController(mainController);
                 grid.add(movieCard, col, row);
                 col++;
             }
@@ -75,6 +77,7 @@ public class WarningViewController implements Initializable {
             if(movie.getPersonalRating() <= lowRating && movie.getLastViewed().before(Date.valueOf(LocalDate.now().minusYears(2)))) {
                 //... it creates a movieCard for said movie and adds it to the content grid
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
+                movieCardController.setMainController(mainController);
                 grid.add(movieCard, col, row);
                 col++;
             }
@@ -95,6 +98,7 @@ public class WarningViewController implements Initializable {
             if(movie.getPersonalRating() <= lowRating){
                 //... it creates a movieCard for said movie and adds it to the content grid
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel); //creates the movie card
+                movieCardController.setMainController(mainController);
                 grid.add(movieCard, col, row); //adds it to the content gridPane
                 col++;
             }
@@ -108,6 +112,10 @@ public class WarningViewController implements Initializable {
         } catch (Exception e) {
             ErrorDisplayer.displayError(new Exception(e));
         }
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
 }
