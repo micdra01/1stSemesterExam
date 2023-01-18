@@ -1,6 +1,6 @@
 *{
     /*<variable>: <color>; <Main purpose> */
-    -fx-color1: #000000; /* Background */
+    -fx-color1: #303841; /* Background */
     -fx-color2: #EEEEEE; /* Text */
     -fx-color3: #FF0000; /* Buttons */
     -fx-color4: #303841; /* Color Gradient effect */
@@ -13,7 +13,7 @@
 }
 
 .scroll-pane, GridPane, HBox, FlowPane {
-    -fx-background-color: #000000;
+    -fx-background-color: #3A4750;
 }
 
 #movieCard, VBox {
