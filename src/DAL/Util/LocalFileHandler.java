@@ -6,9 +6,7 @@ import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -19,7 +17,10 @@ public class LocalFileHandler {
      * @param path
      * @throws Exception
      */
-    public static void deleteLocalFile(String path) throws Exception {}
+    public static void deleteLocalFile(String path) throws Exception {
+        Path finalPath = FileSystems.getDefault().getPath("./src/test/resources/newFile.txt");
+            Files.delete(Path.of(path));
+    }
 
 
     /**

@@ -98,6 +98,10 @@ public class MovieDAO implements IMovieDAO {
             statement.setInt(1, movie.getId());
             // Run the specified SQL Statement
             statement.executeUpdate();
+            if(movie.getPictureFileLink().contains("ImageNotFound.jpg")){
+                LocalFileHandler.deleteLocalFile("resources/" + movie.getPictureFileLink());
+            }
+            LocalFileHandler.deleteLocalFile(movie.getMovieFileLink());
         }
         catch (SQLException e) {
             e.printStackTrace();
