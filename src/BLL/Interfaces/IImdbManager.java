@@ -13,7 +13,7 @@ public interface IImdbManager {
      * @throws IOException
      * @throws InterruptedException
      */
-    ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws IOException, InterruptedException;
+    ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws Exception;
 
 
     /**

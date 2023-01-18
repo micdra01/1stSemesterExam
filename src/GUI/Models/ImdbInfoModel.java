@@ -11,11 +11,11 @@ public class ImdbInfoModel {
 
     private IImdbManager imdbManager;
 
-    public ImdbInfoModel(){
+    public ImdbInfoModel() throws Exception {
         imdbManager = new ImdbManager();
     }
 
-    public ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws IOException, InterruptedException {
+    public ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws Exception {
         return imdbManager.getSearchResultFromApi(searchWord);
     }
 

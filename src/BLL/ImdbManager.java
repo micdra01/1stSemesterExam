@@ -11,12 +11,12 @@ import java.util.ArrayList;
 public class ImdbManager implements IImdbManager {
 
     private IImdbAPI imdbAPI;
-    public ImdbManager(){
+    public ImdbManager() throws Exception {
         imdbAPI = new ImdbApi();
     }
 
     @Override
-    public ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws IOException, InterruptedException {
+    public ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws Exception {
         return imdbAPI.getSearchResultFromApi(searchWord);
     }
 

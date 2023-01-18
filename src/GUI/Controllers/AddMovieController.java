@@ -6,6 +6,7 @@ import BE.Movie;
 import GUI.Models.CategoryModel;
 import GUI.Models.ImdbInfoModel;
 import GUI.Models.MovieModel;
+import GUI.Util.ErrorDisplayer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -179,12 +180,11 @@ public class AddMovieController implements Initializable {
         //creates the imdb model, so we can call api operations.
         try {
             searchResult = imdbInfoModel.getSearchResultFromApi(textTitle.getText());
-        } catch (InterruptedException e) {
-            throw new RuntimeException("your search gave nothing back. Try being more specific or check the spelling");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            createResultList(searchResult);
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception("Failed to retrieve search result from IMDB", e));
         }
-        createResultList(searchResult);
+
     }
 
     private void createResultList(ArrayList<ImdbInfo> searchResult) {
