@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MainController">
+<BorderPane fx:id="borderPane" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MainController">
    <left>
-      <VBox minHeight="100.0" prefHeight="450.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="mainViewSidebar" minHeight="100.0" prefHeight="450.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleHome" prefHeight="30.0" prefWidth="80.0" text="Home" VBox.vgrow="ALWAYS">
                <VBox.margin>
@@ -61,7 +61,7 @@
       </VBox>
    </left>
    <top>
-      <HBox minHeight="50.0" minWidth="200.0" prefHeight="50.0" prefWidth="960.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="mainViewTopbar" minHeight="50.0" minWidth="200.0" prefHeight="50.0" prefWidth="960.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="imgViewLogo" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleHome" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
@@ -78,12 +78,12 @@
             <Separator maxHeight="-Infinity" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="50.0" prefWidth="50.0" visible="false" HBox.hgrow="ALWAYS" />
             <HBox fx:id="boxAdvancedSearch" alignment="TOP_CENTER" opacity="0.0">
                <children>
-                  <MenuButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Rating" HBox.hgrow="ALWAYS">
+                  <MenuButton fx:id="menuButtonRating" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Rating" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Min. IMDB">
+                        <MenuItem fx:id="menuItemMinIMDB" mnemonicParsing="false" text="Min. IMDB">
                            <graphic>
                               <HBox>
                                  <children>
@@ -100,7 +100,7 @@
                               </HBox>
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" text="Max. IMDB">
+                        <MenuItem fx:id="menuItemMaxIMDB" mnemonicParsing="false" text="Max. IMDB">
                            <graphic>
                               <HBox>
                                  <children>
@@ -117,7 +117,7 @@
                               </HBox>
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" text="Min. Personal">
+                        <MenuItem fx:id="menuItemMinPR" mnemonicParsing="false" text="Min. Personal">
                            <graphic>
                               <HBox>
                                  <children>
@@ -134,7 +134,7 @@
                               </HBox>
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" text="Max. Personal">
+                        <MenuItem fx:id="menuItemMaxPR" mnemonicParsing="false" text="Max. Personal">
                            <graphic>
                               <HBox>
                                  <children>
@@ -160,7 +160,7 @@
                   </MenuButton>
                </children>
             </HBox>
-            <HBox>
+            <HBox fx:id="mainViewTopButtons">
                <children>
                   <TextField fx:id="textSearch" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="50.0" onKeyPressed="#handleEnter" prefHeight="30.0" prefWidth="205.0" promptText="Filter..." HBox.hgrow="ALWAYS">
                      <opaqueInsets>
@@ -187,8 +187,6 @@
                     <items>
                       <MenuItem fx:id="menuItmTitleAZ" mnemonicParsing="false" text="Title A-Z" />
                       <MenuItem fx:id="menuItmTitleZA" mnemonicParsing="false" text="Title Z-A" />
-                        <MenuItem fx:id="menuItmCategoryAZ" mnemonicParsing="false" text="Category A-Z" />
-                        <MenuItem fx:id="menuItmCategoryZA" mnemonicParsing="false" text="Category Z-A" />
                         <MenuItem fx:id="menuItmIMDBMaxMin" mnemonicParsing="false" text="IMDB max-min" />
                         <MenuItem fx:id="menuItmIMDBMinMax" mnemonicParsing="false" text="IMDB min-max" />
                         <MenuItem fx:id="menuItmPRMinMax" mnemonicParsing="false" text="PR Rating min-max" />

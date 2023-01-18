@@ -419,9 +419,6 @@ public class MainController implements Initializable {
         menuItmTitleAZ.setOnAction(e -> handleSort(Comparator.comparing(Movie::getTitle)));
         menuItmTitleZA.setOnAction(e -> handleSort(Comparator.comparing(Movie::getTitle).reversed()));
 
-        //menuItmCategoryAZ.setOnAction(e -> handleSort(Comparator.comparing(Movie::getCategory)));
-        //menuItmCategoryZA.setOnAction(e -> handleSort(Comparator.comparing(Movie::getCategory).reversed()));
-
         menuItmIMDBMinMax.setOnAction(e -> handleSort(Comparator.comparing(Movie::getImdbRating)));
         menuItmIMDBMaxMin.setOnAction(e -> handleSort(Comparator.comparing(Movie::getImdbRating).reversed()));
 
