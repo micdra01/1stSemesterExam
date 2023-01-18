@@ -38,14 +38,10 @@ public class AddMovieController implements Initializable {
     public GridPane grid;
     private MovieModel movieModel;
     private CategoryModel categoryModel;
-
     private File movieCover, movieFile;
-
     private ImdbInfoModel imdbInfoModel;
-
     private ImdbInfo chosenMovie;
     private ListView<String> searchResultListView;
-
     private boolean textFillMovie, textFillPicture, textFillTitle;
 
     @Override
