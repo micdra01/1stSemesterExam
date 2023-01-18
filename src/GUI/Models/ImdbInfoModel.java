@@ -19,15 +19,15 @@ public class ImdbInfoModel {
         return imdbManager.getSearchResultFromApi(searchWord);
     }
 
-    public ArrayList<String> getMovieCategoriesFromApi(String imdbId) throws IOException, InterruptedException {
+    public ArrayList<String> getMovieCategoriesFromApi(String imdbId) throws Exception {
         return imdbManager.getMovieCategoriesFromApi(imdbId);
     }
 
-    public String getMovieDescriptionFromImdbId(String imdbId) throws IOException, InterruptedException {
+    public String getMovieDescriptionFromImdbId(String imdbId) throws Exception {
         return imdbManager.getMovieDescriptionFromImdbId(imdbId);
     }
 
-    public String getImdbRatingFromApi(String imdbId) throws IOException, InterruptedException {
+    public String getImdbRatingFromApi(String imdbId) throws Exception {
         return imdbManager.getImdbRatingFromApi(imdbId);
     }
 }

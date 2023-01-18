@@ -23,7 +23,7 @@ public interface IImdbManager {
      * @throws IOException
      * @throws InterruptedException
      */
-    ArrayList<String> getMovieCategoriesFromApi(String imdbId) throws IOException, InterruptedException;
+    ArrayList<String> getMovieCategoriesFromApi(String imdbId) throws Exception;
 
     /**
      *
@@ -32,7 +32,7 @@ public interface IImdbManager {
      * @throws IOException
      * @throws InterruptedException
      */
-    String getMovieDescriptionFromImdbId(String imdbId) throws IOException, InterruptedException;
+    String getMovieDescriptionFromImdbId(String imdbId) throws Exception;
 
 
     /**
@@ -42,7 +42,7 @@ public interface IImdbManager {
      * @throws IOException
      * @throws InterruptedException
      */
-    String getImdbRatingFromApi(String imdbId) throws IOException, InterruptedException;
+    String getImdbRatingFromApi(String imdbId) throws Exception;
 
 
 }
