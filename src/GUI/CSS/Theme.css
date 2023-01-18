@@ -12,18 +12,18 @@
     -fx-border-radius: 10;
 }
 
-.scroll-pane, GridPane, HBox, FlowPane {
+
+
+.scroll-pane, GridPane, HBox, FlowPane, VBox {
     -fx-background-color: #3A4750;
 }
 
-#movieCard, VBox {
-    -fx-background-color: transparent;
-}
 
 .button {
     -fx-background-color: #FF0000;
     -fx-text-fill: -fx-color2;
 }
+
 
 .menu-button, .menu-item {
     -fx-background-color: #FF0000;
@@ -37,3 +37,34 @@
 .label {
     -fx-text-fill: -fx-color2;
 }
+
+#mainViewTopbar, #mainViewTopButtons, #boxAdvancedSearch {
+    -fx-background-color: #303841;
+}
+
+#warningViewLabel26, #warningViewLabel2, #warningViewLabel6 {
+    -fx-background-color: #222222;
+}
+
+#homeView, #homeLabelAdded, #homeLabelAll, #homeLabelPopular{
+    -fx-background-color: #222222;
+}
+
+#movieCard, VBox {
+    -fx-background-color: transparent;
+}
+
+#categoryViewAnchor{
+    -fx-background-color: #3A4750;
+}
+
+#grid{
+
+    -fx-background-color: #3A4750;
+}
+
+
+
+
+
+

@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MainController">
+<BorderPane fx:id="borderPane" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MainController">
    <left>
-      <VBox minHeight="100.0" prefHeight="450.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="mainViewSidebar" minHeight="100.0" prefHeight="450.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleHome" prefHeight="30.0" prefWidth="80.0" text="Home" VBox.vgrow="ALWAYS">
                <VBox.margin>
@@ -58,7 +58,7 @@
       </VBox>
    </left>
    <top>
-      <HBox minHeight="50.0" minWidth="200.0" prefHeight="50.0" prefWidth="960.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="mainViewTopbar" minHeight="50.0" minWidth="200.0" prefHeight="50.0" prefWidth="960.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="45.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="textSceneTitle" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
@@ -154,7 +154,7 @@
                   </MenuButton>
                </children>
             </HBox>
-            <HBox>
+            <HBox fx:id="mainViewTopButtons">
                <children>
                   <TextField fx:id="textSearch" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="50.0" onKeyPressed="#handleEnter" prefHeight="30.0" prefWidth="205.0" promptText="Filter..." HBox.hgrow="ALWAYS">
                      <opaqueInsets>

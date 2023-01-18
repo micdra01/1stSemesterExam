@@ -3,8 +3,6 @@ package GUI.Controllers;
 import BE.Movie;
 import GUI.Models.MovieModel;
 import GUI.Util.ErrorDisplayer;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -49,7 +47,7 @@ public class MovieCardController {
         ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it
         imgView.setPreserveRatio(true);
         imgView.setFitWidth(130);
-        imgView.setFitHeight(200);
+        imgView.setFitHeight(190);
 
         //creates a label with the title of the movieCard
         Label lblTitle = new Label(movie.getTitle());
