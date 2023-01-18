@@ -146,9 +146,6 @@ public class MovieListController implements Initializable {
             }
 
         }
-
-
-
     }
 
     public void setMovieModel(MovieModel movieModel) {
@@ -159,5 +156,4 @@ public class MovieListController implements Initializable {
             ErrorDisplayer.displayError(new Exception(e));
         }
     }
-
 }

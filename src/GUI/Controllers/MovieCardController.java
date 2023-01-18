@@ -20,7 +20,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 
 public class MovieCardController {
 
@@ -107,8 +110,26 @@ public class MovieCardController {
             lblTitleCard.setText("");
             lblDescriptionCard.setText("");
         });
+
+
+        btnPlay.setOnAction((EventHandler<ActionEvent>) event -> {
+            try {
+                Desktop.getDesktop().open(new File(new File(movie.getMovieFileLink()).getAbsolutePath()));
+            } catch (Exception e) {
+                ErrorDisplayer.displayError(new Exception("Failed to play movie"));
+            }
+
+            movie.setLastViewed(new Timestamp(System.currentTimeMillis()));
+            try {
+                movieModel.updateMovie(movie);
+            } catch (Exception e) {
+                ErrorDisplayer.displayError(e);
+            }
+        });
         return movieCard; // the finished movieCard with information
     }
+
+
 
     /**
      * Loads MovieView FXML with a Movie object if button is clicked.
