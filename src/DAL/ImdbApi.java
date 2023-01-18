@@ -100,11 +100,12 @@ public class ImdbApi implements IImdbAPI {
         } catch (Exception e) {
             throw new Exception("Failed to retrieve movie description from IMDB", e);
         }
-
         String responseString = response.body();
-        String descriptionRaw = responseString.substring(responseString.lastIndexOf(",\"text\":\"") + 9);
-        String description = descriptionRaw.substring(0, descriptionRaw.indexOf(".\""));
-
+        String description ="no description";
+        if(responseString.contains(",\"text\":\"")) {
+            String descriptionRaw = responseString.substring(responseString.lastIndexOf(",\"text\":\"") + 9);
+            description = descriptionRaw.substring(0, descriptionRaw.indexOf("\"}"));
+        }
         return description;
     }
 
@@ -131,9 +132,12 @@ public class ImdbApi implements IImdbAPI {
         }
 
         String responseString = response.body();
-        String ratingRaw = responseString.substring(responseString.lastIndexOf(",\"rating\":") + 10);
-        String rating = ratingRaw.substring(0, ratingRaw.indexOf(",\""));
-        return rating;
+        if (responseString.contains(",\"rating\":")) {
+            String ratingRaw = responseString.substring(responseString.lastIndexOf(",\"rating\":") + 10);
+            String rating = ratingRaw.substring(0, ratingRaw.indexOf(",\""));
+            return rating;
+        }
+        return "1";
     }
 
     /**
@@ -172,6 +176,7 @@ public class ImdbApi implements IImdbAPI {
             String httpResult = segments[i];
             //get all the information from each movie from string
             if(httpResult.contains("\"titleType\":\"movie\"")){//only selects movies from the list
+
                 //movie id in api database
                 String movieIdRaw = httpResult.substring(httpResult.lastIndexOf("\"id\":\"/title/") + 1);
                 String movieId = movieIdRaw.substring(0, movieIdRaw.indexOf("/"));
@@ -179,11 +184,14 @@ public class ImdbApi implements IImdbAPI {
                 String titleRaw = httpResult.substring(httpResult.lastIndexOf("title\":\"") + 8);
                 String title = titleRaw.substring(0, titleRaw.indexOf("\","));
                 //picture link
-                String pictureLinkRaw = httpResult.substring(httpResult.lastIndexOf("url\":\"") + 6);
-                String picture = pictureLinkRaw.substring(0, pictureLinkRaw.indexOf("\","));
+                String picture = "";
+                if(httpResult.contains("url\":\"")){
+                    String pictureLinkRaw = httpResult.substring(httpResult.lastIndexOf("url\":\"") + 6);
+                    picture = pictureLinkRaw.substring(0, pictureLinkRaw.indexOf("\","));
+                }
                 //year of release
                 String yearOfReleaseRaw = httpResult.substring(httpResult.lastIndexOf("\",\"year\":") + 9);
-                String yearOfRelease = yearOfReleaseRaw.substring(0, yearOfReleaseRaw.indexOf(",\""));
+                String yearOfRelease = yearOfReleaseRaw.substring(0, 4);
                 //gets the names from cast
                 String castStringsRaw[] = httpResult.split("\"name\":\"");
                 ArrayList<String> castList = new ArrayList<>();
@@ -191,6 +199,7 @@ public class ImdbApi implements IImdbAPI {
                     String castString = castStringsRaw[j].substring(0, castStringsRaw[j].indexOf("\","));
                     castList.add(castString);
                 }
+
                 //makes imdbInfo object from response info
                 ImdbInfo imdbInfo = new ImdbInfo(movieId, title, picture, yearOfRelease, castList);
                 resultList.add(imdbInfo);

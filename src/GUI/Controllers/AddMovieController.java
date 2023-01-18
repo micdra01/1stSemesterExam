@@ -128,15 +128,11 @@ public class AddMovieController implements Initializable {
             double imdbRating = 0;
 
             imdbRating = chosenMovie != null ? Double.parseDouble(imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId())) : 0.00;
-
             String movieLink = movieFile != null ? movieFile.getAbsolutePath() : "";
-            String coverPath = chosenMovie != null ? chosenMovie.getPictureLink() : movieCover.getAbsolutePath();
+            String coverPath = chosenMovie != null && !chosenMovie.getPictureLink().isEmpty() ? chosenMovie.getPictureLink() : "images/ImageNotFound.jpg";
             Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
             int yearOfRelease = chosenMovie != null ? Integer.parseInt(chosenMovie.getYearOfRelease()) : 0;
-            String movieDescription = null;
-
-            movieDescription = chosenMovie != null ? imdbInfoModel.getMovieDescriptionFromImdbId(chosenMovie.getImdbId()) : "der er ingen beskrivelse for denne film";
-
+            String movieDescription = chosenMovie != null ? imdbInfoModel.getMovieDescriptionFromImdbId(chosenMovie.getImdbId()) : "der er ingen beskrivelse for denne film";
 
             Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed, yearOfRelease, movieDescription);
             //sets the topcast of the  movie
@@ -232,7 +228,11 @@ public class AddMovieController implements Initializable {
         chosenMovie = searchResult.get(searchResultListView.getSelectionModel().getSelectedIndex());
 
         //sets the image from a url string
-        Image img = new Image(chosenMovie.getPictureLink());
+        Image img = new Image("images/ImageNotFound.jpg");
+        if(chosenMovie != null && !chosenMovie.getPictureLink().isEmpty()){
+            img = new Image(chosenMovie.getPictureLink());
+        }
+
         ImageView imageView = new ImageView(img);
         imageView.setFitWidth(200);
         imageView.setFitHeight(275);
