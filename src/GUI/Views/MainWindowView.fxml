@@ -181,8 +181,6 @@
                     <items>
                       <MenuItem fx:id="menuItmTitleAZ" mnemonicParsing="false" text="Title A-Z" />
                       <MenuItem fx:id="menuItmTitleZA" mnemonicParsing="false" text="Title Z-A" />
-                        <MenuItem fx:id="menuItmCategoryAZ" mnemonicParsing="false" text="Category A-Z" />
-                        <MenuItem fx:id="menuItmCategoryZA" mnemonicParsing="false" text="Category Z-A" />
                         <MenuItem fx:id="menuItmIMDBMaxMin" mnemonicParsing="false" text="IMDB max-min" />
                         <MenuItem fx:id="menuItmIMDBMinMax" mnemonicParsing="false" text="IMDB min-max" />
                         <MenuItem fx:id="menuItmPRMinMax" mnemonicParsing="false" text="PR Rating min-max" />
