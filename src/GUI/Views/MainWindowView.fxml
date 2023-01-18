@@ -77,7 +77,7 @@
                         <Insets top="10.0" />
                      </HBox.margin>
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Min. IMDB">
+                        <MenuItem fx:id="menuItemMinIMDB" mnemonicParsing="false" text="Min. IMDB">
                            <graphic>
                               <HBox>
                                  <children>
@@ -94,7 +94,7 @@
                               </HBox>
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" text="Max. IMDB">
+                        <MenuItem fx:id="menuItemMaxIMDB" mnemonicParsing="false" text="Max. IMDB">
                            <graphic>
                               <HBox>
                                  <children>
@@ -111,7 +111,7 @@
                               </HBox>
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" text="Min. Personal">
+                        <MenuItem fx:id="menuItemMinPR" mnemonicParsing="false" text="Min. Personal">
                            <graphic>
                               <HBox>
                                  <children>
@@ -128,7 +128,7 @@
                               </HBox>
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" text="Max. Personal">
+                        <MenuItem fx:id="menuItemMaxPR" mnemonicParsing="false" text="Max. Personal">
                            <graphic>
                               <HBox>
                                  <children>
