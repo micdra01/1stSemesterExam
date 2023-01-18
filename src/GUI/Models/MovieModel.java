@@ -25,8 +25,12 @@ public class MovieModel {
         moviesInList.add(movie);
     }
 
-    public ObservableList<Movie> getMoviesInList() {
+    public ObservableList<Movie> getMoviesInList() throws Exception{
         return moviesInList;
+    }
+
+    public void removeMovieFromList(Movie movie) {
+        moviesInList.remove(movie);
     }
 
     public void deleteMovie(Movie movie) throws Exception {

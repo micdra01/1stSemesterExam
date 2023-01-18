@@ -2,6 +2,10 @@ package GUI.Controllers;
 
 import BE.Category;
 import GUI.Models.CategoryModel;
+import GUI.Util.ConfirmDelete;
+import GUI.Util.ErrorDisplayer;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -23,7 +27,7 @@ public class CategoryController {
         try {
             categoryModel = new CategoryModel();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(new Exception(e));
         }
     }
 
@@ -57,14 +61,21 @@ public class CategoryController {
      */
     public void handleDeleteCategory() {
         try {
-            Category selectedCategory = (Category) listCategories.getSelectionModel().getSelectedItem();
-            categoryModel.deleteCategory(selectedCategory);
-            listCategories.getItems().clear();
-            populateCategories();
-            mainController.initializeCategoryMenu();
-            mainController.initializeCategorySearchMenu();
+            Category selectedCategory = listCategories.getSelectionModel().getSelectedItem();
+
+            String header = "Are you sure you want to delete this category?";
+            String content = selectedCategory.toString() + " with " + categoryModel.readAllMoviesInCategory(selectedCategory).size() + " movie(s)";
+            boolean deleteCategory = ConfirmDelete.confirm(header, content);
+
+            if(deleteCategory) {
+                categoryModel.deleteCategory(selectedCategory);
+                listCategories.getItems().clear();
+                populateCategories();
+                mainController.initializeCategoryMenu();
+                mainController.initializeCategorySearchMenu();
+            }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(new Exception(e));
         }
     }
 
@@ -75,7 +86,7 @@ public class CategoryController {
         try {
                 listCategories.getItems().addAll(categoryModel.getAllCategories());
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(new Exception(e));
         }
     }
 

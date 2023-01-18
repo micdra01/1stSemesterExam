@@ -4,6 +4,8 @@ import BE.Category;
 import BE.Movie;
 import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
+import GUI.Util.ConfirmDelete;
+import GUI.Util.ErrorDisplayer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -53,7 +55,7 @@ public class MovieViewController implements Initializable {
             categoryModel = new CategoryModel();
             movieModel = new MovieModel();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(e);
         }
     }
 
@@ -84,7 +86,7 @@ public class MovieViewController implements Initializable {
                 categoryModel.removeCategoryFromMovie(category, movie);
                 flowPaneCategories.getChildren().remove(container);
             } catch (Exception e) {
-                new Exception("Failed to remove category from movie", e);
+                ErrorDisplayer.displayError(e);
             }
         });
     }
@@ -96,11 +98,11 @@ public class MovieViewController implements Initializable {
         ArrayList<Category> movieCategories;
         try {
             movieCategories = categoryModel.readAllCategoriesFromMovie(movie);
+            for (Category category : movieCategories) {
+                createCategoryTag(category);
+            }
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        for (Category category : movieCategories) {
-            createCategoryTag(category);
+            ErrorDisplayer.displayError(e);
         }
     }
 
@@ -124,13 +126,13 @@ public class MovieViewController implements Initializable {
                             categoryModel.addMovieToCategory(category, movie);
                             createCategoryTag(category);
                         } catch (Exception e) {
-                            new Exception("Failed to add movie to category", e);
+                            ErrorDisplayer.displayError(e);
                         }
                     }
                 });
             }
         } catch (Exception e) {
-            new Exception("Failed to get all categories", e);
+            ErrorDisplayer.displayError(e);
         }
     }
 
@@ -153,18 +155,21 @@ public class MovieViewController implements Initializable {
     }
 
     public void handlePlayMovie() {
+        String moviePath = new File(movie.getMovieFileLink()).getAbsolutePath();
         try {
-            String moviePath = new File(movie.getMovieFileLink()).getAbsolutePath();
             Desktop.getDesktop().open(new File(moviePath));
-
-            movie.setLastViewed(new Timestamp(System.currentTimeMillis()));
-            movieModel.updateMovie(movie);
-            labelLastViewed.setText(String.valueOf(movie.getLastViewed()));
-        } catch (IOException e) {
-            new Exception("Failed to play movie"+e);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(new Exception("Failed to play movie"));
         }
+
+        movie.setLastViewed(new Timestamp(System.currentTimeMillis()));
+        try {
+            movieModel.updateMovie(movie);
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(e);
+        }
+        labelLastViewed.setText(String.valueOf(movie.getLastViewed()));
+
     }
 
     public void handleSetPR() throws Exception {
@@ -182,12 +187,23 @@ public class MovieViewController implements Initializable {
 
     public void deleteMovie() {
         try {
-            movieModel.deleteMovie(movie);
-            Stage stage = (Stage) btnSetPR.getScene().getWindow();
-            stage.close();
-            //TODO re-load previous stage, so removed movie is gone
+            //Check to make sure user meant to delete
+            String header = "Are you sure you want to delete this movie?";
+            String content = movie.getTitle();
+            boolean deleteMovie = ConfirmDelete.confirm(header, content);
+
+            if(deleteMovie) {
+                movieModel.removeMovieFromList(movie);
+                movieModel.deleteMovie(movie);
+                Stage stage = (Stage) btnSetPR.getScene().getWindow();
+                stage.close();
+                //TODO re-load previous stage, so removed movie is gone
+                //This only updates after a sidebar button has been clicked (to reload Home/All/Popular/Favorites)
+                //We need access to mainController from here to reload it.
+                //Possibly save info on which view was clicked last in main, to reload that same view?
+            }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(e);
         }
     }
 }

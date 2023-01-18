@@ -2,6 +2,8 @@ package GUI.Controllers;
 
 import BE.Movie;
 import GUI.Models.MovieModel;
+import GUI.Util.ErrorDisplayer;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
@@ -20,15 +22,18 @@ public class WarningViewController implements Initializable {
     @FXML
     private ScrollPane listLowRating, listLowAndLast, listLastViewed;
     private double lowRating = 6.0;
+    private ObservableList<Movie> allMovies;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         movieCardController = new MovieCardController();
-        //sets the models
+    }
+
+    public void setContent() {
         try {
-            movieModel = new MovieModel();
+            allMovies = movieModel.getMoviesInList();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ErrorDisplayer.displayError(new Exception(e));
         }
         createLowRatedList();
         createLastViewedList();
@@ -45,7 +50,7 @@ public class WarningViewController implements Initializable {
         int row = 0;
 
         //loop for creating each movieCard and setting movie info
-        for (Movie movie : movieModel.getMoviesInList()){
+        for (Movie movie : allMovies){
             //If the movie's last view is > 2 years ago ...
             if (movie.getLastViewed().before(Date.valueOf(LocalDate.now().minusYears(2)))){
                 //... it creates a movieCard for said movie and adds it to the content grid
@@ -65,7 +70,7 @@ public class WarningViewController implements Initializable {
         int row = 0;
 
         //loop for creating each movieCard and setting movie info
-        for (Movie movie : movieModel.getMoviesInList()){
+        for (Movie movie : allMovies){
             //If the movie is both low rated & last view is > 2 years ago ...
             if(movie.getPersonalRating() <= lowRating && movie.getLastViewed().before(Date.valueOf(LocalDate.now().minusYears(2)))) {
                 //... it creates a movieCard for said movie and adds it to the content grid
@@ -85,7 +90,7 @@ public class WarningViewController implements Initializable {
         int row = 0;
 
         //loop for creating each movieCard and setting movie info
-        for (Movie movie : movieModel.getMoviesInList()){
+        for (Movie movie : allMovies){
             //If the movie is low rated ...
             if(movie.getPersonalRating() <= lowRating){
                 //... it creates a movieCard for said movie and adds it to the content grid
@@ -98,6 +103,11 @@ public class WarningViewController implements Initializable {
 
     public void setMovieModel(MovieModel movieModel) {
         this.movieModel = movieModel;
+        try {
+            allMovies = movieModel.getMoviesInList();
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception(e));
+        }
     }
 
 }
