@@ -11,23 +11,23 @@ public class ImdbInfoModel {
 
     private IImdbManager imdbManager;
 
-    public ImdbInfoModel(){
+    public ImdbInfoModel() throws Exception {
         imdbManager = new ImdbManager();
     }
 
-    public ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws IOException, InterruptedException {
+    public ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws Exception {
         return imdbManager.getSearchResultFromApi(searchWord);
     }
 
-    public ArrayList<String> getMovieCategoriesFromApi(String imdbId) throws IOException, InterruptedException {
+    public ArrayList<String> getMovieCategoriesFromApi(String imdbId) throws Exception {
         return imdbManager.getMovieCategoriesFromApi(imdbId);
     }
 
-    public String getMovieDescriptionFromImdbId(String imdbId) throws IOException, InterruptedException {
+    public String getMovieDescriptionFromImdbId(String imdbId) throws Exception {
         return imdbManager.getMovieDescriptionFromImdbId(imdbId);
     }
 
-    public String getImdbRatingFromApi(String imdbId) throws IOException, InterruptedException {
+    public String getImdbRatingFromApi(String imdbId) throws Exception {
         return imdbManager.getImdbRatingFromApi(imdbId);
     }
 }

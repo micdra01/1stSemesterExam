@@ -18,7 +18,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 
 public class MovieCardController {
 
@@ -88,7 +91,7 @@ public class MovieCardController {
 
         btnInfo.setOnAction(event -> openMovieInfo(movie));
 
-        movieCard.setOnMouseEntered(event -> {
+        vBox1.setOnMouseEntered(event -> {
 
             imgView.setOpacity(0.3);
             btnPlay.setOpacity(1);
@@ -98,15 +101,33 @@ public class MovieCardController {
             lblDescriptionCard.setText(movie.getMovieDescription());
         });
 
-        movieCard.setOnMouseExited(event -> {
+        vBox1.setOnMouseExited(event -> {
             imgView.setOpacity(1);
             btnPlay.setOpacity(0);
             btnInfo.setOpacity(0);
             lblTitleCard.setText("");
             lblDescriptionCard.setText("");
         });
+
+
+        btnPlay.setOnAction((EventHandler<ActionEvent>) event -> {
+            try {
+                Desktop.getDesktop().open(new File(new File(movie.getMovieFileLink()).getAbsolutePath()));
+            } catch (Exception e) {
+                ErrorDisplayer.displayError(new Exception("Failed to play movie"));
+            }
+
+            movie.setLastViewed(new Timestamp(System.currentTimeMillis()));
+            try {
+                movieModel.updateMovie(movie);
+            } catch (Exception e) {
+                ErrorDisplayer.displayError(e);
+            }
+        });
         return movieCard; // the finished movieCard with information
     }
+
+
 
     /**
      * Loads MovieView FXML with a Movie object if button is clicked.

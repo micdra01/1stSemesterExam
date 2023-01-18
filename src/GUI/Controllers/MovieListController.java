@@ -109,46 +109,18 @@ public class MovieListController implements Initializable {
     }
 
     public void sortTitle(Comparator<Movie> com) {
-        GridPane grid = new GridPane();
-        movieListView.setContent(grid);
-
-        //used for placing
-        int col = 0;
-        int row = 0;
+        pane.getChildren().clear();
+        movieListView.setContent(pane);
 
         Comparator<Movie> movieComparator = com;
-        ObservableList<Movie> getMoviesInList = null;
-        try {
-            getMoviesInList = movieModel.getMoviesInList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Collections.sort(getMoviesInList, movieComparator);
-        SortedList<Movie> sortedMovie = new SortedList<>(getMoviesInList, movieComparator);
+        Collections.sort(allMovies, movieComparator);
+        SortedList<Movie> sortedMovie = new SortedList<>(allMovies, movieComparator);
 
 
         for(Movie movie : sortedMovie) {
             GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
-            grid.add(movieCard, col, row);
-
-            //makes a space between all movies
-            col++;
-            grid.add(new Separator(Orientation.HORIZONTAL), col, row);
-
-            //loop for positioning movieCards in grid
-            if(col < 6 ){
-                col++;
-            }else {
-                col = 0;
-                row++;
-                grid.add(new Separator(Orientation.VERTICAL), col, row);
-                row++;
-            }
-
+            pane.getChildren().add(movieCard);
         }
-
-
-
     }
 
     public void setMovieModel(MovieModel movieModel) {
@@ -159,5 +131,4 @@ public class MovieListController implements Initializable {
             ErrorDisplayer.displayError(new Exception(e));
         }
     }
-
 }

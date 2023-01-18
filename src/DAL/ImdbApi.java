@@ -3,34 +3,51 @@ package DAL;
 import BE.ImdbInfo;
 import DAL.Interfaces.IImdbAPI;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class ImdbApi implements IImdbAPI {
+
+    private static final String PROP_FILE = "data/database.settings";
+    String apiKey;
+
+    public ImdbApi() throws Exception {
+        Properties databaseProperties = new Properties();
+        databaseProperties.load(new FileInputStream(new File(PROP_FILE)));
+        apiKey = databaseProperties.getProperty("ApiKey");
+    }
 
     /**
      * gets all search result from imdb api
      * makes an object with info
      * @param searchWord
      * @return
-     * @throws IOException
-     * @throws InterruptedException
      */
-   public ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws IOException, InterruptedException {
+   public ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws Exception {
+
        String searchWordString = searchWord.replace(" ", "%20");
 
        HttpRequest request = HttpRequest.newBuilder()
                .uri(URI.create("https://imdb8.p.rapidapi.com/title/find?q=" + searchWordString))
-               .header("X-RapidAPI-Key", "0a0a0470e1msh82e4d85417a6657p19b415jsnab794e028cc6")
+               .header("X-RapidAPI-Key", apiKey)
                .header("X-RapidAPI-Host", "imdb8.p.rapidapi.com")
                .method("GET", HttpRequest.BodyPublishers.noBody())
                .build();
 
-       HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+       HttpResponse<String> response = null;
+       try {
+           response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+       } catch (Exception e) {
+           throw new Exception("Failed to retrieve search result from IMDB", e);
+       }
        ArrayList<ImdbInfo> result =getInfoFromResultString(response);
        return result;
    }
@@ -43,14 +60,19 @@ public class ImdbApi implements IImdbAPI {
      * @throws InterruptedException
      */
     @Override
-    public ArrayList<String> getMovieCategoriesFromApi(String imdbId) throws IOException, InterruptedException {
+    public ArrayList<String> getMovieCategoriesFromApi(String imdbId) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-genres?tconst=" + imdbId))
-                .header("X-RapidAPI-Key", "0a0a0470e1msh82e4d85417a6657p19b415jsnab794e028cc6")
+                .header("X-RapidAPI-Key", apiKey)
                 .header("X-RapidAPI-Host", "imdb8.p.rapidapi.com")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
-        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = null;
+        try {
+            response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            throw new Exception("Failed to retrieve movie categories from IMDB", e);
+        }
 
         ArrayList<String> categoriesToMovie = getCategoryFromApiString(response);
         return categoriesToMovie;
@@ -65,14 +87,19 @@ public class ImdbApi implements IImdbAPI {
      * @throws InterruptedException
      */
     @Override
-    public String getMovieDescriptionFromImdbId(String imdbId) throws IOException, InterruptedException {
+    public String getMovieDescriptionFromImdbId(String imdbId) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=" + imdbId + "&currentCountry=US"))
-                .header("X-RapidAPI-Key", "0a0a0470e1msh82e4d85417a6657p19b415jsnab794e028cc6")
+                .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=" + imdbId + "&currentCountry=DK"))
+                .header("X-RapidAPI-Key", apiKey)
                 .header("X-RapidAPI-Host", "imdb8.p.rapidapi.com")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
-        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = null;
+        try {
+            response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            throw new Exception("Failed to retrieve movie description from IMDB", e);
+        }
 
         String responseString = response.body();
         String descriptionRaw = responseString.substring(responseString.lastIndexOf(",\"text\":\"") + 9);
@@ -89,14 +116,19 @@ public class ImdbApi implements IImdbAPI {
      * @throws InterruptedException
      */
     @Override
-    public String getImdbRatingFromApi(String imdbId) throws IOException, InterruptedException {
+    public String getImdbRatingFromApi(String imdbId) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-ratings?tconst=" + imdbId))
-                .header("X-RapidAPI-Key", "0a0a0470e1msh82e4d85417a6657p19b415jsnab794e028cc6")
+                .header("X-RapidAPI-Key", apiKey)
                 .header("X-RapidAPI-Host", "imdb8.p.rapidapi.com")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
-        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = null;
+        try {
+            response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            throw new Exception("Failed to retrieve movie rating from IMDB", e);
+        }
 
         String responseString = response.body();
         String ratingRaw = responseString.substring(responseString.lastIndexOf(",\"rating\":") + 10);
