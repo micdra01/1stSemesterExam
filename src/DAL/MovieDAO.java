@@ -5,7 +5,6 @@ import DAL.Interfaces.IMovieDAO;
 import DAL.Util.FileType;
 import DAL.Util.LocalFileHandler;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -43,9 +42,7 @@ public class MovieDAO implements IMovieDAO {
             }else {
                 relativeCoverPath = !movie.getPictureFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getPictureFileLink(), FileType.IMAGE) : null;
             }
-
             Path relativeMoviePath = !movie.getMovieFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getMovieFileLink(), FileType.MOVIE) : null;
-
 
             //gets all variables from movie and saves
             String title = movie.getTitle();
@@ -76,11 +73,9 @@ public class MovieDAO implements IMovieDAO {
             if (resultSet.next()) {
                 id = resultSet.getInt(1);//saves the movie id as id
             }
-
             //creates the new movie object and sends it back
             Movie generatedMovie =new Movie(id, title, pR, iR, movieLink, pictureLink, tS, yearOfRelease, movieDescription);
             return generatedMovie;
-
         }catch (SQLException e) {
             e.printStackTrace();
             throw new Exception("Failed to create movie", e);
@@ -95,13 +90,11 @@ public class MovieDAO implements IMovieDAO {
     @Override
     public void deleteMovie(Movie movie) throws Exception {
         String sql = "DELETE FROM Movies WHERE Id = ?;";
-
         //gets connection to db
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             // Bind parameters
             statement.setInt(1, movie.getId());
-
             // Run the specified SQL Statement
             statement.executeUpdate();
         }
@@ -109,7 +102,6 @@ public class MovieDAO implements IMovieDAO {
             e.printStackTrace();
             throw new Exception("Failed to delete movie", e);
         }
-
     }
 
     /**
@@ -127,7 +119,6 @@ public class MovieDAO implements IMovieDAO {
             //creates and executes the sql string
             String sql = "SELECT * FROM Movies;";
             ResultSet rs = statement.executeQuery(sql);
-
             //loop that takes all information from movie table in database and creates movie objects from it
             while(rs.next()) {
                 int id = rs.getInt("Id");
@@ -208,7 +199,6 @@ public class MovieDAO implements IMovieDAO {
 
             statement.setInt(1,movieId);//bind the movie id to sql statement
 
-
             ResultSet rs = statement.executeQuery();//execute the statement and get movie result
 
             while (rs.next()) {
@@ -226,7 +216,6 @@ public class MovieDAO implements IMovieDAO {
                 int yearOfRelease = rs.getInt("YearOfRelease");
                 String movieDescription = rs.getString("MovieDescription");
                 String topCast = rs.getString("TopCast");
-
 
                 //creates the movie and add it to the list allMovies
                 movie = new Movie(id, title, personalRating, imdbRating, movieFileLink, pictureFileLink, lastView, yearOfRelease, movieDescription);

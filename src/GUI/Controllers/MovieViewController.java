@@ -30,23 +30,22 @@ import java.util.ResourceBundle;
 
 public class MovieViewController implements Initializable {
 
+    @FXML
+    private Slider sliderSetPR;
 
-    public Slider sliderSetPR;
-    public Label labelDescription;
-    public Label labelCast;
     @FXML
     private VBox vBoxCategories;
+
     @FXML
     private MenuButton menuBtnAddCategory, btnSetPR;
 
     @FXML
-    private Label labelTitle, labelYear, labelIMDBRating, labelPersonalRating, labelLastViewed;
+    private Label labelTitle, labelYear, labelIMDBRating, labelPersonalRating, labelLastViewed,labelDescription,labelCast;
     @FXML
     private ImageView imageMoviePoster;
     private CategoryModel categoryModel;
     private MovieModel movieModel;
     private Movie movie;
-    ArrayList<Category> movieCategories;
 
     public MovieViewController() {
         try {
@@ -77,16 +76,13 @@ public class MovieViewController implements Initializable {
         vBoxCategories.getChildren().add(container);
 
         //Adds listener to the remove button to be able to remove category from movie
-        btnRemove.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    //Removes category from movie, then removes label
-                    categoryModel.removeCategoryFromMovie(category, movie);
-                    vBoxCategories.getChildren().remove(container);
-                } catch (Exception e) {
-                    new Exception("Failed to remove category from movie", e);
-                }
+        btnRemove.setOnAction(event -> {
+            try {
+                //Removes category from movie, then removes label
+                categoryModel.removeCategoryFromMovie(category, movie);
+                vBoxCategories.getChildren().remove(container);
+            } catch (Exception e) {
+                new Exception("Failed to remove category from movie", e);
             }
         });
     }
@@ -95,6 +91,7 @@ public class MovieViewController implements Initializable {
      * Shows all the categories from the movie
      */
     private void showCategories() {
+        ArrayList<Category> movieCategories;
         try {
             movieCategories = categoryModel.readAllCategoriesFromMovie(movie);
         } catch (Exception e) {
@@ -112,12 +109,11 @@ public class MovieViewController implements Initializable {
     private void initializeCategoryDropdown() {
         try {
             //Loads all available categories in as menuitems in the dropdown
-            for (int i = 0; i < categoryModel.getAllCategories().size() ; i++) {
-                MenuItem menuItem = new MenuItem(categoryModel.getAllCategories().get(i).toString());
+            for (Category category: categoryModel.getAllCategories()) {
+                MenuItem menuItem = new MenuItem(category.getTitle());
                 menuBtnAddCategory.getItems().add(menuItem);
 
                 //Adds listener to check if category is selected
-                Category category = categoryModel.getAllCategories().get(i);
                 menuItem.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
@@ -131,7 +127,6 @@ public class MovieViewController implements Initializable {
                     }
                 });
             }
-
         } catch (Exception e) {
             new Exception("Failed to get all categories", e);
         }
@@ -155,7 +150,7 @@ public class MovieViewController implements Initializable {
         labelCast.setText(movie.getTopCast().replaceAll(",", "\n"));
     }
 
-    public void handlePlayMovie(ActionEvent actionEvent) {
+    public void handlePlayMovie() {
         try {
             String moviePath = new File(movie.getMovieFileLink()).getAbsolutePath();
             Desktop.getDesktop().open(new File(moviePath));
@@ -170,7 +165,7 @@ public class MovieViewController implements Initializable {
         }
     }
 
-    public void handleSetPR(ActionEvent actionEvent) throws Exception {
+    public void handleSetPR() throws Exception {
 
         double pr = sliderSetPR.getValue();
         DecimalFormat df = new DecimalFormat();
@@ -183,7 +178,7 @@ public class MovieViewController implements Initializable {
     }
 
 
-    public void deleteMovie(ActionEvent actionEvent) {
+    public void deleteMovie() {
         try {
             movieModel.deleteMovie(movie);
             Stage stage = (Stage) btnSetPR.getScene().getWindow();

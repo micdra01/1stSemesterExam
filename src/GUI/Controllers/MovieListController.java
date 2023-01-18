@@ -18,16 +18,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
-
-
 public class MovieListController implements Initializable {
     @FXML
     private ScrollPane movieListView;
     private MovieModel movieModel;
     private CategoryModel categoryModel;
     private MovieCardController movieCardController;
-    private final double minRatingPopular = 7.5;
-    private final double minRatingFavorite = 7.5;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -35,6 +31,7 @@ public class MovieListController implements Initializable {
         //sets the models
         try {
             categoryModel = new CategoryModel();
+            //movieModel = new MovieModel();
         } catch (Exception e) {
             new Exception(e);
         }
@@ -91,6 +88,7 @@ public class MovieListController implements Initializable {
         //loop for creating each movieCard and setting movie info
         for (Movie movie : movieModel.getMoviesInList()) {
             //If the movie's IMDB Rating is greater than or equal to minRatingPopular variable ...
+            double minRatingPopular = 7.5;
             if (movie.getImdbRating() >= minRatingPopular) {
                 //... it creates a movieCard for said movie and adds it to the content grid
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
@@ -129,6 +127,7 @@ public class MovieListController implements Initializable {
         //loop for creating each movieCard and setting movie info
         for (Movie movie : movieModel.getMoviesInList()) {
             //If the movie's IMDB Rating is greater than or equal to minRatingPopular variable ...
+            double minRatingFavorite = 7.5;
             if (movie.getPersonalRating() >= minRatingFavorite) {
                 //... it creates a movieCard for said movie and adds it to the content grid
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);

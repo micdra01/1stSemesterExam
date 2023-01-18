@@ -15,7 +15,6 @@ public class ImdbInfoModel {
         imdbManager = new ImdbManager();
     }
 
-
     public ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws IOException, InterruptedException {
         return imdbManager.getSearchResultFromApi(searchWord);
     }
@@ -24,11 +23,9 @@ public class ImdbInfoModel {
         return imdbManager.getMovieCategoriesFromApi(imdbId);
     }
 
-
     public String getMovieDescriptionFromImdbId(String imdbId) throws IOException, InterruptedException {
         return imdbManager.getMovieDescriptionFromImdbId(imdbId);
     }
-
 
     public String getImdbRatingFromApi(String imdbId) throws IOException, InterruptedException {
         return imdbManager.getImdbRatingFromApi(imdbId);

@@ -34,7 +34,6 @@
                                  </HBox.margin>
                               </Label>
                               <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="30.0" prefWidth="10.0" visible="false" HBox.hgrow="ALWAYS" />
-                              <Label maxHeight="1.7976931348623157E308" maxWidth="-Infinity" text="Duration:" />
                               <Label fx:id="labelDuration" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets left="5.0" />

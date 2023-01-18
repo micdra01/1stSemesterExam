@@ -12,13 +12,8 @@ public class CategoryModel {
 
     private ICategoryManager categoryManager;
 
-
     public CategoryModel() throws  Exception {
         categoryManager = new CategoryManager();
-    }
-
-    public Category createCategory(Category category) throws Exception {
-        return categoryManager.createCategory(category);
     }
 
     public void deleteCategory(Category category) throws Exception {
@@ -27,8 +22,6 @@ public class CategoryModel {
 
     public void addMovieToCategory(Category category, Movie movie) throws Exception {
         categoryManager.addMovieToCategory(category, movie);
-
-
     }
 
     public void removeCategoryFromMovie(Category category, Movie movie) throws Exception {
@@ -52,7 +45,16 @@ public class CategoryModel {
         return categoryManager.readAllMoviesInCategory(category);
     }
 
-    public Category getCategoryFromName(String categoryName) throws Exception {
+    /**
+     * checks if the category exists, if it does the category will not be created
+     * @param categoryName
+     * @return
+     * @throws Exception
+     */
+    public Category createCategoryIfNotExist(String categoryName) throws Exception {
+        if (categoryManager.getCategoryFromName(categoryName) == null) {
+            categoryManager.createCategory(new Category(-1, categoryName));
+        }
         return categoryManager.getCategoryFromName(categoryName);
     }
 }

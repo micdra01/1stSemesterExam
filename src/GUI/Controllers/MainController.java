@@ -1,7 +1,6 @@
 package GUI.Controllers;
 
 import BE.Category;
-import BE.Movie;
 import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
@@ -20,7 +19,6 @@ import javafx.scene.layout.HBox;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -34,8 +32,6 @@ public class MainController implements Initializable {
 
     @FXML
     private MenuButton menuBtnCategory, searchMenuBtnCategory;
-    @FXML
-    private TextField textCategoryName;
     @FXML
     private Slider sliderMinIMDBRating, sliderMaxIMDBRating, sliderMinPersonalRating, sliderMaxPersonalRating;
     @FXML
@@ -51,15 +47,10 @@ public class MainController implements Initializable {
 
     private DecimalFormat df = new DecimalFormat("0.00");
 
-    public MovieModel getMovieModel() {
-        return movieModel;
-    }
-
     private MovieModel movieModel;
     private MovieListController movieListController;
     private boolean isSimpleSearch = true;
     private CategoryModel categoryModel;
-
 
     public MainController(){
         try {
@@ -94,7 +85,7 @@ public class MainController implements Initializable {
             menuBtnCategory.getItems().add(menuItem);
 
             //Adds a listener to open all movies in selected categories
-            menuItem.setOnAction(new EventHandler<ActionEvent>() {
+            menuItem.setOnAction(new EventHandler<>() {
                 @Override
                 public void handle(ActionEvent event) {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
@@ -111,7 +102,7 @@ public class MainController implements Initializable {
                     try {
                         movieListController.showMoviesInCategory(category);
                     } catch (Exception e) {
-                        throw new RuntimeException("Failed to show movies in category" + category +e);
+                        throw new RuntimeException("Failed to show movies in category" + category + e);
                     }
                     borderPane.setCenter(root);
 
@@ -123,8 +114,6 @@ public class MainController implements Initializable {
         setSortByContent();
     }
 
-
-
     public void initializeCategorySearchMenu() throws Exception {
         searchMenuBtnCategory.getItems().clear();
         for (Category category : categoryModel.getAllCategories()) {
@@ -133,7 +122,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void handleHome(ActionEvent actionEvent) throws IOException {
+    public void handleHome() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/HomeView.fxml"));
         Parent root = null;
 
@@ -146,11 +135,12 @@ public class MainController implements Initializable {
         HomeViewController controller = loader.getController();
         controller.setMovieModel(movieModel);
         borderPane.setCenter(root);
+        controller.setContent();
 
         textSceneTitle.setText("Home");
     }
 
-    public void handleWarning() throws IOException {
+    public void handleWarning() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/WarningView.fxml"));
         Parent root = null;
 
@@ -168,7 +158,7 @@ public class MainController implements Initializable {
     }
 
 
-    public void handlePopular(ActionEvent actionEvent) {
+    public void handlePopular() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
         Parent root = null;
 
@@ -186,7 +176,7 @@ public class MainController implements Initializable {
         textSceneTitle.setText("Popular movies");
     }
 
-    public void handleFavorites(ActionEvent actionEvent) throws IOException {
+    public void handleFavorites() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
         Parent root = null;
 
@@ -222,7 +212,7 @@ public class MainController implements Initializable {
         textSceneTitle.setText("all movies");
     }
 
-    public void handleAddMovie(ActionEvent actionEvent) throws IOException {
+    public void handleAddMovie() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/AddMovieView.fxml"));
         Parent root = null;
 
@@ -286,41 +276,9 @@ public class MainController implements Initializable {
             }
         });
 
-        sliderMinIMDBRating.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setSearchNodes(false);
-                btnSearch.setText("🔍");
-                labelMinIMDBRating.setText(df.format(sliderMinIMDBRating.getValue()));
-            }
-        });
+        setSliderListeners(sliderMinIMDBRating, labelMinIMDBRating, sliderMaxIMDBRating, labelMaxIMDBRating);
 
-        sliderMaxIMDBRating.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setSearchNodes(false);
-                btnSearch.setText("🔍");
-                labelMaxIMDBRating.setText(df.format(sliderMaxIMDBRating.getValue()));
-            }
-        });
-
-        sliderMinPersonalRating.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setSearchNodes(false);
-                btnSearch.setText("🔍");
-                labelMinPersonalRating.setText(df.format(sliderMinPersonalRating.getValue()));
-            }
-        });
-
-        sliderMaxPersonalRating.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setSearchNodes(false);
-                btnSearch.setText("🔍");
-                labelMaxPersonalRating.setText(df.format(sliderMaxPersonalRating.getValue()));
-            }
-        });
+        setSliderListeners(sliderMinPersonalRating, labelMinPersonalRating, sliderMaxPersonalRating, labelMaxPersonalRating);
 
 
         //TODO Add better Listener for changes in selected categories
@@ -330,6 +288,20 @@ public class MainController implements Initializable {
                 setSearchNodes(false);
                 btnSearch.setText("🔍");
             }
+        });
+    }
+
+    private void setSliderListeners(Slider sliderMinIMDBRating, Label labelMinIMDBRating, Slider sliderMaxIMDBRating, Label labelMaxIMDBRating) {
+        sliderMinIMDBRating.setOnMouseReleased(event -> {
+            setSearchNodes(false);
+            btnSearch.setText("🔍");
+            labelMinIMDBRating.setText(df.format(sliderMinIMDBRating.getValue()));
+        });
+
+        sliderMaxIMDBRating.setOnMouseReleased(event -> {
+            setSearchNodes(false);
+            btnSearch.setText("🔍");
+            labelMaxIMDBRating.setText(df.format(sliderMaxIMDBRating.getValue()));
         });
     }
 
@@ -388,9 +360,8 @@ public class MainController implements Initializable {
 
     /**
      * Loads AddCategoryView FXML and populates the category listview.
-     * @param event
      */
-    public void handleAddCategory(ActionEvent event) {
+    public void handleAddCategory() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/CategoryView.fxml"));
         Parent root = null;
 

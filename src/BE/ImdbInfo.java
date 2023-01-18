@@ -4,13 +4,7 @@ import java.util.ArrayList;
 
 public class ImdbInfo {
 
-    private String imdbId;
-
-    private String title;
-
-    private String pictureLink;
-
-    private String yearOfRelease;
+    private String title, imdbId, pictureLink, yearOfRelease;
 
     private ArrayList<String> cast;
 
@@ -26,10 +20,6 @@ public class ImdbInfo {
         return imdbId;
     }
 
-    public void setImdbId(String imdbId) {
-        this.imdbId = imdbId;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -42,23 +32,11 @@ public class ImdbInfo {
         return pictureLink;
     }
 
-    public void setPictureLink(String pictureLink) {
-        this.pictureLink = pictureLink;
-    }
-
     public String getYearOfRelease() {
         return yearOfRelease;
     }
 
-    public void setYearOfRelease(String yearOfRelease) {
-        this.yearOfRelease = yearOfRelease;
-    }
-
     public ArrayList<String> getCast() {
         return cast;
-    }
-
-    public void setCast(ArrayList<String> cast) {
-        this.cast = cast;
     }
 }
