@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MovieDAO implements IMovieDAO {
 
-    private DatabaseConnector databaseConnector;
+    private final DatabaseConnector databaseConnector;
 
     public MovieDAO() throws IOException {
         databaseConnector = new DatabaseConnector();
@@ -75,8 +75,7 @@ public class MovieDAO implements IMovieDAO {
                 id = resultSet.getInt(1);//saves the movie id as id
             }
             //creates the new movie object and sends it back
-            Movie generatedMovie =new Movie(id, title, pR, iR, movieLink, pictureLink, tS, yearOfRelease, movieDescription);
-            return generatedMovie;
+            return new Movie(id, title, pR, iR, movieLink, pictureLink, tS, yearOfRelease, movieDescription);
         }catch (SQLException e) {
             e.printStackTrace();
             throw new Exception("Failed to create movie", e);
@@ -189,7 +188,6 @@ public class MovieDAO implements IMovieDAO {
      * gets a movie from the id
      * @param movieId the movie id
      * @return the found movie object from id.
-     * @throws Exception
      */
     @Override
     public Movie getMovieFromId(int movieId) throws Exception {

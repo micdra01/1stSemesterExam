@@ -6,9 +6,7 @@ import GUI.Util.ErrorDisplayer;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Orientation;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;

@@ -5,12 +5,11 @@ import BLL.Interfaces.IImdbManager;
 import DAL.ImdbApi;
 import DAL.Interfaces.IImdbAPI;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ImdbManager implements IImdbManager {
 
-    private IImdbAPI imdbAPI;
+    private final IImdbAPI imdbAPI;
     public ImdbManager() throws Exception {
         imdbAPI = new ImdbApi();
     }

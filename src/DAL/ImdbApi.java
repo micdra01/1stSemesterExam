@@ -5,13 +5,12 @@ import DAL.Interfaces.IImdbAPI;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class ImdbApi implements IImdbAPI {
@@ -28,8 +27,6 @@ public class ImdbApi implements IImdbAPI {
     /**
      * gets all search result from imdb api
      * makes an object with info
-     * @param searchWord
-     * @return
      */
    public ArrayList<ImdbInfo> getSearchResultFromApi(String searchWord) throws Exception {
 
@@ -48,16 +45,11 @@ public class ImdbApi implements IImdbAPI {
        } catch (Exception e) {
            throw new Exception("Failed to retrieve search result from IMDB", e);
        }
-       ArrayList<ImdbInfo> result =getInfoFromResultString(response);
-       return result;
+       return getInfoFromResultString(response);
    }
 
     /**
      * gets a list of categories from the chosen movie from imdb api
-     * @param imdbId
-     * @return
-     * @throws IOException
-     * @throws InterruptedException
      */
     @Override
     public ArrayList<String> getMovieCategoriesFromApi(String imdbId) throws Exception {
@@ -74,17 +66,12 @@ public class ImdbApi implements IImdbAPI {
             throw new Exception("Failed to retrieve movie categories from IMDB", e);
         }
 
-        ArrayList<String> categoriesToMovie = getCategoryFromApiString(response);
-        return categoriesToMovie;
+        return getCategoryFromApiString(response);
 
     }
 
     /**
      * gets the description from a movie from imdb api
-     * @param imdbId
-     * @return
-     * @throws IOException
-     * @throws InterruptedException
      */
     @Override
     public String getMovieDescriptionFromImdbId(String imdbId) throws Exception {
@@ -111,10 +98,6 @@ public class ImdbApi implements IImdbAPI {
 
     /**
      * gets the rating from imdb api
-     * @param imdbId
-     * @return
-     * @throws IOException
-     * @throws InterruptedException
      */
     @Override
     public String getImdbRatingFromApi(String imdbId) throws Exception {
@@ -134,48 +117,35 @@ public class ImdbApi implements IImdbAPI {
         String responseString = response.body();
         if (responseString.contains(",\"rating\":")) {
             String ratingRaw = responseString.substring(responseString.lastIndexOf(",\"rating\":") + 10);
-            String rating = ratingRaw.substring(0, ratingRaw.indexOf(",\""));
-            return rating;
+            return ratingRaw.substring(0, ratingRaw.indexOf(",\""));
         }
         return "1";
     }
 
     /**
      * gets the categories from imdb api
-     * @param response
-     * @return
      */
     private ArrayList<String> getCategoryFromApiString(HttpResponse<String> response){
         String categoryRaw = response.body();
         String categoryWithoutStart = categoryRaw.substring(categoryRaw.lastIndexOf("[\"") + 2);
         String categoryWithoutEnd = categoryWithoutStart.substring(0, categoryWithoutStart.indexOf("\"]"));
 
-        ArrayList<String> categories = new ArrayList<>();
         //adds each category to list
-        String segments[] = categoryWithoutEnd.split("\",\"");
-        for (int i = 0; segments.length > i; i++){
-            categories.add(segments[i]);
-        }
-        return categories;
+        String[] segments = categoryWithoutEnd.split("\",\"");
+        return new ArrayList<>(Arrays.asList(segments));
     }
 
     /**
      * gets all the information from each movie in the result string, and creates an object from it.
-     * todo check if link is real before creating object
-     * @param response
-     * @return
-     * @throws IOException
-     * @throws InterruptedException
      */
     private ArrayList<ImdbInfo> getInfoFromResultString(HttpResponse<String> response){
-        String segments[] = response.body().split("\"id\":\"/title/");
+        String[] segments = response.body().split("\"id\":\"/title/");
         ArrayList<ImdbInfo> resultList = new ArrayList<>();
 
-        for (int i = 0; segments.length > i; i++){
+        for (String httpResult : segments) {
             //gets a string for each object on the list
-            String httpResult = segments[i];
             //get all the information from each movie from string
-            if(httpResult.contains("\"titleType\":\"movie\"")){//only selects movies from the list
+            if (httpResult.contains("\"titleType\":\"movie\"")) {//only selects movies from the list
 
                 //movie id in api database
                 String movieIdRaw = httpResult.substring(httpResult.lastIndexOf("\"id\":\"/title/") + 1);
@@ -185,7 +155,7 @@ public class ImdbApi implements IImdbAPI {
                 String title = titleRaw.substring(0, titleRaw.indexOf("\","));
                 //picture link
                 String picture = "";
-                if(httpResult.contains("url\":\"")){
+                if (httpResult.contains("url\":\"")) {
                     String pictureLinkRaw = httpResult.substring(httpResult.lastIndexOf("url\":\"") + 6);
                     picture = pictureLinkRaw.substring(0, pictureLinkRaw.indexOf("\","));
                 }
@@ -193,9 +163,9 @@ public class ImdbApi implements IImdbAPI {
                 String yearOfReleaseRaw = httpResult.substring(httpResult.lastIndexOf("\",\"year\":") + 9);
                 String yearOfRelease = yearOfReleaseRaw.substring(0, 4);
                 //gets the names from cast
-                String castStringsRaw[] = httpResult.split("\"name\":\"");
+                String[] castStringsRaw = httpResult.split("\"name\":\"");
                 ArrayList<String> castList = new ArrayList<>();
-                for (int j = 1; castStringsRaw.length > j; j++){
+                for (int j = 1; castStringsRaw.length > j; j++) {
                     String castString = castStringsRaw[j].substring(0, castStringsRaw[j].indexOf("\","));
                     castList.add(castString);
                 }

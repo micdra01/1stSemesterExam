@@ -26,9 +26,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-/**
- * todo write comments for all methods
- */
 public class MainController implements Initializable {
     public MenuItem menuItmTitleAZ, menuItmTitleZA, menuItmCategoryAZ, menuItmCategoryZA, menuItmIMDBMinMax, menuItmIMDBMaxMin, menuItmPRMaxMin, menuItmPRMinMax ;
     public MenuButton menuBtnSortBy;
@@ -48,7 +45,7 @@ public class MainController implements Initializable {
     @FXML
     private BorderPane borderPane;
 
-    private DecimalFormat df = new DecimalFormat("0.00");
+    private final DecimalFormat df = new DecimalFormat("0.00");
 
     private MovieModel movieModel;
     private MovieListController movieListController;
@@ -388,7 +385,6 @@ public class MainController implements Initializable {
 
     /**
      * Loads FXML, sets MovieListController + MovieModel and calls SortTitle method from MoveListController.
-     * @param com
      */
     private void handleSort(Comparator<Movie> com) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
