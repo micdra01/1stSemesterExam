@@ -6,6 +6,7 @@ import GUI.Util.ErrorDisplayer;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 
@@ -13,6 +14,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class HomeViewController implements Initializable {
+    @FXML
+    private ScrollPane homeView;
+    @FXML
+    private Label homeLabelAdded, homeLabelPopular, homeLabelAll;
     private MovieModel movieModel;
     private MovieCardController movieCardController;
 
@@ -31,6 +36,11 @@ public class HomeViewController implements Initializable {
         } catch (Exception e) {
             ErrorDisplayer.displayError(new Exception(e));
         }
+
+        homeLabelAdded.prefWidthProperty().bind(homeView.widthProperty());
+        homeLabelPopular.prefWidthProperty().bind(homeView.widthProperty());
+        homeLabelAll.prefWidthProperty().bind(homeView.widthProperty());
+
         createPopularList();
         createAllMoviesList();
         createLastAddedList();

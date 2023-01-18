@@ -6,6 +6,7 @@ import GUI.Util.ErrorDisplayer;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 
@@ -15,6 +16,10 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class WarningViewController implements Initializable {
+    @FXML
+    private ScrollPane warningView;
+    @FXML
+    private Label warningViewLabel26, warningViewLabel2, warningViewLabel6;
     private MovieModel movieModel;
     private MovieCardController movieCardController;
     @FXML
@@ -25,6 +30,9 @@ public class WarningViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         movieCardController = new MovieCardController();
+        warningViewLabel2.prefWidthProperty().bind(warningView.widthProperty());
+        warningViewLabel6.prefWidthProperty().bind(warningView.widthProperty());
+        warningViewLabel26.prefWidthProperty().bind(warningView.widthProperty());
     }
 
     public void setContent() {
