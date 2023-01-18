@@ -43,7 +43,9 @@
     -fx-text-fill: -fx-color2;
 }
 
-
+.context-menu {
+    -fx-background-color: #3A4750;
+}
 
 #mainViewTopbar, #mainViewTopButtons, #boxAdvancedSearch {
     -fx-background-color: #303841;
@@ -76,4 +78,3 @@
 #listCategories{
     -fx-background-color: #3A4750;
 }
-

@@ -218,7 +218,7 @@ public class MainController implements Initializable {
         movieListController.showAllMovies();
         borderPane.setCenter(root);
 
-        textSceneTitle.setText("all movies");
+        textSceneTitle.setText("All movies");
     }
 
     public void handleAddMovie() {
