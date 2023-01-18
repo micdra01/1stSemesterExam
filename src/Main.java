@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -17,6 +18,7 @@ public class Main extends Application {
         primaryStage.setMinWidth(350);
         primaryStage.setMinHeight(350);
         primaryStage.getScene().getStylesheets().add(getClass().getResource("/GUI/CSS/Theme.css").toExternalForm());
+        primaryStage.getIcons().add(new Image("images/Tv-Remote-50-Red.png"));
         primaryStage.show();
 
         //Shows alert box when loading main window

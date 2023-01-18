@@ -12,6 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -30,8 +32,10 @@ import java.util.stream.Collectors;
  * todo write comments for all methods
  */
 public class MainController implements Initializable {
-    public MenuItem menuItmTitleAZ, menuItmTitleZA, menuItmCategoryAZ, menuItmCategoryZA, menuItmIMDBMinMax, menuItmIMDBMaxMin, menuItmPRMaxMin, menuItmPRMinMax ;
+    public MenuItem menuItmTitleAZ, menuItmTitleZA, menuItmIMDBMinMax, menuItmIMDBMaxMin, menuItmPRMaxMin, menuItmPRMinMax ;
     public MenuButton menuBtnSortBy;
+    @FXML
+    private ImageView imgViewLogo;
 
     @FXML
     private MenuButton menuBtnCategory, searchMenuBtnCategory;
@@ -73,6 +77,9 @@ public class MainController implements Initializable {
         handleWarning();
         initializeCategoryMenu();
         initializeCategorySearchMenu();
+
+        Image logo = new Image("images/Tv-Remote-50-Red.png");
+        imgViewLogo.setImage(logo);
     }
 
 
