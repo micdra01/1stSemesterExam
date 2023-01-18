@@ -233,7 +233,7 @@ public class AddMovieController implements Initializable {
         categories.addAll(categoryResult);
 
         ListView<String> categoryList = new ListView<>(categories);
-        categoryList.setPrefWidth(275);
+        categoryList.setMaxSize(275, 350);
         grid.add(categoryList, 1, 5);
     }
 
