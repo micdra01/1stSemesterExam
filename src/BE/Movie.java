@@ -81,10 +81,6 @@ public class Movie {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         String cap = title.substring(0,1).toUpperCase() + title.substring(1);
         return cap;

@@ -1,6 +1,7 @@
 package GUI.Controllers;
 
 import BE.Category;
+import BE.Movie;
 import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ import javafx.scene.layout.HBox;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
