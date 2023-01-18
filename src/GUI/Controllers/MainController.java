@@ -1,6 +1,7 @@
 package GUI.Controllers;
 
 import BE.Category;
+import BE.Movie;
 import GUI.Models.CategoryModel;
 import GUI.Models.MovieModel;
 import GUI.Util.ErrorDisplayer;
@@ -20,6 +21,7 @@ import javafx.scene.layout.HBox;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -28,6 +30,9 @@ import java.util.stream.Collectors;
  * todo write comments for all methods
  */
 public class MainController implements Initializable {
+    public MenuItem menuItmTitleAZ, menuItmTitleZA, menuItmCategoryAZ, menuItmCategoryZA, menuItmIMDBMinMax, menuItmIMDBMaxMin, menuItmPRMaxMin, menuItmPRMinMax ;
+    public MenuButton menuBtnSortBy;
+
     @FXML
     private MenuButton menuBtnCategory, searchMenuBtnCategory;
     @FXML
@@ -42,6 +47,7 @@ public class MainController implements Initializable {
     private Label textSceneTitle, labelMinIMDBRating, labelMaxIMDBRating, labelMinPersonalRating, labelMaxPersonalRating;
     @FXML
     private BorderPane borderPane;
+
     private DecimalFormat df = new DecimalFormat("0.00");
 
     private MovieModel movieModel;
@@ -106,6 +112,8 @@ public class MainController implements Initializable {
         } catch (Exception e) {
             ErrorDisplayer.displayError(new Exception(e));
         }
+
+        setSortByContent();
     }
 
     public void initializeCategorySearchMenu() {
@@ -376,4 +384,42 @@ public class MainController implements Initializable {
         controller.setMainController(this);
         controller.populateCategories();
     }
+
+
+    /**
+     * Loads FXML, sets MovieListController + MovieModel and calls SortTitle method from MoveListController.
+     * @param com
+     */
+    private void handleSort(Comparator<Movie> com) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            new Exception("Failed to open 'open all movies'", e);
+        }
+        MovieListController controller = loader.getController();
+        borderPane.setCenter(root);
+        controller.setMovieModel(movieModel);
+        controller.sortTitle(com);
+    }
+
+    /**
+     * sets the listeners for menuItems with comparator.
+     */
+    private void setSortByContent() {
+        menuItmTitleAZ.setOnAction(e -> handleSort(Comparator.comparing(Movie::getTitle)));
+        menuItmTitleZA.setOnAction(e -> handleSort(Comparator.comparing(Movie::getTitle).reversed()));
+
+        //menuItmCategoryAZ.setOnAction(e -> handleSort(Comparator.comparing(Movie::getCategory)));
+        //menuItmCategoryZA.setOnAction(e -> handleSort(Comparator.comparing(Movie::getCategory).reversed()));
+
+        menuItmIMDBMinMax.setOnAction(e -> handleSort(Comparator.comparing(Movie::getImdbRating)));
+        menuItmIMDBMaxMin.setOnAction(e -> handleSort(Comparator.comparing(Movie::getImdbRating).reversed()));
+
+        menuItmPRMaxMin.setOnAction(e -> handleSort(Comparator.comparing(Movie::getPersonalRating)));
+        menuItmPRMaxMin.setOnAction(e -> handleSort(Comparator.comparing(Movie::getPersonalRating).reversed()));
+    }
+
 }
