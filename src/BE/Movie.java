@@ -16,7 +16,7 @@ public class Movie {
 
     private double personalRating, imdbRating;
 
-    private String imdbId, title, movieFileLink, pictureFileLink, category, TopCast, movieDescription;
+    private String imdbId, title, movieFileLink, pictureFileLink, category, topCast, movieDescription;
 
     private Timestamp lastViewed;
 
@@ -31,7 +31,7 @@ public class Movie {
      * @param lastViewed
      */
     public Movie(int id, String title, double personalRating, double imdbRating, String movieFileLink,
-                 String pictureFileLink, Timestamp lastViewed, int yearOfRelease, String movieDescription) {
+                 String pictureFileLink, Timestamp lastViewed, int yearOfRelease, String movieDescription, String topCast) {
         this.id = id;
         this.title = title;
         this.personalRating = personalRating;
@@ -41,6 +41,7 @@ public class Movie {
         this.lastViewed = lastViewed;
         this.yearOfRelease = yearOfRelease;
         this.movieDescription = movieDescription;
+        this.topCast = topCast;
     }
 
     /**
@@ -53,7 +54,7 @@ public class Movie {
      * @param pictureFileLink
      * @param lastViewed
      */
-    public Movie(String title, double personalRating, double imdbRating, String movieFileLink, String pictureFileLink, Timestamp lastViewed, int yearOfRelease, String movieDescription) {
+    public Movie(String title, double personalRating, double imdbRating, String movieFileLink, String pictureFileLink, Timestamp lastViewed, int yearOfRelease, String movieDescription, String topCast) {
         this.title = title;
         this.personalRating = personalRating;
         this.imdbRating = imdbRating;
@@ -62,15 +63,16 @@ public class Movie {
         this.lastViewed = lastViewed;
         this.yearOfRelease = yearOfRelease;
         this.movieDescription = movieDescription;
+        this.topCast = topCast;
     }
 
 
     public void setTopCast(String topCast) {
-        TopCast = topCast;
+        topCast = topCast;
     }
 
     public String getTopCast() {
-        return TopCast;
+        return topCast;
     }
 
     public void setId(int id) {
@@ -103,6 +105,10 @@ public class Movie {
 
     public String getMovieFileLink() {
         return movieFileLink;
+    }
+
+    public void setPictureFileLink(String pictureFileLink) {
+        this.pictureFileLink = pictureFileLink;
     }
 
     public String getPictureFileLink() {return pictureFileLink.replaceAll("resources\\\\", "");}

@@ -75,7 +75,7 @@ public class MovieDAO implements IMovieDAO {
                 id = resultSet.getInt(1);//saves the movie id as id
             }
             //creates the new movie object and sends it back
-            return new Movie(id, title, pR, iR, movieLink, pictureLink, tS, yearOfRelease, movieDescription);
+            return new Movie(id, title, pR, iR, movieLink, pictureLink, tS, yearOfRelease, movieDescription, topCast);
         }catch (SQLException e) {
             e.printStackTrace();
             throw new Exception("Failed to create movie", e);
@@ -141,8 +141,7 @@ public class MovieDAO implements IMovieDAO {
                 String movieDescription = rs.getString("MovieDescription");
                 String topCast = rs.getString("TopCast");
                 //creates the movie and add it to the list allMovies
-                Movie movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink, lastView, yearOfRelease, movieDescription);
-                movie.setTopCast(topCast);
+                Movie movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink, lastView, yearOfRelease, movieDescription, topCast);
                 allMovies.add(movie);
             }
         }catch (Exception e){
@@ -221,8 +220,7 @@ public class MovieDAO implements IMovieDAO {
                 String topCast = rs.getString("TopCast");
 
                 //creates the movie and add it to the list allMovies
-                movie = new Movie(id, title, personalRating, imdbRating, movieFileLink, pictureFileLink, lastView, yearOfRelease, movieDescription);
-                movie.setTopCast(topCast);
+                movie = new Movie(id, title, personalRating, imdbRating, movieFileLink, pictureFileLink, lastView, yearOfRelease, movieDescription, topCast);
                 return movie;//returns the found movie
             }
         }catch (SQLException e) {

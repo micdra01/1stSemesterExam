@@ -128,21 +128,21 @@ public class AddMovieController implements Initializable {
             int yearOfRelease = chosenMovie != null ? Integer.parseInt(chosenMovie.getYearOfRelease()) : 0;
             String movieDescription = chosenMovie != null ? imdbInfoModel.getMovieDescriptionFromImdbId(chosenMovie.getImdbId()) : "der er ingen beskrivelse for denne film";
 
-            Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed, yearOfRelease, movieDescription);
             //sets the topcast of the  movie
+            String topCast ="";
             if (chosenMovie != null && chosenMovie.getCast() != null) {
-                movie.setImdbId(chosenMovie.getImdbId());
-
-                StringBuilder topCast = new StringBuilder();
                 for (int i = 0; chosenMovie.getCast().size() > i; i++) {
-                    topCast.append(chosenMovie.getCast().get(i)).append(",");
+                    topCast = topCast + chosenMovie.getCast().get(i) + ",";
                 }
-                movie.setTopCast(topCast.toString());
             }
 
-            movieModel.addMovieToList(movie);
+            Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed, yearOfRelease, movieDescription, topCast);
             movie = movieModel.createMovie(movie); //Create movie in DAO and get the correct ID back
+
+            movie.setPictureFileLink(coverPath);
             addCategoriesFromMovie(movie);
+            movieModel.addMovieToList(movie);
+
             Label savedText = new Label("you did it, you saved the movie in your database ");
             grid.add(savedText, 1, 8);
 

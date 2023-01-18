@@ -148,8 +148,9 @@ public class MovieViewController implements Initializable {
         labelLastViewed.setText(String.valueOf(movie.getLastViewed()));
         imageMoviePoster.setImage(new Image(movie.getPictureFileLink()));
         labelDescription.setText(movie.getMovieDescription());
-        //TODO check if null. if null set "", else run below line
-        labelCast.setText(movie.getTopCast().replaceAll(",", "\n"));
+        if(movie.getTopCast() != null && movie.getTopCast().contains(",")){
+            labelCast.setText(movie.getTopCast().replaceAll(",", "\n"));
+        }
     }
 
     public void handlePlayMovie() {
