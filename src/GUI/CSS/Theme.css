@@ -59,8 +59,11 @@
 }
 
 #grid{
-
     -fx-background-color: #3A4750;
+}
+
+.button, .menu-button{
+    -fx-background-radius: 14;
 }
 
 
