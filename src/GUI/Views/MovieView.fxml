@@ -164,7 +164,7 @@
                   <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" visible="false" HBox.hgrow="ALWAYS" />
                   <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" text="TopCast:" VBox.vgrow="ALWAYS">
+                        <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" text="Top Cast:" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="20.0" />
                            </font>

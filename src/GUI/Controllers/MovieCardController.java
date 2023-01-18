@@ -76,8 +76,8 @@ public class MovieCardController {
         Button btnInfo = new Button();
 
         HBox hBox = new HBox(btnPlay, btnInfo);
-        btnPlay.setText("play");
-        btnInfo.setText("se info");
+        btnPlay.setText("Play");
+        btnInfo.setText("Info");
         hBox.setAlignment(Pos.CENTER);
 
         VBox vBox1 = new VBox(lblTitleCard, lblDescriptionCard, hBox);

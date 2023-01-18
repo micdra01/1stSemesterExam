@@ -190,7 +190,7 @@
                         <Insets right="10.0" top="10.0" />
                      </HBox.margin>
                   </MenuButton>
-                  <Button fx:id="btnClose" alignment="CENTER" mnemonicParsing="false" onAction="#handleClose" prefHeight="0.0" prefWidth="88.0" text="✖">
+                  <Button fx:id="btnClose" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleClose" prefHeight="0.0" prefWidth="88.0" snapToPixel="false" text="✖" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="20.0" right="6.0" top="6.0" />
                      </HBox.margin>

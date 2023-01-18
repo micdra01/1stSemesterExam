@@ -69,6 +69,11 @@
     -fx-background-color: #3A4750;
 }
 
+#warningViewHBox{
+    -fx-background-color: #D72323;
+}
 
-
+#listCategories{
+    -fx-background-color: #3A4750;
+}
 

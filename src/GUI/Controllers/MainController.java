@@ -385,6 +385,8 @@ public class MainController implements Initializable {
         controller.setCategoryModel(categoryModel);
         controller.setMainController(this);
         controller.populateCategories();
+
+        textSceneTitle.setText("Edit Category");
     }
 
 
@@ -399,7 +401,7 @@ public class MainController implements Initializable {
         try {
             root = loader.load();
         } catch (IOException e) {
-            new Exception("Failed to open 'open all movies'", e);
+            new Exception("Failed to open 'open All movies'", e);
         }
         MovieListController controller = loader.getController();
         borderPane.setCenter(root);
