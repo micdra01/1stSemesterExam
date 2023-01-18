@@ -196,7 +196,12 @@ public class MovieListController implements Initializable {
         int row = 0;
 
         Comparator<Movie> movieComparator = com;
-        ObservableList<Movie> getMoviesInList = movieModel.getMoviesInList();
+        ObservableList<Movie> getMoviesInList = null;
+        try {
+            getMoviesInList = movieModel.getMoviesInList();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         Collections.sort(getMoviesInList, movieComparator);
         SortedList<Movie> sortedMovie = new SortedList<>(getMoviesInList, movieComparator);
 
