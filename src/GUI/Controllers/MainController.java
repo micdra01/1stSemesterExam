@@ -17,6 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
 public class MainController implements Initializable {
     public MenuItem menuItmTitleAZ, menuItmTitleZA, menuItmCategoryAZ, menuItmCategoryZA, menuItmIMDBMinMax, menuItmIMDBMaxMin, menuItmPRMaxMin, menuItmPRMinMax ;
     public MenuButton menuBtnSortBy;
+    public Button btnClose;
 
     @FXML
     private MenuButton menuBtnCategory, searchMenuBtnCategory;
@@ -419,4 +421,8 @@ public class MainController implements Initializable {
         menuItmPRMaxMin.setOnAction(e -> handleSort(Comparator.comparing(Movie::getPersonalRating).reversed()));
     }
 
+    public void handleClose() {
+        Stage stage = (Stage) btnClose.getScene().getWindow();
+        stage.close();
+    }
 }

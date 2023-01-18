@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MainController">
+<BorderPane fx:id="borderPane" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MainController">
    <left>
       <VBox fx:id="mainViewSidebar" minHeight="100.0" prefHeight="450.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
@@ -79,7 +79,7 @@
                      <items>
                         <MenuItem fx:id="menuItemMinIMDB" mnemonicParsing="false" text="Min. IMDB">
                            <graphic>
-                              <HBox>
+                              <HBox fx:id="HBoxMinIMDB">
                                  <children>
                                     <Slider fx:id="sliderMinIMDBRating" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" minorTickCount="0" showTickLabels="true" />
                                     <Label fx:id="labelMinIMDBRating" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
@@ -96,7 +96,7 @@
                         </MenuItem>
                         <MenuItem fx:id="menuItemMaxIMDB" mnemonicParsing="false" text="Max. IMDB">
                            <graphic>
-                              <HBox>
+                              <HBox fx:id="HBoxMaxIMDB">
                                  <children>
                                     <Slider fx:id="sliderMaxIMDBRating" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" minorTickCount="0" showTickLabels="true" value="10.0" />
                                     <Label fx:id="labelMaxIMDBRating" HBox.hgrow="ALWAYS">
@@ -113,7 +113,7 @@
                         </MenuItem>
                         <MenuItem fx:id="menuItemMinPR" mnemonicParsing="false" text="Min. Personal">
                            <graphic>
-                              <HBox>
+                              <HBox fx:id="HBoxMinPR">
                                  <children>
                                     <Slider fx:id="sliderMinPersonalRating" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" minorTickCount="0" showTickLabels="true" />
                                     <Label fx:id="labelMinPersonalRating" HBox.hgrow="ALWAYS">
@@ -130,10 +130,10 @@
                         </MenuItem>
                         <MenuItem fx:id="menuItemMaxPR" mnemonicParsing="false" text="Max. Personal">
                            <graphic>
-                              <HBox>
+                              <HBox fx:id="HBoxMaxPR">
                                  <children>
                                     <Slider fx:id="sliderMaxPersonalRating" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" minorTickCount="0" showTickLabels="true" value="10.0" />
-                                    <Label fx:id="labelMaxPersonalRating" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="40.0" HBox.hgrow="ALWAYS">
+                                    <Label fx:id="labelMaxPersonalRating" HBox.hgrow="ALWAYS">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -190,6 +190,11 @@
                         <Insets right="10.0" top="10.0" />
                      </HBox.margin>
                   </MenuButton>
+                  <Button fx:id="btnClose" alignment="CENTER" mnemonicParsing="false" onAction="#handleClose" prefHeight="0.0" prefWidth="88.0" text="✖">
+                     <HBox.margin>
+                        <Insets left="20.0" right="6.0" top="6.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
          </children>
