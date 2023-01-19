@@ -106,16 +106,27 @@ public class HomeViewController implements Initializable {
         int col = 0;
         int row = 0;
 
-        //loop for getting the last six added movies
-        for (int i = allMovies.size() -1; i > allMovies.size() -7; i--) {
-            Movie movie = allMovies.get(i);
+        if(allMovies.size() > 6) {
+            //loop for getting the last six added movies
+            for (int i = allMovies.size() -1; i > allMovies.size() -7; i--) {
+                Movie movie = allMovies.get(i);
 
-            //Creates the movieCard and adds it to the content grid
-            GridPane movieCard = movieCardController.createMovieCard(movie, movieModel); //creates the movie card
-            movieCardController.setMainController(mainController);
-            grid.add(movieCard, col, row); //adds it to the content gridPane
-            col++;
+                //Creates the movieCard and adds it to the content grid
+                GridPane movieCard = movieCardController.createMovieCard(movie, movieModel); //creates the movie card
+                movieCardController.setMainController(mainController);
+                grid.add(movieCard, col, row); //adds it to the content gridPane
+                col++;
+            }
+        } else {
+            for (Movie movie : allMovies) {
+                //Creates the movieCard and adds it to the content grid
+                GridPane movieCard = movieCardController.createMovieCard(movie, movieModel); //creates the movie card
+                movieCardController.setMainController(mainController);
+                grid.add(movieCard, col, row); //adds it to the content gridPane
+                col++;
+            }
         }
+
     }
 
     public void setMovieModel(MovieModel movieModel) {

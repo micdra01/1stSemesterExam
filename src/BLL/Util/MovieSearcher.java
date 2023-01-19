@@ -44,8 +44,10 @@ public class MovieSearcher {
      * @param maxPersonalRating, the max. Personal Rating to search for
      * @return a list of movies matching the query in title
      */
-    public List<Movie> searchAdvanced(List<Movie> searchBase, String query, double minIMDBRating, double maxIMDBRating,
-                                      double minPersonalRating, double maxPersonalRating, List<String> categories) throws Exception {
+    public List<Movie> searchAdvanced(List<Movie> searchBase, String query,
+                                      double minIMDBRating, double maxIMDBRating,
+                                      double minPersonalRating, double maxPersonalRating,
+                                      List<String> categories) throws Exception {
         List<Movie> searchResult = new ArrayList<>();
 
         for (Movie movie: searchBase) {

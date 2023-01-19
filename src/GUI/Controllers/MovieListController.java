@@ -44,7 +44,7 @@ public class MovieListController implements Initializable {
     }
 
     /**
-     * Creates the gridPane for movieContent
+     * Creates the FlowPane for movieContent
      * fills it with all movies
      */
     public void showAllMovies() {
