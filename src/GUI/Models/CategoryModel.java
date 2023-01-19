@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CategoryModel {
 
-    private ICategoryManager categoryManager;
+    private final ICategoryManager categoryManager;
 
     public CategoryModel() throws Exception {
         categoryManager = new CategoryManager();
@@ -47,14 +47,15 @@ public class CategoryModel {
 
     /**
      * checks if the category exists, if it does the category will not be created
-     * @param categoryName
-     * @return
-     * @throws Exception
      */
     public Category createCategoryIfNotExist(String categoryName) throws Exception {
         if (categoryManager.getCategoryFromName(categoryName) == null) {
             categoryManager.createCategory(new Category(-1, categoryName));
         }
+        return categoryManager.getCategoryFromName(categoryName);
+    }
+
+    public Category getCategoryFromName(String categoryName) throws Exception {
         return categoryManager.getCategoryFromName(categoryName);
     }
 }

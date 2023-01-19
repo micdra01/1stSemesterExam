@@ -11,8 +11,8 @@ import java.util.List;
 
 public class MovieManager implements IMovieManager {
 
-    private IMovieDAO databaseAccess;
-    private MovieSearcher movieSearcher;
+    private final IMovieDAO databaseAccess;
+    private final MovieSearcher movieSearcher;
 
     public MovieManager() throws IOException {
         databaseAccess = new MovieDAO();
@@ -69,9 +69,8 @@ public class MovieManager implements IMovieManager {
     @Override
     public List<Movie> search(String query) throws Exception {
         List<Movie> allMovies = getAllMovies();
-        List<Movie> searchResult = movieSearcher.search(allMovies, query);
 
-        return searchResult;
+        return movieSearcher.search(allMovies, query);
     }
 
     /**
@@ -83,21 +82,10 @@ public class MovieManager implements IMovieManager {
      */
     public List<Movie> searchAdvanced(String query, double minIMDBRating, double maxIMDBRating,
                                       double minPersonalRating, double maxPersonalRating, List<String> categories) throws Exception {
+
         List<Movie> allMovies = getAllMovies();
-        List<Movie> searchResult = movieSearcher.searchAdvanced(allMovies, query, minIMDBRating, maxIMDBRating,
+
+        return movieSearcher.searchAdvanced(allMovies, query, minIMDBRating, maxIMDBRating,
                 minPersonalRating, maxPersonalRating, categories);
-
-        return searchResult;
-    }
-
-    /**
-     * gets a movie from the database by its id
-     * @param movieId the movie id for the movie
-     * @return returns a movie object
-     * @throws Exception
-     */
-    @Override
-    public Movie getMovieFromId(int movieId) throws Exception {
-        return databaseAccess.getMovieFromId(movieId);
     }
 }

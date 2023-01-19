@@ -19,6 +19,7 @@ public class HomeViewController implements Initializable {
     @FXML
     private Label homeLabelAdded, homeLabelPopular, homeLabelAll;
     private MovieModel movieModel;
+    private MainController mainController;
     private MovieCardController movieCardController;
 
     @FXML
@@ -66,6 +67,7 @@ public class HomeViewController implements Initializable {
             if (movie.getImdbRating() >= minRatingPopular) {
                 //... it creates a movieCard for said movie and adds it to the content grid
                 GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
+                movieCardController.setMainController(mainController);
                 grid.add(movieCard, col, row);
                 col++;
             }
@@ -89,6 +91,7 @@ public class HomeViewController implements Initializable {
         for(Movie movie : allMovies) {
             //Creates the movieCard and adds it to the content grid
             GridPane movieCard = movieCardController.createMovieCard(movie, movieModel);
+            movieCardController.setMainController(mainController);
             grid.add(movieCard, col, row);
             col++;
         }
@@ -109,6 +112,7 @@ public class HomeViewController implements Initializable {
 
             //Creates the movieCard and adds it to the content grid
             GridPane movieCard = movieCardController.createMovieCard(movie, movieModel); //creates the movie card
+            movieCardController.setMainController(mainController);
             grid.add(movieCard, col, row); //adds it to the content gridPane
             col++;
         }
@@ -116,5 +120,8 @@ public class HomeViewController implements Initializable {
 
     public void setMovieModel(MovieModel movieModel) {
         this.movieModel = movieModel;
+    }
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 }

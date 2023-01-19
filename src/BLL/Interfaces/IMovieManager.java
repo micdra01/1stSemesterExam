@@ -7,9 +7,9 @@ import java.util.List;
 public interface IMovieManager {
 
 
-
     /**
      * Creates a Movie.
+     *
      * @param movie The movie to create.
      * @return Returns the newly created movie.
      * @throws Exception If it fails to create the movie.
@@ -19,6 +19,7 @@ public interface IMovieManager {
 
     /**
      * Deletes a movie.
+     *
      * @param movie The movie to delete.
      * @throws Exception If it fails to delete the movie.
      */
@@ -27,6 +28,7 @@ public interface IMovieManager {
 
     /**
      * Returns all movies
+     *
      * @return A list of all movies.
      * @throws Exception If it fails to retrieve all movies.
      */
@@ -34,6 +36,7 @@ public interface IMovieManager {
 
     /**
      * Update/Edit a Movie
+     *
      * @param movie, the selected movie to update
      * @throws Exception If it fails to update the movie.
      */
@@ -42,6 +45,7 @@ public interface IMovieManager {
 
     /**
      * Filter the list of movies in library using a search query
+     *
      * @param query, the string input used to filter
      * @return a list of movies matching the query in either title or category...
      * @throws Exception If it fails to search.
@@ -50,24 +54,17 @@ public interface IMovieManager {
 
     /**
      * Filter the list of movies in library using a search query, min. rating & category selection
-     * @param query, the string input used to filter
-     * @param minIMDBRating, the min. IMDB rating
-     * @param maxIMDBRating, the max. IMDB rating
+     *
+     * @param query,             the string input used to filter
+     * @param minIMDBRating,     the min. IMDB rating
+     * @param maxIMDBRating,     the max. IMDB rating
      * @param minPersonalRating, the min. personal rating
      * @param maxPersonalRating, the max. personal rating
-     * @param categories, the selected categories
+     * @param categories,        the selected categories
      * @return a list of movies matching the query in title & the min. rating
      * @throws Exception If it fails to search.
      */
     List<Movie> searchAdvanced(String query, double minIMDBRating, double maxIMDBRating,
                                double minPersonalRating, double maxPersonalRating, List<String> categories) throws Exception;
 
-
-    /**
-     * gets a movie from the database by its id
-     * @param movieId the movie id for the movie
-     * @return returns a movie object
-     * @throws Exception
-     */
-    Movie getMovieFromId(int movieId) throws Exception;
 }

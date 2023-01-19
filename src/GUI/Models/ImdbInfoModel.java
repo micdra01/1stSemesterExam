@@ -4,12 +4,11 @@ import BE.ImdbInfo;
 import BLL.ImdbManager;
 import BLL.Interfaces.IImdbManager;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ImdbInfoModel {
 
-    private IImdbManager imdbManager;
+    private final IImdbManager imdbManager;
 
     public ImdbInfoModel() throws Exception {
         imdbManager = new ImdbManager();
