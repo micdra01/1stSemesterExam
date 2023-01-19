@@ -38,7 +38,7 @@ public class MovieDAO implements IMovieDAO {
 
             if(movie.getPictureFileLink().startsWith("https:")){
                 relativeCoverPath = !movie.getPictureFileLink().isEmpty() ? LocalFileHandler.saveFileFromApi(movie.getPictureFileLink(), movie.getImdbId()) : null;
-            } else if (movie.getPictureFileLink().equals("images/ImageNotFound.jpg")) {
+            } else if (movie.getPictureFileLink().contains("images/ImageNotFound.jpg")) {
                 relativeCoverPath = Path.of(movie.getPictureFileLink());
             } else {
                 relativeCoverPath = !movie.getPictureFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getPictureFileLink(), FileType.IMAGE) : null;
@@ -97,7 +97,7 @@ public class MovieDAO implements IMovieDAO {
             statement.setInt(1, movie.getId());
             // Run the specified SQL Statement
             statement.executeUpdate();
-            if(movie.getPictureFileLink().contains("ImageNotFound.jpg")){
+            if(!movie.getPictureFileLink().contains("ImageNotFound.jpg")){
                 LocalFileHandler.deleteLocalFile("resources/" + movie.getPictureFileLink());
             }
             LocalFileHandler.deleteLocalFile(movie.getMovieFileLink());
