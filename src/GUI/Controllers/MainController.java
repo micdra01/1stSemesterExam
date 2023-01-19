@@ -19,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,6 +37,7 @@ public class MainController implements Initializable {
     public MenuButton menuBtnSortBy;
     @FXML
     private ImageView imgViewLogo;
+    public Button btnClose;
 
     @FXML
     private MenuButton menuBtnCategory, searchMenuBtnCategory;
@@ -223,7 +225,7 @@ public class MainController implements Initializable {
         movieListController.showAllMovies();
         borderPane.setCenter(root);
 
-        textSceneTitle.setText("all movies");
+        textSceneTitle.setText("All movies");
     }
 
     public void handleAddMovie() {
@@ -391,7 +393,7 @@ public class MainController implements Initializable {
         controller.setMainController(this);
         controller.populateCategories();
 
-        textSceneTitle.setText("Add/Remove Category");
+        textSceneTitle.setText("Edit Category");
     }
 
 
@@ -406,7 +408,7 @@ public class MainController implements Initializable {
         try {
             root = loader.load();
         } catch (IOException e) {
-            new Exception("Failed to open 'open all movies'", e);
+            new Exception("Failed to open 'open All movies'", e);
         }
         MovieListController controller = loader.getController();
         borderPane.setCenter(root);
@@ -428,4 +430,8 @@ public class MainController implements Initializable {
         menuItmPRMaxMin.setOnAction(e -> handleSort(Comparator.comparing(Movie::getPersonalRating).reversed()));
     }
 
+    public void handleClose() {
+        Stage stage = (Stage) btnClose.getScene().getWindow();
+        stage.close();
+    }
 }
