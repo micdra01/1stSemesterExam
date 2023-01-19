@@ -29,7 +29,6 @@ public class LocalFileHandler {
             String folder = "";
 
             if (fileType == FileType.MOVIE) folder += "movies//";
-            if (fileType == FileType.TRAILER) folder += "trailers//";
             if (fileType == FileType.IMAGE) folder += "images//";
 
             Path originalFile = Paths.get(path);

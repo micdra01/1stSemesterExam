@@ -202,14 +202,11 @@ public class AddMovieController implements Initializable {
         grid.add(searchResultListView, 1,2);
 
         //listener for when a result is selected on the listVIew
-        searchResultListView.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                try {
-                    chosenMovieListener(searchResult);
-                } catch (Exception e) {
-                    ErrorDisplayer.displayError(new Exception(e));
-                }
+        searchResultListView.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            try {
+                chosenMovieListener(searchResult);
+            } catch (Exception e) {
+                ErrorDisplayer.displayError(new Exception(e));
             }
         });
     }
