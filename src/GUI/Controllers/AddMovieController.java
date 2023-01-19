@@ -137,6 +137,11 @@ public class AddMovieController implements Initializable {
             }
 
             Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed, yearOfRelease, movieDescription, topCast);
+
+            if(chosenMovie != null){
+                movie.setImdbId(chosenMovie.getImdbId());
+            }
+
             movie = movieModel.createMovie(movie); //Create movie in DAO and get the correct ID back
 
             movie.setPictureFileLink(coverPath);
