@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MovieDAO implements IMovieDAO {
 
-    private DatabaseConnector databaseConnector;
+    private final DatabaseConnector databaseConnector;
 
     public MovieDAO() throws IOException {
         databaseConnector = new DatabaseConnector();
@@ -38,8 +38,9 @@ public class MovieDAO implements IMovieDAO {
 
             if(movie.getPictureFileLink().startsWith("https:")){
                 relativeCoverPath = !movie.getPictureFileLink().isEmpty() ? LocalFileHandler.saveFileFromApi(movie.getPictureFileLink(), movie.getImdbId()) : null;
-                System.out.println("it works");
-            }else {
+            } else if (movie.getPictureFileLink().equals("images/ImageNotFound.jpg")) {
+                relativeCoverPath = Path.of(movie.getPictureFileLink());
+            } else {
                 relativeCoverPath = !movie.getPictureFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getPictureFileLink(), FileType.IMAGE) : null;
             }
             Path relativeMoviePath = !movie.getMovieFileLink().isEmpty() ? LocalFileHandler.createLocalFile(movie.getMovieFileLink(), FileType.MOVIE) : null;
@@ -74,8 +75,7 @@ public class MovieDAO implements IMovieDAO {
                 id = resultSet.getInt(1);//saves the movie id as id
             }
             //creates the new movie object and sends it back
-            Movie generatedMovie =new Movie(id, title, pR, iR, movieLink, pictureLink, tS, yearOfRelease, movieDescription);
-            return generatedMovie;
+            return new Movie(id, title, pR, iR, movieLink, pictureLink, tS, yearOfRelease, movieDescription, topCast);
         }catch (SQLException e) {
             e.printStackTrace();
             throw new Exception("Failed to create movie", e);
@@ -97,6 +97,10 @@ public class MovieDAO implements IMovieDAO {
             statement.setInt(1, movie.getId());
             // Run the specified SQL Statement
             statement.executeUpdate();
+            if(movie.getPictureFileLink().contains("ImageNotFound.jpg")){
+                LocalFileHandler.deleteLocalFile("resources/" + movie.getPictureFileLink());
+            }
+            LocalFileHandler.deleteLocalFile(movie.getMovieFileLink());
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -137,8 +141,7 @@ public class MovieDAO implements IMovieDAO {
                 String movieDescription = rs.getString("MovieDescription");
                 String topCast = rs.getString("TopCast");
                 //creates the movie and add it to the list allMovies
-                Movie movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink, lastView, yearOfRelease, movieDescription);
-                movie.setTopCast(topCast);
+                Movie movie = new Movie(id, title,personalRating,imdbRating,movieFileLink,pictureFileLink, lastView, yearOfRelease, movieDescription, topCast);
                 allMovies.add(movie);
             }
         }catch (Exception e){
@@ -184,7 +187,6 @@ public class MovieDAO implements IMovieDAO {
      * gets a movie from the id
      * @param movieId the movie id
      * @return the found movie object from id.
-     * @throws Exception
      */
     @Override
     public Movie getMovieFromId(int movieId) throws Exception {
@@ -218,8 +220,7 @@ public class MovieDAO implements IMovieDAO {
                 String topCast = rs.getString("TopCast");
 
                 //creates the movie and add it to the list allMovies
-                movie = new Movie(id, title, personalRating, imdbRating, movieFileLink, pictureFileLink, lastView, yearOfRelease, movieDescription);
-                movie.setTopCast(topCast);
+                movie = new Movie(id, title, personalRating, imdbRating, movieFileLink, pictureFileLink, lastView, yearOfRelease, movieDescription, topCast);
                 return movie;//returns the found movie
             }
         }catch (SQLException e) {

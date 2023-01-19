@@ -19,12 +19,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -155,8 +153,9 @@ public class MovieViewController implements Initializable {
         labelLastViewed.setText(String.valueOf(movie.getLastViewed()));
         imageMoviePoster.setImage(new Image(movie.getPictureFileLink()));
         labelDescription.setText(movie.getMovieDescription());
-        //TODO check if null. if null set "", else run below line
-        labelCast.setText(movie.getTopCast().replaceAll(",", "\n"));
+        if(movie.getTopCast() != null && movie.getTopCast().contains(",")){
+            labelCast.setText(movie.getTopCast().replaceAll(",", "\n"));
+        }
     }
 
     public void handlePlayMovie() {
@@ -202,11 +201,7 @@ public class MovieViewController implements Initializable {
                 movieModel.deleteMovie(movie);
                 Stage stage = (Stage) btnSetPR.getScene().getWindow();
                 stage.close();
-                //TODO re-load previous stage, so removed movie is gone
-                //This only updates after a sidebar button has been clicked (to reload Home/All/Popular/Favorites)
-                //We need access to mainController from here to reload it.
-                //Possibly save info on which view was clicked last in main, to reload that same view?
-                mainController.reloadCurrentView();
+               mainController.reloadCurrentView();
             }
         } catch (Exception e) {
             ErrorDisplayer.displayError(e);

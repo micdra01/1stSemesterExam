@@ -9,14 +9,11 @@ import javafx.collections.transformation.SortedList;
 import GUI.Util.ErrorDisplayer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Orientation;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
@@ -27,7 +24,7 @@ public class MovieListController implements Initializable {
     private MainController mainController;
     private CategoryModel categoryModel;
     private MovieCardController movieCardController;
-    private FlowPane pane = new FlowPane();
+    private final FlowPane pane = new FlowPane();
     private ObservableList<Movie> allMovies;
 
     @Override
@@ -117,9 +114,8 @@ public class MovieListController implements Initializable {
         pane.getChildren().clear();
         movieListView.setContent(pane);
 
-        Comparator<Movie> movieComparator = com;
-        Collections.sort(allMovies, movieComparator);
-        SortedList<Movie> sortedMovie = new SortedList<>(allMovies, movieComparator);
+        allMovies.sort(com);
+        SortedList<Movie> sortedMovie = new SortedList<>(allMovies, com);
 
 
         for(Movie movie : sortedMovie) {

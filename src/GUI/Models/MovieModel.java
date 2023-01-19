@@ -10,9 +10,9 @@ import java.util.List;
 
 public class MovieModel {
 
-    private IMovieManager movieManager;
+    private final IMovieManager movieManager;
 
-    private ObservableList<Movie> moviesInList;
+    private final ObservableList<Movie> moviesInList;
 
     public MovieModel() throws Exception {
         movieManager = new MovieManager();
@@ -43,9 +43,6 @@ public class MovieModel {
 
     public void updateMovie(Movie movie) throws Exception {
         movieManager.updateMovie(movie);
-    }
-    public Movie getMovieById(int movieId) throws Exception{
-        return movieManager.getMovieFromId(movieId);
     }
 
     /**

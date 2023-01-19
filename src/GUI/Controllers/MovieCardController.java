@@ -53,7 +53,7 @@ public class MovieCardController {
         ImageView imgView = new ImageView(img);//creates a new image view and sets the img in it
         imgView.setPreserveRatio(true);
         imgView.setFitWidth(130);
-        imgView.setFitHeight(200);
+        imgView.setFitHeight(190);
 
         //creates a label with the title of the movieCard
         Label lblTitle = new Label(movie.getTitle());
@@ -94,7 +94,7 @@ public class MovieCardController {
 
         btnInfo.setOnAction(event -> openMovieInfo(movie));
 
-        movieCard.setOnMouseEntered(event -> {
+        vBox1.setOnMouseEntered(event -> {
 
             imgView.setOpacity(0.3);
             btnPlay.setOpacity(1);
@@ -104,7 +104,7 @@ public class MovieCardController {
             lblDescriptionCard.setText(movie.getMovieDescription());
         });
 
-        movieCard.setOnMouseExited(event -> {
+        vBox1.setOnMouseExited(event -> {
             imgView.setOpacity(1);
             btnPlay.setOpacity(0);
             btnInfo.setOpacity(0);

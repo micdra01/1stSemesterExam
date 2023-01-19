@@ -6,6 +6,7 @@ import BE.Movie;
 import GUI.Models.CategoryModel;
 import GUI.Models.ImdbInfoModel;
 import GUI.Models.MovieModel;
+import GUI.Util.ErrorDisplayer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -22,7 +23,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -36,14 +36,10 @@ public class AddMovieController implements Initializable {
     public GridPane grid;
     private MovieModel movieModel;
     private CategoryModel categoryModel;
-
     private File movieCover, movieFile;
-
     private ImdbInfoModel imdbInfoModel;
-
     private ImdbInfo chosenMovie;
     private ListView<String> searchResultListView;
-
     private boolean textFillMovie, textFillPicture, textFillTitle;
 
     @Override
@@ -118,38 +114,43 @@ public class AddMovieController implements Initializable {
     /**
      * creates a movie from either the inputfields if they are selected or the imdb info if it is created
      */
-    public void handleSave() throws Exception {
-        String title = chosenMovie != null ? chosenMovie.getTitle() : lblTitle.getText();
+    public void handleSave() {
+        try {
+            String title = chosenMovie != null ? chosenMovie.getTitle() : lblTitle.getText();
 
-        double personalRating = -1;
-        double imdbRating = chosenMovie != null ? Double.parseDouble(imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId())) : 0.00;
-        String movieLink = movieFile != null ? movieFile.getAbsolutePath() : "";
-        String coverPath = chosenMovie != null ? chosenMovie.getPictureLink() : movieCover.getAbsolutePath();
-        Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
-        int yearOfRelease = chosenMovie != null ? Integer.parseInt(chosenMovie.getYearOfRelease()) : 0;
-        String movieDescription = chosenMovie != null ? imdbInfoModel.getMovieDescriptionFromImdbId(chosenMovie.getImdbId()) : "der er ingen beskrivelse for denne film";
+            double personalRating = -1;
+            double imdbRating = 0;
 
-        Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed, yearOfRelease, movieDescription);
-        //sets the topcast of the  movie
-        if (chosenMovie != null && chosenMovie.getCast() != null) {
-            movie.setImdbId(chosenMovie.getImdbId());
+            imdbRating = chosenMovie != null ? Double.parseDouble(imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId())) : 0.00;
+            String movieLink = movieFile != null ? movieFile.getAbsolutePath() : "";
+            String coverPath = chosenMovie != null && !chosenMovie.getPictureLink().isEmpty() ? chosenMovie.getPictureLink() : "images/ImageNotFound.jpg";
+            Timestamp lastViewed = new Timestamp(Calendar.getInstance().getTimeInMillis());
+            int yearOfRelease = chosenMovie != null ? Integer.parseInt(chosenMovie.getYearOfRelease()) : 0;
+            String movieDescription = chosenMovie != null ? imdbInfoModel.getMovieDescriptionFromImdbId(chosenMovie.getImdbId()) : "der er ingen beskrivelse for denne film";
 
-            StringBuilder topCast = new StringBuilder();
-            for (int i = 0; chosenMovie.getCast().size() > i; i++) {
-                topCast.append(chosenMovie.getCast().get(i)).append(",");
+            //sets the topcast of the  movie
+            String topCast ="";
+            if (chosenMovie != null && chosenMovie.getCast() != null) {
+                for (int i = 0; chosenMovie.getCast().size() > i; i++) {
+                    topCast = topCast + chosenMovie.getCast().get(i) + ",";
+                }
             }
-            movie.setTopCast(topCast.toString());
+
+            Movie movie = new Movie(title, personalRating, imdbRating, movieLink, coverPath, lastViewed, yearOfRelease, movieDescription, topCast);
+            movie = movieModel.createMovie(movie); //Create movie in DAO and get the correct ID back
+
+            movie.setPictureFileLink(coverPath);
+            addCategoriesFromMovie(movie);
+            movieModel.addMovieToList(movie);
+
+            Label savedText = new Label("you did it, you saved the movie in your database ");
+            grid.add(savedText, 1, 8);
+
+            clearImputFileds();
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception(e));
         }
-
-        movieModel.addMovieToList(movie);
-        movie = movieModel.createMovie(movie); //Create movie in DAO and get the correct ID back
-
-        addCategoriesFromMovie(movie);
-        Label savedText = new Label("you did it, you saved the movie in your database ");
-        grid.add(savedText, 1, 8);
-
-        clearImputFileds();
-        }
+    }
 
     private void clearImputFileds() {
         textMovieFile.clear();
@@ -157,16 +158,20 @@ public class AddMovieController implements Initializable {
         textTitle.clear();
     }
 
-    private void addCategoriesFromMovie(Movie movie) throws Exception {
-        if (chosenMovie != null) {
-            //Create a list of all movie categories found from IMDB
-            ArrayList<String> movieCategories = imdbInfoModel.getMovieCategoriesFromApi(chosenMovie.getImdbId());
-            //Loop through all categories, and add the movie.
-            //If the category does not exist it will be created through the CategoryModel
-            for (String movieCategory : movieCategories) {
-                Category category = categoryModel.createCategoryIfNotExist(movieCategory);
-                categoryModel.addMovieToCategory(category, movie);
+    private void addCategoriesFromMovie(Movie movie) {
+        try {
+            if (chosenMovie != null) {
+                //Create a list of all movie categories found from IMDB
+                ArrayList<String> movieCategories = imdbInfoModel.getMovieCategoriesFromApi(chosenMovie.getImdbId());
+                //Loop through all categories, and add the movie.
+                //If the category does not exist it will be created through the CategoryModel
+                for (String movieCategory : movieCategories) {
+                    Category category = categoryModel.createCategoryIfNotExist(movieCategory);
+                    categoryModel.addMovieToCategory(category, movie);
+                }
             }
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception(e));
         }
     }
 
@@ -179,12 +184,11 @@ public class AddMovieController implements Initializable {
         //creates the imdb model, so we can call api operations.
         try {
             searchResult = imdbInfoModel.getSearchResultFromApi(textTitle.getText());
-        } catch (InterruptedException e) {
-            throw new RuntimeException("your search gave nothing back. Try being more specific or check the spelling");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            createResultList(searchResult);
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception("Failed to retrieve search result from IMDB", e));
         }
-        createResultList(searchResult);
+
     }
 
     private void createResultList(ArrayList<ImdbInfo> searchResult) {
@@ -201,7 +205,11 @@ public class AddMovieController implements Initializable {
         searchResultListView.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                chosenMovieListener(searchResult);
+                try {
+                    chosenMovieListener(searchResult);
+                } catch (Exception e) {
+                    ErrorDisplayer.displayError(new Exception(e));
+                }
             }
         });
     }
@@ -214,7 +222,11 @@ public class AddMovieController implements Initializable {
         chosenMovie = searchResult.get(searchResultListView.getSelectionModel().getSelectedIndex());
 
         //sets the image from a url string
-        Image img = new Image(chosenMovie.getPictureLink());
+        Image img = new Image("images/ImageNotFound.jpg");
+        if(chosenMovie != null && !chosenMovie.getPictureLink().isEmpty()){
+            img = new Image(chosenMovie.getPictureLink());
+        }
+
         ImageView imageView = new ImageView(img);
         imageView.setFitWidth(200);
         imageView.setFitHeight(275);
@@ -226,11 +238,10 @@ public class AddMovieController implements Initializable {
         ArrayList<String> categoryResult;
         try {
             categoryResult = imdbInfoModel.getMovieCategoriesFromApi(chosenMovie.getImdbId());
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            categories.addAll(categoryResult);
+        } catch (Exception e) {
+            ErrorDisplayer.displayError(new Exception(e));
         }
-
-        categories.addAll(categoryResult);
 
         ListView<String> categoryList = new ListView<>(categories);
         grid.add(categoryList, 1, 5);

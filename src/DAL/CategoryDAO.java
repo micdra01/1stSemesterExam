@@ -12,8 +12,8 @@ import java.util.List;
 
 public class CategoryDAO implements ICategoryDAO {
 
-    private DatabaseConnector databaseConnector;
-    private IMovieDAO movieDAO;
+    private final DatabaseConnector databaseConnector;
+    private final IMovieDAO movieDAO;
 
     public CategoryDAO() throws IOException {
         databaseConnector = new DatabaseConnector();
@@ -72,8 +72,7 @@ public class CategoryDAO implements ICategoryDAO {
                 id = resultSet.getInt(1);
             }
 
-            Category generatedCategory = new Category(id, title);
-            return generatedCategory;
+            return new Category(id, title);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,8 +91,6 @@ public class CategoryDAO implements ICategoryDAO {
             stmt.setInt(2, category.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            //TODO er printStackTrace nødvendigt? Burde jo logges eller fjernes
-            //e.printStackTrace();
             throw new Exception("Failed to add movie to category");
         }
     }
@@ -185,7 +182,6 @@ public class CategoryDAO implements ICategoryDAO {
      * gets a category from the id
      * @param categoryId, the category id
      * @return the found category object from id.
-     * @throws Exception
      */
     @Override
     public Category getCategoryFromId(int categoryId) throws Exception {
@@ -219,7 +215,6 @@ public class CategoryDAO implements ICategoryDAO {
      * search through category table for item by name
      * @param categoryName, the category name
      * @return the found category object from id.
-     * @throws Exception
      */
     @Override
     public Category getCategoryFromName(String categoryName) throws Exception {

@@ -4,8 +4,6 @@ import BE.Category;
 import GUI.Models.CategoryModel;
 import GUI.Util.ConfirmDelete;
 import GUI.Util.ErrorDisplayer;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;

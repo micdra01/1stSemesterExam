@@ -6,28 +6,19 @@ import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class LocalFileHandler {
 
-    /**
-     * todo make delete function
-     * @param path
-     * @throws Exception
-     */
-    public static void deleteLocalFile(String path) throws Exception {}
-
+    public static void deleteLocalFile(String path) throws Exception {
+        Path finalPath = FileSystems.getDefault().getPath("./src/test/resources/newFile.txt");
+            Files.delete(Path.of(path));
+    }
 
     /**
      * creates local file from relative path
-     * @param path
-     * @param fileType
-     * @return
-     * @throws Exception
      */
     public static Path createLocalFile(String path, FileType fileType) throws Exception {
         try {
@@ -56,9 +47,6 @@ public class LocalFileHandler {
 
     /**
      * creates local file from url
-     * @param imgString
-     * @param imdbId
-     * @return
      */
     public static Path saveFileFromApi(String imgString, String imdbId){
 
