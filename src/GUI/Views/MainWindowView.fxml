@@ -78,7 +78,7 @@
             <Separator maxHeight="-Infinity" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="50.0" prefWidth="50.0" visible="false" HBox.hgrow="ALWAYS" />
             <HBox fx:id="boxAdvancedSearch" alignment="TOP_CENTER" opacity="0.0">
                <children>
-                  <MenuButton fx:id="menuButtonRating" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Rating" HBox.hgrow="ALWAYS">
+                  <MenuButton fx:id="menuButtonRating" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Rating" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
@@ -153,7 +153,7 @@
                         </MenuItem>
                      </items>
                   </MenuButton>
-                  <MenuButton fx:id="searchMenuBtnCategory" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Category" HBox.hgrow="ALWAYS">
+                  <MenuButton fx:id="searchMenuBtnCategory" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Category" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>
@@ -178,12 +178,15 @@
                         <Insets right="5.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSearchSettings" prefHeight="30.0" prefWidth="30.0" text="...." HBox.hgrow="ALWAYS">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSearchSettings" prefHeight="30.0" prefWidth="30.0" text="◀" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets right="10.0" top="10.0" />
                      </HBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
                   </Button>
-                  <MenuButton fx:id="menuBtnSortBy" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Sort by">
+                  <MenuButton fx:id="menuBtnSortBy" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Sort">
                     <items>
                       <MenuItem fx:id="menuItmTitleAZ" mnemonicParsing="false" text="Title A-Z" />
                       <MenuItem fx:id="menuItmTitleZA" mnemonicParsing="false" text="Title Z-A" />
@@ -196,9 +199,14 @@
                         <Insets right="10.0" top="10.0" />
                      </HBox.margin>
                   </MenuButton>
-                  <Button fx:id="btnClose" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleClose" prefHeight="0.0" prefWidth="88.0" snapToPixel="false" text="✖" textAlignment="CENTER">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleResize" prefHeight="30.0" prefWidth="30.0" text="🗖">
                      <HBox.margin>
-                        <Insets left="20.0" right="6.0" top="6.0" />
+                        <Insets right="5.0" top="6.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnClose" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClose" prefHeight="30.0" prefWidth="30.0" snapToPixel="false" text="✖" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets right="6.0" top="6.0" />
                      </HBox.margin>
                   </Button>
                </children>

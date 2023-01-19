@@ -30,14 +30,12 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class MainController implements Initializable {
-    public MenuItem menuItmTitleAZ, menuItmTitleZA, menuItmIMDBMinMax, menuItmIMDBMaxMin, menuItmPRMaxMin, menuItmPRMinMax ;
-    public MenuButton menuBtnSortBy;
+    @FXML
+    private MenuItem menuItmTitleAZ, menuItmTitleZA, menuItmIMDBMinMax, menuItmIMDBMaxMin, menuItmPRMaxMin, menuItmPRMinMax ;
     @FXML
     private ImageView imgViewLogo;
-    public Button btnClose;
-
     @FXML
-    private MenuButton menuBtnCategory, searchMenuBtnCategory;
+    private MenuButton menuBtnCategory, searchMenuBtnCategory, menuBtnSortBy;
     @FXML
     private Slider sliderMinIMDBRating, sliderMaxIMDBRating, sliderMinPersonalRating, sliderMaxPersonalRating;
     @FXML
@@ -45,7 +43,7 @@ public class MainController implements Initializable {
     @FXML
     private TextField textSearch;
     @FXML
-    private Button btnSearch;
+    private Button btnSearch, btnClose;
     @FXML
     private Label textSceneTitle, labelMinIMDBRating, labelMaxIMDBRating, labelMinPersonalRating, labelMaxPersonalRating;
     @FXML
@@ -57,6 +55,7 @@ public class MainController implements Initializable {
     private MovieListController movieListController;
     private boolean isSimpleSearch = true;
     private CategoryModel categoryModel;
+    private int sizeState = 0;
 
     public MainController(){
         try {
@@ -475,5 +474,16 @@ public class MainController implements Initializable {
     public void handleClose() {
         Stage stage = (Stage) btnClose.getScene().getWindow();
         stage.close();
+    }
+
+    public void handleResize() {
+        Stage stage = (Stage) btnClose.getScene().getWindow();
+        if (sizeState == 0) {
+            stage.setMaximized(true);
+            sizeState = 1;
+        } else {
+            stage.setMaximized(false);
+            sizeState = 0;
+        }
     }
 }
