@@ -207,6 +207,11 @@ public class MovieViewController implements Initializable {
             ErrorDisplayer.displayError(e);
         }
     }
+
+    public void handleClose() {
+        Stage stage = (Stage) btnSetPR.getScene().getWindow();
+        stage.close();
+    }
 }
 
 

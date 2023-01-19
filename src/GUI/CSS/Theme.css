@@ -3,7 +3,7 @@
     -fx-color1: #303841; /* Background */
     -fx-color2: #EEEEEE; /* Text */
     -fx-color3: #FF0000; /* Buttons */
-    -fx-color4: #303841; /* Color Gradient effect */
+    -fx-color4: #3A4750; /* Color Gradient effect */
 }
 
 .root {
@@ -77,4 +77,35 @@
 
 #listCategories{
     -fx-background-color: #3A4750;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical, .scroll-bar:vertical .track, .scroll-bar:horizontal .track {
+    -fx-background-color: #303841;
+}
+
+.scroll-bar:vertical .thumb, .scroll-bar:horizontal .thumb {
+    -fx-background-color: #FF0000;
+}
+
+.dialog-pane, .dialog-pane .header-panel {
+    -fx-background-color: #303841;
+    -fx-border-color: #3A4750;
+}
+
+.list-view {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-text-fill: #EEEEEE;
+    -fx-border-color: #D72323;
+}
+
+.list-cell:odd {
+    -fx-background-color: #303841;
+}
+.list-cell:even {
+    -fx-background-color: #3A4750;
+}
+
+.list-cell:hover, .list-cell:selected {
+    -fx-font-weight: bold;
 }

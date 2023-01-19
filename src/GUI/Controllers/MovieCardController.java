@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.*;
 import java.io.File;
@@ -150,6 +151,7 @@ public class MovieCardController {
         stage.setTitle("Movie info: " + movie.getTitle());
         stage.setScene(new Scene(root));
         stage.getScene().getStylesheets().add(getClass().getResource("/GUI/CSS/Theme.css").toExternalForm());
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
         MovieViewController controller = loader.getController();
         controller.setMovieModel(movieModel);

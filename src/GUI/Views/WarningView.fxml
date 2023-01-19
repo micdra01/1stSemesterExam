@@ -7,16 +7,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="warningView" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.WarningViewController">
+<ScrollPane fx:id="warningView" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="860.0" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.WarningViewController">
    <content>
-      <VBox fx:id="home" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="825.0" prefWidth="860.0">
+      <VBox fx:id="home" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="860.0">
          <children>
             <Label fx:id="warningViewLabel26" prefHeight="25.0" prefWidth="844.0" text="Not Viewed For 2 Years And Rated 6 Or Lower" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <ScrollPane fx:id="listLowAndLast" hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="240.0" prefWidth="490.0" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+            <ScrollPane fx:id="listLowAndLast" hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="490.0" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                <content>
                   <HBox fx:id="warningViewHBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="2500.0" />
                </content>
@@ -29,7 +29,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <ScrollPane fx:id="listLastViewed" hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="240.0" prefWidth="490.0" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+            <ScrollPane fx:id="listLastViewed" hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="490.0" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                <content>
                   <HBox prefHeight="230.0" prefWidth="2500.0" />
                </content>
@@ -42,7 +42,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <ScrollPane fx:id="listLowRating" hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="240.0" prefWidth="490.0" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+            <ScrollPane fx:id="listLowRating" hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="490.0" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                <content>
                   <HBox prefHeight="230.0" prefWidth="2500.0" />
                </content>

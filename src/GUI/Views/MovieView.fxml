@@ -14,11 +14,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="movieView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" pannable="true" prefHeight="440.0" prefWidth="860.0" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MovieViewController">
+<ScrollPane fx:id="movieView" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" pannable="true" prefHeight="440.0" prefWidth="860.0" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MovieViewController">
    <content>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="845.0">
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="840.0">
          <children>
-            <HBox prefHeight="350.0" prefWidth="845.0" VBox.vgrow="ALWAYS">
+            <HBox prefHeight="350.0" prefWidth="840.0" VBox.vgrow="ALWAYS">
                <children>
                   <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="430.0" HBox.hgrow="ALWAYS">
                      <children>
@@ -140,9 +140,14 @@
                   </VBox>
                   <Separator orientation="VERTICAL" prefHeight="334.0" prefWidth="100.0" visible="false" HBox.hgrow="ALWAYS" />
                   <ImageView fx:id="imageMoviePoster" fitHeight="300.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" />
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClose" prefHeight="30.0" prefWidth="30.0" text="✖">
+                     <HBox.margin>
+                        <Insets left="40.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
-            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="845.0" VBox.vgrow="ALWAYS">
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="840.0" VBox.vgrow="ALWAYS">
                <children>
                   <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                      <children>
@@ -175,6 +180,12 @@
                </children>
             </HBox>
          </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </VBox>
    </content>
+   <padding>
+      <Insets top="10.0" />
+   </padding>
 </ScrollPane>
