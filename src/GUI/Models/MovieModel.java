@@ -31,6 +31,7 @@ public class MovieModel {
         //gets all movies in a list
         moviesInList = FXCollections.observableArrayList();
         moviesInList.addAll(movieManager.getAllMovies());
+        searchResultList = FXCollections.observableArrayList();
     }
 
     public void addMovieToList(Movie movie){

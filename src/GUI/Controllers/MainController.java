@@ -283,6 +283,7 @@ public class MainController implements Initializable {
             }
             movieListController.showAllMovies();
         } catch (Exception e) {
+            e.printStackTrace();
             ErrorDisplayer.displayError(new Exception("Failed to search", e));
         }
     }
