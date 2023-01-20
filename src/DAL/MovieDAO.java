@@ -170,7 +170,11 @@ public class MovieDAO implements IMovieDAO {
             statement.setDouble(2, movie.getPersonalRating());
             statement.setDouble(3, movie.getImdbRating());
             statement.setString(4, movie.getMovieFileLink());
-            statement.setString(5, movie.getPictureFileLink());
+            if(movie.getPictureFileLink().startsWith("https:")) {
+                statement.setString(5, "resources\\images\\" + movie.getImdbId() + ".jpg");
+            }else {
+                statement.setString(5, movie.getPictureFileLink());
+            }
             statement.setTimestamp(6, movie.getLastViewed());
             statement.setInt(7, movie.getYearOfRelease());
             statement.setString(8, movie.getMovieDescription());

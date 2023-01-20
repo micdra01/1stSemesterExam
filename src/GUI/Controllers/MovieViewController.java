@@ -183,7 +183,6 @@ public class MovieViewController implements Initializable {
         df.setMaximumFractionDigits(2);
         movie.setPersonalRating(pr);
         movieModel.updateMovie(movie);
-
         labelPersonalRating.setText(String.valueOf(movie.getPersonalRating()));
     }
 
