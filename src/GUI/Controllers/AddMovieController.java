@@ -118,7 +118,7 @@ public class AddMovieController implements Initializable {
         try {
             String title = chosenMovie != null ? chosenMovie.getTitle() : lblTitle.getText();
 
-            double personalRating = -1;
+            double personalRating = 0;
             double imdbRating = 0;
 
             imdbRating = chosenMovie != null ? Double.parseDouble(imdbInfoModel.getImdbRatingFromApi(chosenMovie.getImdbId())) : 0.00;
