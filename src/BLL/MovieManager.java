@@ -67,8 +67,8 @@ public class MovieManager implements IMovieManager {
      * @throws Exception If it fails to search.
      */
     @Override
-    public List<Movie> search(String query) throws Exception {
-        List<Movie> allMovies = getAllMovies();
+    public List<Movie> search(String query, List<Movie> movieInList) throws Exception {
+        List<Movie> allMovies = movieInList;
 
         return movieSearcher.search(allMovies, query);
     }

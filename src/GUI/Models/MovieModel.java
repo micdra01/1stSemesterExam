@@ -14,6 +14,18 @@ public class MovieModel {
 
     private final ObservableList<Movie> moviesInList;
 
+    private ObservableList<Movie> searchResultList;
+
+    public boolean isSearchActive() {
+        return isSearchActive;
+    }
+
+    public void setSearchActive(boolean searchActive) {
+        isSearchActive = searchActive;
+    }
+
+    private boolean isSearchActive;
+
     public MovieModel() throws Exception {
         movieManager = new MovieManager();
         //gets all movies in a list
@@ -26,6 +38,9 @@ public class MovieModel {
     }
 
     public ObservableList<Movie> getMoviesInList() throws Exception{
+        if(isSearchActive){
+            return searchResultList;
+        }
         return moviesInList;
     }
 
@@ -50,10 +65,8 @@ public class MovieModel {
      * @param query, a String to search for.
      */
     public void search(String query) throws Exception {
-        List<Movie> searchResults = movieManager.search(query);
-
-        moviesInList.clear();
-        moviesInList.addAll(searchResults);
+        searchResultList.clear();
+        searchResultList.addAll(movieManager.search(query, moviesInList));
     }
 
     /**
@@ -65,7 +78,7 @@ public class MovieModel {
         List<Movie> searchResults = movieManager.searchAdvanced(query, minIMDBRating, maxIMDBRating,
                 minPersonalRating, maxPersonalRating, categories);
 
-        moviesInList.clear();
-        moviesInList.addAll(searchResults);
+        searchResults.clear();
+        searchResults.addAll(searchResults);
     }
 }

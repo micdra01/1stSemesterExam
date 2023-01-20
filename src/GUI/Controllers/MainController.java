@@ -260,9 +260,11 @@ public class MainController implements Initializable {
                 if (btnSearch.getText().equals("🔍")) {
                     movieModel.search(textSearch.getText());
                     setSearchNodes(false);
+                    movieModel.setSearchActive(true);
                 } else {
                     movieModel.search("");
                     setSearchNodes(true);
+                    movieModel.setSearchActive(false);
                 }
             } else {
                 if (btnSearch.getText().equals("🔍")) {

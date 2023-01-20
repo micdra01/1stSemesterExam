@@ -50,7 +50,7 @@ public interface IMovieManager {
      * @return a list of movies matching the query in either title or category...
      * @throws Exception If it fails to search.
      */
-    List<Movie> search(String query) throws Exception;
+    List<Movie> search(String query, List<Movie> moviesInList) throws Exception;
 
     /**
      * Filter the list of movies in library using a search query, min. rating & category selection
