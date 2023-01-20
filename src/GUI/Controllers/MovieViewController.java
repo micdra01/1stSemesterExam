@@ -184,7 +184,6 @@ public class MovieViewController implements Initializable {
         System.out.println(df.format(pr));
         movie.setPersonalRating(pr);
         movieModel.updateMovie(movie);
-
         labelPersonalRating.setText(String.valueOf(movie.getPersonalRating()));
     }
 
