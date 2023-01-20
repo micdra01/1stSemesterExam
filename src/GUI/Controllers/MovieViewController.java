@@ -181,7 +181,6 @@ public class MovieViewController implements Initializable {
         double pr = sliderSetPR.getValue();
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
-        System.out.println(df.format(pr));
         movie.setPersonalRating(pr);
         movieModel.updateMovie(movie);
 
