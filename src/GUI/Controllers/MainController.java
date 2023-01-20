@@ -192,7 +192,7 @@ public class MainController implements Initializable {
         textSceneTitle.setText("Favorite movies");
     }
 
-    public void handleAllMovies() {
+    public void handleAllMovies() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/MovieListView.fxml"));
         Parent root = null;
 
@@ -253,7 +253,7 @@ public class MainController implements Initializable {
     }
 
 
-    public void handleSearch() {
+    public void handleSearch() throws Exception {
         handleAllMovies();
         try {
             if(isSimpleSearch) {
@@ -377,7 +377,7 @@ public class MainController implements Initializable {
      * Allows searching by pressing Enter (instead of using the 🔍-button).
      * @param keyEvent, a key-press
      */
-    public void handleEnter(KeyEvent keyEvent) {
+    public void handleEnter(KeyEvent keyEvent) throws Exception {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             handleSearch();
         }
@@ -441,7 +441,7 @@ public class MainController implements Initializable {
     /**
      * Refresh the current view after a movie is deleted
      */
-    public void reloadCurrentView() {
+    public void reloadCurrentView() throws Exception {
         String sceneTitle = textSceneTitle.getText();
         if (sceneTitle.contains(" ")) {
             sceneTitle = sceneTitle.substring(0, sceneTitle.indexOf(" "));
