@@ -258,13 +258,14 @@ public class MainController implements Initializable {
         try {
             if(isSimpleSearch) {
                 if (btnSearch.getText().equals("🔍")) {
+                    movieModel.setSearchActive(true);
                     movieModel.search(textSearch.getText());
                     setSearchNodes(false);
-                    movieModel.setSearchActive(true);
+                    addSearchListener();
                 } else {
+                    movieModel.setSearchActive(false);
                     movieModel.search("");
                     setSearchNodes(true);
-                    movieModel.setSearchActive(false);
                 }
             } else {
                 if (btnSearch.getText().equals("🔍")) {
@@ -276,6 +277,7 @@ public class MainController implements Initializable {
                     movieModel.searchAdvanced(textSearch.getText(), sliderMinIMDBRating.getValue(), sliderMaxIMDBRating.getValue(),
                             sliderMinPersonalRating.getValue(), sliderMaxPersonalRating.getValue(), selectedCategories);
                     setSearchNodes(false);
+                    addSearchListener();
                 } else {
                     movieModel.search("");
                     setSearchNodes(true);
@@ -338,23 +340,24 @@ public class MainController implements Initializable {
         btnSearch.setDisable(disable);
         if (!disable) {
             btnSearch.setText("✖");
-            addSearchListener();
         } else {
             btnSearch.setText("🔍");
             textSearch.setText("");
-            sliderMinIMDBRating.setValue(0);
-            sliderMaxIMDBRating.setValue(10);
-            sliderMinPersonalRating.setValue(0);
-            sliderMaxPersonalRating.setValue(10);
-            labelMinIMDBRating.setText("0");
-            labelMaxIMDBRating.setText("10");
-            labelMinPersonalRating.setText("0");
-            labelMaxPersonalRating.setText("10");
+            if (!isSimpleSearch) {
+                sliderMinIMDBRating.setValue(0);
+                sliderMaxIMDBRating.setValue(10);
+                sliderMinPersonalRating.setValue(0);
+                sliderMaxPersonalRating.setValue(10);
+                labelMinIMDBRating.setText("0");
+                labelMaxIMDBRating.setText("10");
+                labelMinPersonalRating.setText("0");
+                labelMaxPersonalRating.setText("10");
 
-            try {
-                initializeCategorySearchMenu();
-            } catch (Exception e) {
-                ErrorDisplayer.displayError(new Exception(e));
+                try {
+                    initializeCategorySearchMenu();
+                } catch (Exception e) {
+                    ErrorDisplayer.displayError(new Exception(e));
+                }
             }
         }
     }
