@@ -81,11 +81,9 @@ public class MovieManager implements IMovieManager {
      * @throws Exception If it fails to search.
      */
     public List<Movie> searchAdvanced(String query, double minIMDBRating, double maxIMDBRating,
-                                      double minPersonalRating, double maxPersonalRating, List<String> categories) throws Exception {
+                                      double minPersonalRating, double maxPersonalRating, List<String> categories, List<Movie> movieList) throws Exception {
 
-        List<Movie> allMovies = getAllMovies();
-
-        return movieSearcher.searchAdvanced(allMovies, query, minIMDBRating, maxIMDBRating,
+        return movieSearcher.searchAdvanced(movieList, query, minIMDBRating, maxIMDBRating,
                 minPersonalRating, maxPersonalRating, categories);
     }
 }

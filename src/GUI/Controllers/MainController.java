@@ -269,6 +269,7 @@ public class MainController implements Initializable {
                 }
             } else {
                 if (btnSearch.getText().equals("🔍")) {
+                    movieModel.setSearchActive(true);
                     //Stores selected menu items (categories) in a list
                     List<String> selectedCategories = searchMenuBtnCategory.getItems().stream()
                                     .map(CheckMenuItem.class::cast).filter(CheckMenuItem::isSelected)
@@ -279,6 +280,7 @@ public class MainController implements Initializable {
                     setSearchNodes(false);
                     addSearchListener();
                 } else {
+                    movieModel.setSearchActive(false);
                     movieModel.search("");
                     setSearchNodes(true);
                 }

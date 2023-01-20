@@ -76,10 +76,11 @@ public class MovieModel {
      */
     public void searchAdvanced(String query, double minIMDBRating, double maxIMDBRating,
                                double minPersonalRating, double maxPersonalRating, List<String> categories) throws Exception {
-        List<Movie> searchResults = movieManager.searchAdvanced(query, minIMDBRating, maxIMDBRating,
-                minPersonalRating, maxPersonalRating, categories);
 
-        searchResults.clear();
-        searchResults.addAll(searchResults);
+        List<Movie> searchResults = movieManager.searchAdvanced(query, minIMDBRating, maxIMDBRating,
+                minPersonalRating, maxPersonalRating, categories, moviesInList);
+
+        searchResultList.clear();
+        searchResultList.addAll(searchResults);
     }
 }

@@ -65,6 +65,6 @@ public interface IMovieManager {
      * @throws Exception If it fails to search.
      */
     List<Movie> searchAdvanced(String query, double minIMDBRating, double maxIMDBRating,
-                               double minPersonalRating, double maxPersonalRating, List<String> categories) throws Exception;
+                               double minPersonalRating, double maxPersonalRating, List<String> categories, List<Movie> moviesList) throws Exception;
 
 }
