@@ -73,12 +73,12 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <children>
-            <TextField fx:id="textCategory" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="275.0" />
+            <TextField fx:id="textCategory" editable="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="275.0" />
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
          <children>
-            <TextField fx:id="textImageFile" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="275.0" />
+            <TextField fx:id="textImageFile" editable="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="275.0" />
             <Button fx:id="btnImageFile" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleImageFile" prefHeight="30.0" text="Choose...">
                <HBox.margin>
                   <Insets left="5.0" />
