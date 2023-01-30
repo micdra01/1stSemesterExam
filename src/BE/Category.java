@@ -1,5 +1,7 @@
 package BE;
 
+import javafx.scene.chart.PieChart;
+
 public class Category {
     private String title;
     private int id;
